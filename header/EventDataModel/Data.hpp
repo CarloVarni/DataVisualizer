@@ -16,7 +16,8 @@ namespace EventDataModel {
     
     Data() = delete;
 
-    template<typename value_t>
+    template<typename value_t,
+	     typename Enable = std::enable_if_t<std::disjunction<std::is_same<value_t, supported_t>...>::value>>
     Data(value_t value,
 	 float weight = 1.);
     
@@ -44,7 +45,8 @@ namespace EventDataModel {
   /* ============================================================== */
   
   template<typename ... supported_t>
-  template<typename value_t>
+  template<typename value_t,
+	   typename Enable>
   Data<supported_t...>::Data(value_t value,
 			     float weight)
     : m_value(value),
@@ -65,7 +67,6 @@ namespace EventDataModel {
 
   using DataObject = Data<double, int, float, long, unsigned int, short, bool, unsigned short>;
   using DataObjectColletion = std::vector<DataObject>;
-  
 }
 
 #endif
