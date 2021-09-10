@@ -20,33 +20,15 @@ namespace Core {
     Scheduler& operator=(const Scheduler&) = delete;
     ~Scheduler() = default;
     
-    template <typename T>
-    void addAlgorithm(const std::string& name,
-		      T&& object);
-
+    void addAlgorithm(std::shared_ptr<Core::BaseAlgorithm> algorithm);
     void run();
     
   private:
     std::unique_ptr<Core::EventContext> m_eventContext;
     std::vector<std::string> m_algoSequence;
     std::unordered_map<std::string,
-		       std::unique_ptr<Core::BaseAlgorithm>> m_store;
+		       std::shared_ptr<Core::BaseAlgorithm>> m_store;
   };
-
-  /* ============================================================== */
-
-  template <typename T>
-  void
-  Scheduler::addAlgorithm(const std::string& name,
-			  T&& object)
-  {
-    if (m_store.find(name) != m_store.end())
-      throw std::invalid_argument("Algorithm `" + name + "` is already in store. Cannot add another one");
-    
-    m_algoSequence.push_back(name);
-    m_store.emplace(name,
-		    std::make_unique<Core::BaseAlgorithm>(std::forward<T>(object)));
-  }
   
 }
 

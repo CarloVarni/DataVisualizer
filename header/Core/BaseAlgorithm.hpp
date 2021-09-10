@@ -11,7 +11,7 @@ namespace Core {
   public:
     BaseAlgorithm() = delete;
     BaseAlgorithm(const std::string& name);
-    ~BaseAlgorithm() = default;
+    virtual ~BaseAlgorithm() = default;
 
     virtual void initialize() = 0;
     virtual void execute(EventContext& context) = 0;

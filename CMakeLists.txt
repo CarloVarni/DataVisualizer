@@ -24,10 +24,12 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Core/IHolder.hpp
 		  header/Core/EventContext.hpp
 		  header/Core/BaseAlgorithm.hpp
-		  header/Core/Scheduler.hpp )
+		  header/Core/Scheduler.hpp
+		  header/Algorithms/RootFileReaderAlgorithm.hpp )
 		  
 SET( SRC_FILES src/Core/BaseAlgorithm.cpp
-     	       src/Core/Scheduler.cpp )
+     	       src/Core/Scheduler.cpp
+	       src/Algorithms/RootFileReaderAlgorithm.cpp)
 
 add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )
 
@@ -37,3 +39,6 @@ set_target_properties(DataVisualizerLib PROPERTIES LINKER_LANGUAGE CXX)
 # Executables
 add_executable( mainCode macros/maintmp.cxx )
 target_link_libraries( mainCode DataVisualizerLib )
+
+add_executable( testRootReader macros/testRootReader.cpp)
+target_link_libraries( testRootReader DataVisualizerLib )

@@ -18,4 +18,15 @@ namespace Core {
       m_store.at(algo)->finalize();
   }
 
+  void
+  Scheduler::addAlgorithm(std::shared_ptr<Core::BaseAlgorithm> algorithm)
+  {
+    const std::string name = algorithm->name();
+    if (m_store.find(name) != m_store.end())
+      throw std::invalid_argument("Algorithm `" + name + "` is already in store. Cannot add another one to scheduler.");
+    
+    m_algoSequence.push_back(name);
+    m_store.emplace(name, std::move(algorithm));
+  }
+  
 }
