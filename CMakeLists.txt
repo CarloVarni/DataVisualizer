@@ -41,8 +41,5 @@ target_link_libraries( DataVisualizerLib ${ROOT_LIBRARIES} )
 set_target_properties(DataVisualizerLib PROPERTIES LINKER_LANGUAGE CXX)
 
 # Executables
-add_executable( mainCode macros/maintmp.cxx )
-target_link_libraries( mainCode DataVisualizerLib )
-
 add_executable( testRootReader macros/testRootReader.cpp)
 target_link_libraries( testRootReader DataVisualizerLib )

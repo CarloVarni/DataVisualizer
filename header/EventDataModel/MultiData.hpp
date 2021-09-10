@@ -14,7 +14,7 @@ namespace EventDataModel {
   template<typename ... supported_t>
   class MultiData {
   public:
-    using data_type = std::variant<supported_t...>;
+    using value_type = std::variant<supported_t...>;
 
     static_assert(not std::disjunction<std::is_same<std::string, supported_t>...>::value,
 		  "MultiData Object does not support std::string!");
@@ -22,7 +22,7 @@ namespace EventDataModel {
     MultiData() = delete;
     
     MultiData(const std::vector<std::string>& labels,
-	      const std::vector<data_type>& data,
+	      const std::vector<value_type>& data,
 	      float weight = 1.);
     
     ~MultiData() = default;
@@ -32,12 +32,12 @@ namespace EventDataModel {
     bool hasLabel(const std::string&) const; 
 
     std::vector<std::string> labels() const;
-    data_type value(const std::string&) const;
+    value_type value(const std::string&) const;
     
   private:
     const float m_weight;
     std::unordered_map<std::string, int> m_indexMap;
-    std::vector<data_type> m_data;
+    std::vector<value_type> m_data;
   };
   
   /* ============================================================== */

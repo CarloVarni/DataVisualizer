@@ -19,7 +19,7 @@ namespace Algorithm {
 
 
     std::vector<std::string> labels({"nhits", "ntracks"});
-    std::vector<EventDataModel::MultiDataCollection::value_type::data_type> values;
+    std::vector<EventDataModel::MultiDataCollection::value_type::value_type> values;
     values.reserve(labels.size());
     
     unsigned short nhits, ntracks;      

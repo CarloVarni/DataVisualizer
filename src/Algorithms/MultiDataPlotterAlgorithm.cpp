@@ -2,6 +2,7 @@
 #include <MultiDataPlotterAlgorithm.hpp>
 #include <MultiData.hpp>
 #include <Histogram_1D.hpp>
+#include <Histogram_2D.hpp>
 
 namespace Algorithm {
 
@@ -29,11 +30,17 @@ namespace Algorithm {
 						    TH1I("nhits", "nhits", 20, 0 ,20));
     EventDataModel::HistogramObject_1D ntracksPlotter("ntracks", "ntracks",
 						      TH1I("ntracks", "ntracks", 20, 0, 20));
-    
+
+    EventDataModel::HistogramObject_2D nhits_ntracks_Plotter("nhits_ntracks", "nhits", "ntracks",
+							     TH2I("nhits_ntracks", "nhits_ntracks",
+								  20, 0, 20,
+								  20, 0, 20));
+          
     for (auto ientry(0); ientry<dataCollection->size(); ientry++) {
       auto& data = dataCollection->at(ientry);
       nhitsPlotter.Fill(data);
       ntracksPlotter.Fill(data);
+      nhits_ntracks_Plotter.Fill(data);
     }
     
     TCanvas c0("c0", "c0");
@@ -45,6 +52,11 @@ namespace Algorithm {
     ntracksPlotter.Draw(c1, "HIST");
     c1.Draw();
     c1.SaveAs( (m_cfg.outputFolder + "/ntracks.pdf").c_str() );
+
+    TCanvas c2("c2", "c2");
+    nhits_ntracks_Plotter.Draw(c2, "COLZ");
+    c2.Draw();
+    c2.SaveAs( (m_cfg.outputFolder + "/nhits_ntracks.pdf").c_str() );
 
   }
 
