@@ -44,7 +44,7 @@ namespace Core {
       throw std::invalid_argument("Algorithm `" + name + "` is already in store. Cannot add another one");
     
     m_algoSequence.push_back(name);
-    m_store,emplace(name,
+    m_store.emplace(name,
 		    std::make_unique<Core::BaseAlgorithm>(std::forward<T>(object)));
   }
 
