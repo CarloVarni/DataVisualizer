@@ -2,7 +2,6 @@
 #ifndef MULTIDATA_H
 #define MULTIDATA_H
 
-#include "Data.hpp"
 #include <utility>
 #include <string>
 #include <vector>
@@ -27,12 +26,12 @@ public:
   float weight() const;
   bool hasLabel(const std::string&) const; 
   std::vector<std::string> labels() const;
-  std::variant<Data<supported_t>...> value(const std::string&) const;
+  data_type value(const std::string&) const;
   
 private:
   const float m_weight;
   std::unordered_map<std::string, int> m_indexMap;
-  std::vector<std::variant<Data<supported_t>...>> m_data;
+  std::vector<data_type> m_data;
 };
 
 /* ============================================================== */
@@ -45,7 +44,7 @@ operator<<(std::ostream& os, const MultiData<data_type...>& data) {
   const auto& labels = data.labels();
   for (const auto& label : labels)
     std::visit([&] (const auto& arg) {
-		 os << "    `" << label << "` : " << arg.value() << std::endl;
+		 os << "    `" << label << "` : " << arg << std::endl;
 	       }, data.value(label));
 
   return os;
@@ -71,7 +70,7 @@ MultiData<supported_t ...>::MultiData(const std::vector<std::string>& labels,
 
     m_indexMap[label] = m_data.size();
     std::visit([=] (auto arg) {
-                 m_data.push_back( Data(arg, weight) );
+                 m_data.push_back(arg);
                }, data.at(i));
   }
 }
@@ -105,7 +104,7 @@ MultiData<supported_t ...>::labels() const
 }
 
 template<typename ... supported_t>
-std::variant<Data<supported_t>...>
+std::variant<supported_t...>
 MultiData<supported_t ...>::value(const std::string& label) const
 {
   if (not hasLabel(label))
