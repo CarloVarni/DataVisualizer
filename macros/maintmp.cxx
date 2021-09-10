@@ -26,10 +26,10 @@ int main() {
     >
     data{2, 4, 123};
   
-  MultiData A(label, data, 1.2);
+  EventDataModel::MultiData A(label, data, 1.2);
   std::cout << A << std::endl;
 
-  Histogram_2D<int, int, TH2D> prova("histogram", "due", "uno", 20, 0, 10, 10, 0, 10);
+  EventDataModel::Histogram_2D<int, int, TH2D> prova("histogram", "due", "uno", 20, 0, 10, 10, 0, 10);
   prova.Fill(A);
 
   TCanvas c0("","");

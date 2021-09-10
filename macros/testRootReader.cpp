@@ -1,21 +1,37 @@
 
 #include <Scheduler.hpp>
-#include <RootFileReaderAlgorithm.hpp>
+#include <SeedingPerformanceRootReaderAlgorithm.hpp>
+#include <MultiDataPlotterAlgorithm.hpp>
 
 int main() {
 
   Core::Scheduler scheduler;
+
+  Algorithm::SeedingPerformanceRootReaderAlgorithm::Config SeedingPerformanceRootReaderConfiguration;
+  SeedingPerformanceRootReaderConfiguration.fileName = "./data/performance_seeding_trees.root ";
+  SeedingPerformanceRootReaderConfiguration.treeName = "track_finder_particles";
+  SeedingPerformanceRootReaderConfiguration.dataCollectionName = "raw_data";
+
+  std::shared_ptr<Algorithm::SeedingPerformanceRootReaderAlgorithm> seedingPerformanceRootReaderAlgorithm
+    = std::make_shared<Algorithm::SeedingPerformanceRootReaderAlgorithm>("SeedingPerformanceRootReaderAlgorithm",
+									 SeedingPerformanceRootReaderConfiguration);
+
+  scheduler.addAlgorithm(seedingPerformanceRootReaderAlgorithm);
+
+
+
+
+  Algorithm::MultiDataPlotterAlgorithm::Config MultiDataPlotterConfiguration;
+  MultiDataPlotterConfiguration.inputCollection = SeedingPerformanceRootReaderConfiguration.dataCollectionName;
+  MultiDataPlotterConfiguration.outputFolder = "./plots";
+  MultiDataPlotterConfiguration.variableNames = {"nhits", "ntracks"};
   
-  Algorithm::RootFileReaderAlgorithm::Config RootReaderConfiguration;
-  RootReaderConfiguration.fileName = "testFile.root";
-  RootReaderConfiguration.treeName = "testTree";
-  RootReaderConfiguration.dataCollectionName = "raw_data";
+  std::shared_ptr<Algorithm::MultiDataPlotterAlgorithm> multiDataPlotterAlgorithm =
+    std::make_shared<Algorithm::MultiDataPlotterAlgorithm>("MultiDataPlotterAlgorithm",
+							   MultiDataPlotterConfiguration);
 
-  std::shared_ptr<Algorithm::RootFileReaderAlgorithm> rootFileReaderAlgorithm
-    = std::make_shared<Algorithm::RootFileReaderAlgorithm>("RootFileReaderAlgorithm",
-							   RootReaderConfiguration);
+  scheduler.addAlgorithm(multiDataPlotterAlgorithm);
 
-  scheduler.addAlgorithm(rootFileReaderAlgorithm);
   
   scheduler.run();
 }

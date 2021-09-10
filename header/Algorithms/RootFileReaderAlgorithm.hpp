@@ -4,6 +4,7 @@
 
 #include <BaseAlgorithm.hpp>
 #include <TFile.h>
+#include <TTree.h>
 
 namespace Algorithm {
 
@@ -25,12 +26,13 @@ namespace Algorithm {
     virtual ~RootFileReaderAlgorithm() override = default;
 
     virtual void initialize() override;
-    virtual void execute(Core::EventContext& context) override;
+    virtual void execute(Core::EventContext& context) override = 0;
     virtual void finalize() override;
     
-  private:
+  protected:
     const Config m_cfg;
     std::unique_ptr<TFile> m_file;
+    TTree* m_tree;
   };
   
 }

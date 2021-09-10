@@ -25,11 +25,15 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Core/EventContext.hpp
 		  header/Core/BaseAlgorithm.hpp
 		  header/Core/Scheduler.hpp
-		  header/Algorithms/RootFileReaderAlgorithm.hpp )
+		  header/Algorithms/RootFileReaderAlgorithm.hpp
+		  header/Algorithms/SeedingPerformanceRootReaderAlgorithm.hpp
+		  header/Algorithms/MultiDataPlotterAlgorithm.hpp )
 		  
 SET( SRC_FILES src/Core/BaseAlgorithm.cpp
      	       src/Core/Scheduler.cpp
-	       src/Algorithms/RootFileReaderAlgorithm.cpp)
+	       src/Algorithms/RootFileReaderAlgorithm.cpp
+	       src/Algorithms/SeedingPerformanceRootReaderAlgorithm.cpp
+	       src/Algorithms/MultiDataPlotterAlgorithm.cpp )
 
 add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )
 

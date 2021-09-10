@@ -9,7 +9,8 @@ namespace Algorithm {
   RootFileReaderAlgorithm::RootFileReaderAlgorithm(const std::string& name,
 						   const Algorithm::RootFileReaderAlgorithm::Config& cfg)
     : BaseAlgorithm(name),
-      m_cfg(cfg)
+      m_cfg(cfg),
+      m_tree(nullptr)
   {}
 
   void
@@ -26,19 +27,15 @@ namespace Algorithm {
     if (m_cfg.dataCollectionName.empty())
       throw std::invalid_argument("Output Collection Name has not been specified for algorithm " + name());
 
+    std::cout<<"Opening ROOT file: "<< m_cfg.fileName << std::endl;
     m_file = std::make_unique<TFile>( m_cfg.fileName.c_str(), "READ" );
-  }
+    if (not m_file)
+      throw std::runtime_error("Cannot open input ROOT file: " + m_cfg.fileName);
 
-  void
-  RootFileReaderAlgorithm::execute(Core::EventContext& context)
-  {
-    std::cout << "Executing " << name() << " ..." << std::endl;
-
-    using MultiDataCollection = std::vector<MultiData<double, int, float>>;
-    std::shared_ptr<MultiDataCollection> outputCollection = std::make_shared<MultiDataCollection>();
-    
-    context.add(m_cfg.dataCollectionName,
-    		std::move(outputCollection));
+    std::cout<<"Retrieving TTree object: " << m_cfg.treeName << std::endl;
+    m_tree = reinterpret_cast<TTree*>( m_file->Get(m_cfg.treeName.c_str()) );
+    if (not m_tree)
+      throw std::runtime_error("Cannot retrieve TTree from ROOT file: " + m_cfg.treeName);
   }
 
   void
