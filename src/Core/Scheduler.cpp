@@ -3,6 +3,10 @@
 
 namespace Core {
 
+  Scheduler::Scheduler()
+    : m_eventContext(std::make_unique<Core::EventContext>())
+  {}
+
   void
   Scheduler::run() {
     // Initialize everything

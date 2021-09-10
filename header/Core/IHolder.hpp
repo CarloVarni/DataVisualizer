@@ -3,7 +3,8 @@
 #define IHOLDER_H
 
 #include <typeinfo>
-
+#include <memory>
+#include "iostream"
 namespace Core {
 
   class IHolder {
@@ -18,18 +19,21 @@ namespace Core {
   class HolderT :
     public IHolder {
   public:
-    HolderT(T&& v);
+    HolderT(std::shared_ptr<T> v);
+
     const std::type_info& type() const;
     
+    const std::shared_ptr<T>& value() const;
+
   private:
-    T m_value;
+    std::shared_ptr<T> m_value;
   };
 
   /* ============================================================== */
 
   template<typename T,
 	   typename Enable>
-  HolderT<T, Enable>::HolderT(T&& v)
+  HolderT<T, Enable>::HolderT(std::shared_ptr<T> v)
     : m_value(std::move(v))
   {}
 
@@ -39,6 +43,11 @@ namespace Core {
   HolderT<T, Enable>::type() const
   { return typeid(T); }
 
+  template<typename T,
+	   typename Enable>
+  const std::shared_ptr<T>&
+  HolderT<T, Enable>::value() const
+  { return m_value; }
   
 }
 

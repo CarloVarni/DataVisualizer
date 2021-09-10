@@ -14,8 +14,8 @@ int main() {
   std::shared_ptr<Algorithm::RootFileReaderAlgorithm> rootFileReaderAlgorithm
     = std::make_shared<Algorithm::RootFileReaderAlgorithm>("RootFileReaderAlgorithm",
 							   RootReaderConfiguration);
-  
-  scheduler.addAlgorithm(rootFileReaderAlgorithm);
 
+  scheduler.addAlgorithm(rootFileReaderAlgorithm);
+  
   scheduler.run();
 }

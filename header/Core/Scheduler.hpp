@@ -4,7 +4,7 @@
 
 #include <BaseAlgorithm.hpp>
 #include <EventContext.hpp>
-
+#include "iostream"
 #include <stdexcept>
 #include <memory>
 #include <unordered_map>
@@ -15,7 +15,7 @@ namespace Core {
 
   class Scheduler {
   public:
-    Scheduler() = default;
+    Scheduler();
     Scheduler(const Scheduler&) = delete;
     Scheduler& operator=(const Scheduler&) = delete;
     ~Scheduler() = default;
