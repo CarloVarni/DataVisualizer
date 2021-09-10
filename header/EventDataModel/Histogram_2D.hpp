@@ -24,12 +24,12 @@ namespace EventDataModel {
     Histogram_2D() = delete;
 
     template<typename histogram_t,
-	     typename Enable = std::enable_if_t<std::is_base_of<TH2, histogram_t>::value>>
+	     typename Enable = std::enable_if_t<std::disjunction<std::is_same<histogram_t, histogram_supported_t>...>::value>>
     Histogram_2D(const std::string& title,
 		 histogram_t histogram);
 
     template<typename histogram_t,
-	     typename Enable = std::enable_if_t<std::is_base_of<TH2, histogram_t>::value>>    
+	     typename Enable = std::enable_if_t<std::disjunction<std::is_same<histogram_t, histogram_supported_t>...>::value>>
     Histogram_2D(const std::string& title,
 		 const std::string& target_variable_x,
 		 const std::string& target_variable_y,
