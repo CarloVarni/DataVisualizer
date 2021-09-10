@@ -15,7 +15,12 @@ namespace Core {
 
   class Scheduler {
   public:
+    struct Config {
+      long int nEvents = 1;
+    };
+
     Scheduler();
+    Scheduler(const Config&);
     Scheduler(const Scheduler&) = delete;
     Scheduler& operator=(const Scheduler&) = delete;
     ~Scheduler() = default;
@@ -24,7 +29,8 @@ namespace Core {
     void run();
     
   private:
-    std::unique_ptr<Core::EventContext> m_eventContext;
+    Config m_cfg;
+    std::vector<std::unique_ptr<Core::EventContext>> m_eventContext;
     std::vector<std::string> m_algoSequence;
     std::unordered_map<std::string,
 		       std::shared_ptr<Core::BaseAlgorithm>> m_store;

@@ -4,19 +4,29 @@
 namespace Core {
 
   Scheduler::Scheduler()
-    : m_eventContext(std::make_unique<Core::EventContext>())
   {}
 
+  Scheduler::Scheduler(const Core::Scheduler::Config& config)
+    : m_cfg(config)
+  {}
+  
   void
   Scheduler::run() {
+    // Creating Event Context
+    m_eventContext.reserve(m_cfg.nEvents);
+    for(auto ievt(0); ievt<m_cfg.nEvents; ievt++)
+      m_eventContext.push_back(std::make_unique<Core::EventContext>());
+    
     // Initialize everything
     for	(const auto& algo : m_algoSequence)
       m_store.at(algo)->initialize();
 
     // Execute Code
-    for (const auto& algo : m_algoSequence)
-      m_store.at(algo)->execute( *m_eventContext.get() );
-
+    for(auto ievt(0); ievt<m_cfg.nEvents; ievt++) {
+      for (const auto& algo : m_algoSequence)
+	m_store.at(algo)->execute( *m_eventContext.at(ievt).get() );
+    }
+    
     // Finalize everything
     for (const auto& algo : m_algoSequence)
       m_store.at(algo)->finalize();
