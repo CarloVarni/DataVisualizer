@@ -20,7 +20,10 @@ include_directories( header/EventDataModel
 SET( HEADER_FILES header/EventDataModel/Data.hpp 
      		  header/EventDataModel/MultiData.hpp
 		  header/EventDataModel/Histogram_1D.hpp 
-		  header/EventDataModel/Histogram_2D.hpp )
+		  header/EventDataModel/Histogram_2D.hpp 
+		  header/Core/IHolder.hpp
+		  header/Core/EventContext.hpp )
+		  
 #SET( SRC_FILES ) # src/Data.cpp )
 
 add_library( DataVisualizerLib SHARED ${HEADER_FILES} ) #${SRC_FILES} ${HEADER_FILES} )

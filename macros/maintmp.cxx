@@ -12,6 +12,8 @@
 #include <TCanvas.h>
 #include <TApplication.h>
 
+#include <EventContext.hpp>
+
 TApplication Runner("gui",0,NULL);
 
 int main() {
