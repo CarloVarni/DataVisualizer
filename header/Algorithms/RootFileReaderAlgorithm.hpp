@@ -3,6 +3,7 @@
 #define ROOT_FILE_READER_H 1
 
 #include <BaseAlgorithm.hpp>
+#include <TFile.h>
 
 namespace Algorithm {
 
@@ -29,7 +30,7 @@ namespace Algorithm {
     
   private:
     const Config m_cfg;
-
+    std::unique_ptr<TFile> m_file;
   };
   
 }

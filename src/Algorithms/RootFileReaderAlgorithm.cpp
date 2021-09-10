@@ -25,6 +25,8 @@ namespace Algorithm {
 
     if (m_cfg.dataCollectionName.empty())
       throw std::invalid_argument("Output Collection Name has not been specified for algorithm " + name());
+
+    m_file = std::make_unique<TFile>( m_cfg.fileName.c_str(), "READ" );
   }
 
   void
@@ -43,6 +45,9 @@ namespace Algorithm {
   RootFileReaderAlgorithm::finalize()
   {
     std::cout << "Finalizing " << name() << " ..." << std::endl;
+
+    if (m_file)
+      m_file->Close();
   }
   
 }
