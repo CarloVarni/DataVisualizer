@@ -16,7 +16,8 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include )
 include_directories( header )
 
 SET( HEADER_FILES header/Data.hpp 
-     		  header/MultiData.hpp )
+     		  header/MultiData.hpp
+		  header/Histogram_1D.hpp )
 SET( SRC_FILES src/Data.cpp )
 
 add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )
