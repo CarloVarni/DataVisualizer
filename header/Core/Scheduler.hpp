@@ -45,7 +45,7 @@ namespace Core {
     
     m_algoSequence.push_back(name);
     m_store,emplace(name,
-		    std::make_unique<HolderT<T>>(std::forward<T>(object)));
+		    std::make_unique<Core::BaseAlgorithm>(std::forward<T>(object)));
   }
 
   void
