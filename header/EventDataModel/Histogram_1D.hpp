@@ -37,9 +37,7 @@ namespace EventDataModel {
     ~Histogram_1D() = default;
     
     void Fill(const DataObject& data);
-    
-    template<typename ... args>
-    void Fill(const MultiData<args...>& data);
+    void Fill(const MultiDataObject& data);
     
     void Draw(TCanvas& canvas,
 	      const std::string& option);
@@ -84,9 +82,8 @@ namespace EventDataModel {
   { Fill(data.value(), data.weight()); }
   
   template<typename ... histogram_supported_t>
-  template<typename ... args>
   void
-  Histogram_1D<histogram_supported_t...>::Fill(const MultiData<args...>& data)
+  Histogram_1D<histogram_supported_t...>::Fill(const MultiDataObject& data)
   {
     if (not data.hasLabel(m_target_variable))
       throw std::runtime_error("MultiData collection has not data with label `" + m_target_variable + "` to fill the histogram with.");
