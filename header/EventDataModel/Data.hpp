@@ -13,6 +13,9 @@ namespace EventDataModel {
   class Data {
   public:
     using value_type = std::variant<supported_t...>;
+
+    static_assert(not std::disjunction<std::is_same<std::string, supported_t>...>::value,
+		  "Data Object does not support std::string");
     
     Data() = delete;
 
