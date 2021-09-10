@@ -18,14 +18,14 @@ int main() {
 
   std::vector<std::string> label{"uno", "due", "tre"};
   std::vector<
-    std::variant< int, double, float, bool, short, long, unsigned int>
+    std::variant< int >
     >
-    data{2, 4.1, 123};
+    data{2, 4, 123};
   
   MultiData A(label, data, 1.2);
   std::cout << A << std::endl;
 
-  Histogram_2D<double, int, TH2D> prova("histogram", "due", "uno", 20, 0, 10, 10, 0, 10);
+  Histogram_2D<int, int, TH2D> prova("histogram", "due", "uno", 20, 0, 10, 10, 0, 10);
   prova.Fill(A);
 
   TCanvas c0("","");

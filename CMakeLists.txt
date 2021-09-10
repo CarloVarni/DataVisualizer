@@ -13,16 +13,20 @@ include( ${ROOT_USE_FILE} )
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include )
 
 # My Code
-include_directories( header )
+include_directories( header/EventDataModel
+		     header/Core
+		     header/Algorithms )
 
-SET( HEADER_FILES header/Data.hpp 
-     		  header/MultiData.hpp
-		  header/Histogram_1D.hpp 
-		  header/Histogram_2D.hpp )
-SET( SRC_FILES src/Data.cpp )
+SET( HEADER_FILES header/EventDataModel/Data.hpp 
+     		  header/EventDataModel/MultiData.hpp
+		  header/EventDataModel/Histogram_1D.hpp 
+		  header/EventDataModel/Histogram_2D.hpp )
+#SET( SRC_FILES ) # src/Data.cpp )
 
-add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )
+add_library( DataVisualizerLib SHARED ${HEADER_FILES} ) #${SRC_FILES} ${HEADER_FILES} )
+
 target_link_libraries( DataVisualizerLib ${ROOT_LIBRARIES} )
+set_target_properties(DataVisualizerLib PROPERTIES LINKER_LANGUAGE CXX)
 
 # Executables
 add_executable( mainCode macros/maintmp.cxx )
