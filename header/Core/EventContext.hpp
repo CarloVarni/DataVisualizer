@@ -29,6 +29,7 @@ namespace Core {
 		       std::unique_ptr<IHolder>> m_store;
   };
 
+  /* ============================================================== */
   
   template<typename T>
   inline

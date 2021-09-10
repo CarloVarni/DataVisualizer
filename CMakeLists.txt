@@ -22,7 +22,9 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/EventDataModel/Histogram_1D.hpp 
 		  header/EventDataModel/Histogram_2D.hpp 
 		  header/Core/IHolder.hpp
-		  header/Core/EventContext.hpp )
+		  header/Core/EventContext.hpp
+		  header/Core/BaseAlgorithm.hpp
+		  header/Core/Scheduler.hpp )
 		  
 #SET( SRC_FILES ) # src/Data.cpp )
 

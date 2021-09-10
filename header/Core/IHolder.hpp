@@ -25,6 +25,7 @@ namespace Core {
     T m_value;
   };
 
+  /* ============================================================== */
 
   template<typename T,
 	   typename Enable>

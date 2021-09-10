@@ -14,6 +14,8 @@
 
 #include <EventContext.hpp>
 
+#include <Scheduler.hpp>
+
 TApplication Runner("gui",0,NULL);
 
 int main() {
