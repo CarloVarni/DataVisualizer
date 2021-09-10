@@ -26,9 +26,10 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Core/BaseAlgorithm.hpp
 		  header/Core/Scheduler.hpp )
 		  
-#SET( SRC_FILES ) # src/Data.cpp )
+SET( SRC_FILES src/Core/BaseAlgorithm.cpp
+     	       src/Core/Scheduler.cpp )
 
-add_library( DataVisualizerLib SHARED ${HEADER_FILES} ) #${SRC_FILES} ${HEADER_FILES} )
+add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )
 
 target_link_libraries( DataVisualizerLib ${ROOT_LIBRARIES} )
 set_target_properties(DataVisualizerLib PROPERTIES LINKER_LANGUAGE CXX)

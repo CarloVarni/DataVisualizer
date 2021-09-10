@@ -22,16 +22,6 @@ namespace Core {
   protected:
     const std::string m_name;
   };
-
-  /* ============================================================== */
-  
-  BaseAlgorithm::BaseAlgorithm(const std::string& name)
-    : m_name(name)
-  {}
-
-  const std::string&
-  BaseAlgorithm::name() const
-  { return m_name; }
   
 }
 

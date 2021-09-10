@@ -47,21 +47,6 @@ namespace Core {
     m_store.emplace(name,
 		    std::make_unique<Core::BaseAlgorithm>(std::forward<T>(object)));
   }
-
-  void
-  Scheduler::run() {
-    // Initialize everything
-    for	(const auto& algo : m_algoSequence)
-      m_store.at(algo)->initialize();
-
-    // Execute Code
-    for (const auto& algo : m_algoSequence)
-      m_store.at(algo)->execute( *m_eventContext.get() );
-
-    // Finalize everything
-    for (const auto& algo : m_algoSequence)
-      m_store.at(algo)->finalize();
-  }
   
 }
 
