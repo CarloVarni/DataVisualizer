@@ -25,10 +25,10 @@ namespace Algorithm {
     const auto dataCollection = context.get<EventDataModel::MultiDataCollection>(m_cfg.inputCollection);
     std::cout<<"Retrieved " << dataCollection->size() << " objects"<<std::endl;
 
-    EventDataModel::Histogram_1D<unsigned short, TH1I> nhitsPlotter("nhits", "nhits",
-								    20, 0 ,20);
-    EventDataModel::Histogram_1D<unsigned short, TH1I> ntracksPlotter("ntracks", "ntracks",
-								      20, 0, 20);
+    EventDataModel::HistogramObject_1D nhitsPlotter("nhits", "nhits",
+						    TH1I("nhits", "nhits", 20, 0 ,20));
+    EventDataModel::HistogramObject_1D ntracksPlotter("ntracks", "ntracks",
+						      TH1I("ntracks", "ntracks", 20, 0, 20));
     
     for (auto ientry(0); ientry<dataCollection->size(); ientry++) {
       auto& data = dataCollection->at(ientry);
