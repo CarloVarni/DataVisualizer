@@ -2,6 +2,7 @@
 
 #include <MultiData.hpp>
 #include <Histogram_1D.hpp>
+#include <Histogram_2D.hpp>
 #include <type_traits>
 #include <iostream>
 
@@ -24,11 +25,11 @@ int main() {
   MultiData A(label, data, 1.2);
   std::cout << A << std::endl;
 
-  Histogram_1D<double, TH1D> prova("histogram", "due", 20, 0, 10);
+  Histogram_2D<double, int, TH2D> prova("histogram", "due", "uno", 20, 0, 10, 10, 0, 10);
   prova.Fill(A);
 
   TCanvas c0("","");
-  prova.Draw(c0, "HIST");
+  prova.Draw(c0, "COLZ");
 
   Runner.Run(true);
 }

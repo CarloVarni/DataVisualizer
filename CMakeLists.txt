@@ -17,7 +17,8 @@ include_directories( header )
 
 SET( HEADER_FILES header/Data.hpp 
      		  header/MultiData.hpp
-		  header/Histogram_1D.hpp )
+		  header/Histogram_1D.hpp 
+		  header/Histogram_2D.hpp )
 SET( SRC_FILES src/Data.cpp )
 
 add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )

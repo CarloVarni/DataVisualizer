@@ -1,7 +1,7 @@
 
 #ifndef HISTOGRAM_1D_H
 #define HISTOGRAM_1D_H
-#include "iostream"
+
 #include <type_traits>
 #include <string>
 #include <Data.hpp>
