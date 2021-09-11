@@ -82,7 +82,11 @@ namespace EventDataModel {
   template<typename ... histogram_supported_t>
   void
   Histogram_1D<histogram_supported_t...>::Fill(const DataObject& data)
-  { Fill(data.value(), data.weight()); }
+  {
+    std::visit([&] (const auto& arg) {
+		 Fill(arg, data.weight());
+	       }, data.value());
+  }
   
   template<typename ... histogram_supported_t>
   void

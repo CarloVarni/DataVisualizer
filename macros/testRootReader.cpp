@@ -1,5 +1,6 @@
 
 #include <Scheduler.hpp>
+#include <DataPlotterAlgorithm.hpp>
 #include <MultiDataPlotterAlgorithm.hpp>
 #include <FilteringAlgorithm.hpp>
 #include <SeedingPerformanceRootReaderAlgorithm.hpp>
