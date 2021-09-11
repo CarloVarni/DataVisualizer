@@ -27,6 +27,9 @@ namespace Algorithm {
     if (m_cfg.dataCollectionName.empty())
       throw std::invalid_argument("Output Collection Name has not been specified for algorithm " + name());
 
+    if (m_cfg.outputMaskName.empty())
+      throw std::invalid_argument("Output Mask Name has not been specified for algorithm " + name());
+    
     std::cout<<"Opening ROOT file: "<< m_cfg.fileName << std::endl;
     m_file = std::make_unique<TFile>( m_cfg.fileName.c_str(), "READ" );
     if (not m_file)

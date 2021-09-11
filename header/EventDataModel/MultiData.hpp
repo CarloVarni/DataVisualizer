@@ -121,7 +121,7 @@ namespace EventDataModel {
   
 
   using MultiDataObject = MultiData<double, int, float, long, unsigned int, short, bool, unsigned short>;
-  using MultiDataCollection = std::vector<MultiDataObject>;
+  using MultiDataObjectCollection = std::vector<MultiDataObject>;
   
 }
 

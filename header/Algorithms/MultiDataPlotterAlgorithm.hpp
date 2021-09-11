@@ -17,6 +17,7 @@ namespace Algorithm {
 
     struct Config {
       std::string inputCollection;
+      std::string inputMaskName;
       std::string outputFolder;
 
       std::vector<std::string> variableNames_1D;

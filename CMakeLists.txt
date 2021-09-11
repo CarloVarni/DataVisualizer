@@ -27,7 +27,8 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Core/Scheduler.hpp
 		  header/Algorithms/RootFileReaderAlgorithm.hpp
 		  header/Algorithms/SeedingPerformanceRootReaderAlgorithm.hpp
-		  header/Algorithms/MultiDataPlotterAlgorithm.hpp )
+		  header/Algorithms/MultiDataPlotterAlgorithm.hpp
+		  header/Algorithms/FilteringAlgorithm.hpp )
 		  
 SET( SRC_FILES src/Core/BaseAlgorithm.cpp
      	       src/Core/Scheduler.cpp

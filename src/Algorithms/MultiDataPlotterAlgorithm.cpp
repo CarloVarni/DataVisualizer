@@ -33,9 +33,14 @@ namespace Algorithm {
   {
     std::cout << "Executing " << name() << " ... " << std::endl;
 
-    const auto dataCollection = context.get<EventDataModel::MultiDataCollection>(m_cfg.inputCollection);
+    const auto dataCollection = context.get<EventDataModel::MultiDataObjectCollection>(m_cfg.inputCollection);
     std::cout<<"Retrieved " << dataCollection->size() << " objects"<<std::endl;
 
+    const std::vector<bool>* mask =
+      m_cfg.inputMaskName.empty() ?
+      new std::vector<bool>(dataCollection->size() ,true) :
+      context.get<std::vector<bool>>(m_cfg.inputMaskName);
+    
     const auto nSize_1D = m_cfg.variableNames_1D.size();
     const auto nSize_2D = m_cfg.variableNames_2D.size();
     
@@ -72,6 +77,8 @@ namespace Algorithm {
 
     // Fill histograms
     for (auto ientry(0); ientry<dataCollection->size(); ientry++) {
+      if (not mask->at(ientry))
+	continue;
       auto& data = dataCollection->at(ientry);
 
       // 1D plots

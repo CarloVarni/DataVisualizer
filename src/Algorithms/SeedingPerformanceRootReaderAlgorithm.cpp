@@ -14,12 +14,12 @@ namespace Algorithm {
   {
     std::cout << "Executing " << name() << " ..." << std::endl;
 
-    std::shared_ptr<EventDataModel::MultiDataCollection> outputCollection
-      = std::make_shared<EventDataModel::MultiDataCollection>();
+    std::shared_ptr<EventDataModel::MultiDataObjectCollection> outputCollection
+      = std::make_shared<EventDataModel::MultiDataObjectCollection>();
 
 
     std::vector<std::string> labels({"nhits", "ntracks"});
-    std::vector<EventDataModel::MultiDataCollection::value_type::value_type> values;
+    std::vector<EventDataModel::MultiDataObjectCollection::value_type::value_type> values;
     values.reserve(labels.size());
     
     unsigned short nhits, ntracks;      
@@ -37,8 +37,14 @@ namespace Algorithm {
       outputCollection->emplace_back( labels, values, 1. );
     }
 
+
+    std::shared_ptr<std::vector<bool>> mask =
+      std::make_shared<std::vector<bool>>(outputCollection->size(), true);
+    
     context.add(m_cfg.dataCollectionName,
                 std::move(outputCollection));    
+    context.add(m_cfg.outputMaskName,
+		std::move(mask));
   }
 
 }

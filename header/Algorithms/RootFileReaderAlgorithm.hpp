@@ -16,6 +16,7 @@ namespace Algorithm {
       std::string fileName;
       std::string treeName;
       std::string dataCollectionName;
+      std::string outputMaskName;
     };
 
   public:
