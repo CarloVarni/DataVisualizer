@@ -24,12 +24,24 @@ int main() {
   Algorithm::MultiDataPlotterAlgorithm::Config MultiDataPlotterConfiguration;
   MultiDataPlotterConfiguration.inputCollection = SeedingPerformanceRootReaderConfiguration.dataCollectionName;
   MultiDataPlotterConfiguration.outputFolder = "./plots";
-  MultiDataPlotterConfiguration.variableNames = {"nhits", "ntracks"};
+  // 1D plots
+  MultiDataPlotterConfiguration.variableNames_1D = {"nhits", "ntracks"};
+  MultiDataPlotterConfiguration.histogramDefs_1D =
+    {
+     TH1I("nhits", "nhits", 20, 0 ,20),
+     TH1I("ntracks", "ntracks", 20, 0, 20)
+    };
+  // 2D plots
+  MultiDataPlotterConfiguration.variableNames_2D = { std::make_pair("nhits", "ntracks") };
+  MultiDataPlotterConfiguration.histogramDefs_2D =
+    {
+     TH2I("nhits_ntracks", "nhits_ntracks", 20, 0, 20, 20, 0, 20)
+    };
   
   std::shared_ptr<Algorithm::MultiDataPlotterAlgorithm> multiDataPlotterAlgorithm =
     std::make_shared<Algorithm::MultiDataPlotterAlgorithm>("MultiDataPlotterAlgorithm",
 							   MultiDataPlotterConfiguration);
-
+  
   scheduler.addAlgorithm(multiDataPlotterAlgorithm);
 
   

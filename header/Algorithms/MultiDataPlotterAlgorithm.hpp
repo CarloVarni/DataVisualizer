@@ -3,9 +3,12 @@
 #define MULTIDATA_PLOTTER_ALGORITHM_H 1
 
 #include <BaseAlgorithm.hpp>
+#include <Histogram_1D.hpp>
+#include <Histogram_2D.hpp>
 
 #include <string>
 #include <vector>
+#include <variant>
 
 namespace Algorithm {
   class MultiDataPlotterAlgorithm
@@ -15,9 +18,14 @@ namespace Algorithm {
     struct Config {
       std::string inputCollection;
       std::string outputFolder;
-      std::vector<std::string> variableNames;
-    };
 
+      std::vector<std::string> variableNames_1D;
+      std::vector<EventDataModel::HistogramObject_1D::histogram_type> histogramDefs_1D;
+
+      std::vector<std::pair<std::string, std::string>> variableNames_2D;
+      std::vector<EventDataModel::HistogramObject_2D::histogram_type> histogramDefs_2D;
+    };
+    
     MultiDataPlotterAlgorithm() = delete;
     MultiDataPlotterAlgorithm(const std::string&,
 			      const Config& cfg);

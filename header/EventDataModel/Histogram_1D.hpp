@@ -41,6 +41,9 @@ namespace EventDataModel {
     
     void Draw(TCanvas& canvas,
 	      const std::string& option);
+
+    const std::string& title() const;
+    const std::string& target_variable() const;
     
   protected:
     template<typename fill_t>
@@ -103,6 +106,16 @@ namespace EventDataModel {
 		  histo.Draw(option.c_str());
 		}, m_histogram);
   }
+
+  template<typename ... histogram_supported_t>
+  const std::string&
+  Histogram_1D<histogram_supported_t...>::title() const
+  { return m_title; }
+
+  template<typename ... histogram_supported_t>
+  const std::string&
+  Histogram_1D<histogram_supported_t...>::target_variable() const
+  { return m_target_variable; }
   
   template<typename ... histogram_supported_t>
   template<typename fill_t>
