@@ -12,7 +12,7 @@ namespace Algorithm {
   void
   DataPlotterAlgorithm::initialize()
   {
-    std::cout << "Initializing " << name() << " ... "<<std::endl;
+    MSG_INFO("Initializing " + name() + " ... ");
 
     if (m_cfg.inputCollection.empty())
       throw std::invalid_argument("Input Collection has not been specified for algorithm " + name());
@@ -30,10 +30,10 @@ namespace Algorithm {
   void
   DataPlotterAlgorithm::execute(Core::EventContext& context)
   {
-    std::cout << "Executing " << name() << " ... " << std::endl;
+    MSG_INFO("Executing " + name() + " ... ");
 
     const auto dataCollection = context.get<EventDataModel::DataObjectColletion>(m_cfg.inputCollection);
-    std::cout<<"Retrieved " << dataCollection->size() << " objects"<<std::endl;
+    MSG_INFO("Retrieved " + std::to_string(dataCollection->size()) + " objects");
     
     const std::vector<bool>* mask =
       m_cfg.inputMaskName.empty() ?
@@ -72,12 +72,6 @@ namespace Algorithm {
       canvas.SaveAs( (m_cfg.outputFolder + "/" + histo.target_variable() + ".pdf").c_str() );
     }
     
-  }
-  
-  void
-  DataPlotterAlgorithm::finalize()
-  {
-    std::cout << "Finalizing " << name() << " ... " << std::endl;
   }
 
 }

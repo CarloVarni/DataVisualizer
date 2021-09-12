@@ -32,7 +32,6 @@ namespace Algorithm {
 
     virtual void initialize() override;
     virtual void execute(Core::EventContext&) override;
-    virtual void finalize() override;
     
   private:
     const Config m_cfg;

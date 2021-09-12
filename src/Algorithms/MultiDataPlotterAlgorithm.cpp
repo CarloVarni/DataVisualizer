@@ -13,7 +13,7 @@ namespace Algorithm {
   void
   MultiDataPlotterAlgorithm::initialize()
   {
-    std::cout <<"Initializing " << name() << " ... "<<std::endl;
+    MSG_INFO("Initializing " + name() + " ... ");
 
     if (m_cfg.inputCollection.empty())
       throw std::invalid_argument(name() + " requires an input collection to be defined!");
@@ -31,10 +31,10 @@ namespace Algorithm {
   void
   MultiDataPlotterAlgorithm::execute(Core::EventContext& context)
   {
-    std::cout << "Executing " << name() << " ... " << std::endl;
+    MSG_INFO("Executing " + name() + " ... ");
 
     const auto dataCollection = context.get<EventDataModel::MultiDataObjectCollection>(m_cfg.inputCollection);
-    std::cout<<"Retrieved " << dataCollection->size() << " objects"<<std::endl;
+    MSG_INFO("Retrieved " + std::to_string(dataCollection->size()) + " objects");
 
     const std::vector<bool>* mask =
       m_cfg.inputMaskName.empty() ?
@@ -107,11 +107,6 @@ namespace Algorithm {
 
   }
 
-  void
-  MultiDataPlotterAlgorithm::finalize()
-  {
-    std::cout<<"Finalizing " << name() << " ..." << std::endl;
-  }
 }
 
 

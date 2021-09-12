@@ -3,7 +3,7 @@
 #define BASE_ALGORITHM_H 1
 
 #include <EventContext.hpp>
-#include <string>
+#include <Messager.hpp>
 
 namespace Core {
 
@@ -15,12 +15,16 @@ namespace Core {
 
     virtual void initialize() = 0;
     virtual void execute(EventContext& context) = 0;
-    virtual void finalize() = 0;
+    virtual void finalize();
 
     const std::string& name() const;
+
+  protected:
+    const Messager& msg() const;
     
   protected:
     const std::string m_name;
+    const Messager m_msg;
   };
   
 }

@@ -12,7 +12,7 @@ namespace Algorithm {
   void
   SeedingPerformanceRootReaderAlgorithm::execute(Core::EventContext& context)
   {
-    std::cout << "Executing " << name() << " ..." << std::endl;
+    MSG_INFO("Executing " + name() + " ...");
 
     std::shared_ptr<EventDataModel::MultiDataObjectCollection> outputCollection
       = std::make_shared<EventDataModel::MultiDataObjectCollection>();

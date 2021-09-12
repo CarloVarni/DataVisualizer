@@ -36,7 +36,6 @@ namespace Algorithm {
 
     virtual void initialize() override;
     virtual void execute(Core::EventContext& context) override;
-    virtual void finalize() override;
     
   private:
     const Config m_cfg;
@@ -54,7 +53,7 @@ namespace Algorithm {
   template<typename data_t>
   void
   FilteringAlgorithm<data_t>::initialize() {
-    std::cout<<"Inizializing " << name() << " ..." << std::endl;
+    MSG_INFO("Inizializing " + name() + " ...");
 
     if (m_cfg.inputCollection.empty())
       throw std::invalid_argument("Input Data Collection Name has not beed specified for algorithm " + name());
@@ -73,7 +72,7 @@ namespace Algorithm {
   void
   FilteringAlgorithm<data_t>::execute(Core::EventContext& context) 
   {
-    std::cout<<"Executing " << name() << " ..." << std::endl;
+    MSG_INFO("Executing " + name() + " ...");
 
     const data_t* dataCollection =
       context.get<data_t>(m_cfg.inputCollection);
@@ -93,13 +92,6 @@ namespace Algorithm {
     
     context.add(m_cfg.outputMaskName,
 		std::move(outputMask));
-  }
-
-  template<typename data_t>
-  void
-  FilteringAlgorithm<data_t>::finalize()
-  {
-    std::cout<<"Finalizing " << name() << " ..." << std::endl;
   }
 
   using DataFilteringAlgorithm = FilteringAlgorithm<EventDataModel::DataObjectColletion>;

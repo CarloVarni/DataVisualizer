@@ -4,14 +4,20 @@
 namespace Core {
 
   Scheduler::Scheduler()
+    : m_msg("Scheduler"),
+      m_name("Scheduler")
   {}
 
   Scheduler::Scheduler(const Core::Scheduler::Config& config)
-    : m_cfg(config)
+    : m_cfg(config),
+      m_msg("Scheduler"),
+      m_name("Scheduler")
   {}
   
   void
   Scheduler::run() {
+    MSG_INFO("Ready for code");
+    
     // Creating Event Context
     m_eventContext.reserve(m_cfg.nEvents);
     for(auto ievt(0); ievt<m_cfg.nEvents; ievt++)
@@ -42,5 +48,13 @@ namespace Core {
     m_algoSequence.push_back(name);
     m_store.emplace(name, std::move(algorithm));
   }
+
+  const Messager&
+  Scheduler::msg()  const
+  { return m_msg; }
+
+  const std::string&
+  Scheduler::name() const
+  { return m_name; }
   
 }
