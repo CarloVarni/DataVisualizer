@@ -36,18 +36,15 @@ namespace Core {
     const std::string m_algoName;
   };
 
-}
-
-namespace {
-#define MSG_INFO( xmsg )				\
+#define MSG_INFO( xmsg )			\
   msg().info_message( this->name(), xmsg )
   
-#define MSG_DEBUG( xmsg )				\
+#define MSG_DEBUG( xmsg )			\
   msg().debug_message( this->name(), xmsg )
   
 #define MSG_ERROR( xmsg )				\
   this->msg().error_message( this->name(), xmsg )
-
+  
 #define MSG_FATAL( xmsg )				\
   this->msg().fatal_message( this->name(), xmsg )
 }

@@ -5,9 +5,7 @@ namespace Core {
 
   Messager::Messager(const std::string& algo_name)
     : m_algoName(algo_name)
-  {
-    std::cout << "Creating Messager for algorithm " << algo_name << std::endl;
-  }
+  {}
 
   void
   Messager::info_message(const std::string& algoName,
