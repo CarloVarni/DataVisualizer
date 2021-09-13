@@ -28,19 +28,21 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Core/Messager.hpp
 		  header/Algorithms/RootFileReaderAlgorithm.hpp
 		  header/Algorithms/SeedingPerformanceRootReaderAlgorithm.hpp
-		  header/Algorithms/MultiDataPlotterAlgorithm.hpp
+		  header/Algorithms/DataHistogramMakerAlgorithm.hpp
+		  header/Algorithms/MultiDataHistogramMakerAlgorithm.hpp	
 		  header/Algorithms/FilteringAlgorithm.hpp
-		  header/Algorithms/DataPlotterAlgorithm.hpp
-		  header/Algorithms/PlotComparisonAlgorithm.hpp )
+		  header/Algorithms/PlotComparisonAlgorithm.hpp
+		  header/Algorithms/PlotterAlgorithm.hpp )
 		  
 SET( SRC_FILES src/Core/BaseAlgorithm.cpp
      	       src/Core/Scheduler.cpp
 	       src/Core/Messager.cpp
 	       src/Algorithms/RootFileReaderAlgorithm.cpp
 	       src/Algorithms/SeedingPerformanceRootReaderAlgorithm.cpp
-	       src/Algorithms/MultiDataPlotterAlgorithm.cpp
-	       src/Algorithms/DataPlotterAlgorithm.cpp
-	       src/Algorithms/PlotComparisonAlgorithm.cpp )
+	       src/Algorithms/DataHistogramMakerAlgorithm.cpp
+	       src/Algorithms/MultiDataHistogramMakerAlgorithm.cpp
+	       src/Algorithms/PlotComparisonAlgorithm.cpp
+	       src/Algorithms/PlotterAlgorithm.cpp )
 
 add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )
 

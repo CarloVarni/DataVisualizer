@@ -1,10 +1,10 @@
 
 #include <Scheduler.hpp>
-#include <DataPlotterAlgorithm.hpp>
-#include <MultiDataPlotterAlgorithm.hpp>
+#include <MultiDataHistogramMakerAlgorithm.hpp>
+#include <DataHistogramMakerAlgorithm.hpp> 
 #include <FilteringAlgorithm.hpp>
 #include <SeedingPerformanceRootReaderAlgorithm.hpp>
-#include <PlotComparisonAlgorithm.hpp>
+#include <PlotterAlgorithm.hpp>
 
 int main() {
   
@@ -24,21 +24,7 @@ int main() {
   scheduler.addAlgorithm(seedingPerformanceRootReaderAlgorithm);
 
 
-
-  // Reader
-  Algorithm::SeedingPerformanceRootReaderAlgorithm::Config SeedingPerformanceRootReaderConfiguration2;
-  SeedingPerformanceRootReaderConfiguration2.fileName = "./data/performance_seeding_trees.root ";
-  SeedingPerformanceRootReaderConfiguration2.treeName = "track_finder_particles";
-  SeedingPerformanceRootReaderConfiguration2.dataCollectionName = "raw_data_B";
-  SeedingPerformanceRootReaderConfiguration2.outputMaskName = "raw_mask_B";
-
-  std::shared_ptr<Algorithm::SeedingPerformanceRootReaderAlgorithm> seedingPerformanceRootReaderAlgorithm2
-    = std::make_shared<Algorithm::SeedingPerformanceRootReaderAlgorithm>("SeedingPerformanceRootReaderAlgorithm2",
-									 SeedingPerformanceRootReaderConfiguration2);
-
-  scheduler.addAlgorithm(seedingPerformanceRootReaderAlgorithm2);
-
-
+  
   // Filtering
   Algorithm::MultiDataFilteringAlgorithm::Config multiDataFilteringConfiguration;
   multiDataFilteringConfiguration.inputCollection = SeedingPerformanceRootReaderConfiguration.dataCollectionName;
@@ -54,65 +40,46 @@ int main() {
 							       multiDataFilteringConfiguration);
   
   scheduler.addAlgorithm(multiDataFilteringAlgorithm);
-  
-  // Plotter
-  Algorithm::MultiDataPlotterAlgorithm::Config MultiDataPlotterConfiguration;
-  MultiDataPlotterConfiguration.inputCollection = SeedingPerformanceRootReaderConfiguration.dataCollectionName;
-  MultiDataPlotterConfiguration.inputMaskName = multiDataFilteringConfiguration.outputMaskName;
-  MultiDataPlotterConfiguration.outputFolder = "./plots";
-  // 1D plots
-  MultiDataPlotterConfiguration.variableNames_1D = {"nhits", "ntracks"};
-  MultiDataPlotterConfiguration.histogramDefs_1D =
+
+
+  // Histogram Maker
+  Algorithm::MultiDataHistogramMakerAlgorithm::Config MultiDataHistogramMakerConfiguration;
+  MultiDataHistogramMakerConfiguration.inputCollection = SeedingPerformanceRootReaderConfiguration.dataCollectionName;
+  MultiDataHistogramMakerConfiguration.inputMaskName = multiDataFilteringConfiguration.outputMaskName;
+  MultiDataHistogramMakerConfiguration.variableNames_1D = {"nhits", "ntracks"};
+  // 1D Plots
+  MultiDataHistogramMakerConfiguration.outputCollection_1d = "collection_1d";
+  MultiDataHistogramMakerConfiguration.histogramDefs_1D =
     {
      TH1I("nhits", "nhits", 20, 0 ,20),
      TH1I("ntracks", "ntracks", 20, 0, 20)
     };
-  // 2D plots
-  MultiDataPlotterConfiguration.variableNames_2D = { std::make_pair("nhits", "ntracks") };
-  MultiDataPlotterConfiguration.histogramDefs_2D =
+  // 2D Plots
+  MultiDataHistogramMakerConfiguration.outputCollection_2d = "collection_2d";
+  MultiDataHistogramMakerConfiguration.variableNames_2D = { std::make_pair("nhits", "ntracks") };
+  MultiDataHistogramMakerConfiguration.histogramDefs_2D =
     {
      TH2I("nhits_ntracks", "nhits_ntracks", 20, 0, 20, 20, 0, 20)
     };
+
+  std::shared_ptr<Algorithm::MultiDataHistogramMakerAlgorithm> multiDataHistogramMakerAlgorithm =
+    std::make_shared<Algorithm::MultiDataHistogramMakerAlgorithm>("MultiDataHistogramMakerAlgorithm",
+								  MultiDataHistogramMakerConfiguration);
+
+  scheduler.addAlgorithm(multiDataHistogramMakerAlgorithm);
+
   
-  std::shared_ptr<Algorithm::MultiDataPlotterAlgorithm> multiDataPlotterAlgorithm =
-    std::make_shared<Algorithm::MultiDataPlotterAlgorithm>("MultiDataPlotterAlgorithm",
-							   MultiDataPlotterConfiguration);
+  // Plotter
+  Algorithm::PlotterAlgorithm::Config PlotterConfiguration;
+  PlotterConfiguration.inputCollection_1d = MultiDataHistogramMakerConfiguration.outputCollection_1d;
+  PlotterConfiguration.inputCollection_2d = MultiDataHistogramMakerConfiguration.outputCollection_2d;
+  PlotterConfiguration.outputFolder = "./plots";
   
-  scheduler.addAlgorithm(multiDataPlotterAlgorithm);
-
-
-
-
-
-
-  // Plotter 2
-  MultiDataPlotterConfiguration.inputCollection = SeedingPerformanceRootReaderConfiguration2.dataCollectionName;
-  MultiDataPlotterConfiguration.inputMaskName = multiDataFilteringConfiguration.outputMaskName;
+  std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm =
+    std::make_shared<Algorithm::PlotterAlgorithm>("PlotterAlgorithm",
+						  PlotterConfiguration);
   
-  std::shared_ptr<Algorithm::MultiDataPlotterAlgorithm> multiDataPlotterAlgorithm_B =
-    std::make_shared<Algorithm::MultiDataPlotterAlgorithm>("MultiDataPlotterAlgorithm_B",
-                                                           MultiDataPlotterConfiguration);
-
-  scheduler.addAlgorithm(multiDataPlotterAlgorithm_B);
-
-
-
-  // Plot Comparison
-  Algorithm::PlotComparisonAlgorithm::Config PlotComparison1DConfiguration;
-  PlotComparison1DConfiguration.outputFolder = "./plot_comparison";
-  PlotComparison1DConfiguration.originalInputCollection =
-    {
-     SeedingPerformanceRootReaderConfiguration.dataCollectionName,
-     SeedingPerformanceRootReaderConfiguration2.dataCollectionName
-    };
-  PlotComparison1DConfiguration.variableNames = MultiDataPlotterConfiguration.variableNames_1D ;
-  
-  std::shared_ptr<Algorithm::PlotComparisonAlgorithm> plotComparison1DAlgorithm =
-    std::make_shared<Algorithm::PlotComparisonAlgorithm>("PlotComparison1DAlgorithm",
-							 PlotComparison1DConfiguration);
-  
-  scheduler.addAlgorithm(plotComparison1DAlgorithm);
-
+  scheduler.addAlgorithm(plotterAlgorithm);
   
   scheduler.run();
 }
