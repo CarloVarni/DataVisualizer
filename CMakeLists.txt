@@ -54,3 +54,6 @@ set_target_properties(DataVisualizerLib PROPERTIES LINKER_LANGUAGE CXX)
 # Executables
 add_executable( testRootReader macros/testRootReader.cpp)
 target_link_libraries( testRootReader DataVisualizerLib )
+
+add_executable( muon_efficiency_check macros/muon_efficiency_check.cpp )
+target_link_libraries( muon_efficiency_check DataVisualizerLib )

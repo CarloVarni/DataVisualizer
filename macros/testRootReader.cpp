@@ -6,8 +6,6 @@
 #include <SeedingPerformanceRootReaderAlgorithm.hpp>
 #include <PlotterAlgorithm.hpp>
 
-#include <RootFileHistogramMakerAlgorithm.hpp>
-
 int main() {
   
   Core::Scheduler scheduler;
@@ -83,29 +81,6 @@ int main() {
   
   scheduler.addAlgorithm(plotterAlgorithm);
 
-
-  Algorithm::RootFileHistogramMakerAlgorithm::Config RootFileHistogramMakerConfiguration;
-  RootFileHistogramMakerConfiguration.inputFile = "file.pool.root";
-  RootFileHistogramMakerConfiguration.output_collection_1d = "something";
-  RootFileHistogramMakerConfiguration.output_collection_2d = "something_else";
-  RootFileHistogramMakerConfiguration.extractionFunction =
-    [&] (const TFile& file) -> std::pair<std::shared_ptr<EventDataModel::HistogramObjectCollection_1D>,
-					 std::shared_ptr<EventDataModel::HistogramObjectCollection_2D>>
-    {
-     std::shared_ptr<EventDataModel::HistogramObjectCollection_1D> histo_collection_1d =
-     std::make_shared<EventDataModel::HistogramObjectCollection_1D>();
-
-     std::shared_ptr<EventDataModel::HistogramObjectCollection_2D> histo_collection_2d =
-     std::make_shared<EventDataModel::HistogramObjectCollection_2D>();
-
-     return std::make_pair(histo_collection_1d, histo_collection_2d);
-    };
-
-  std::shared_ptr<Algorithm::RootFileHistogramMakerAlgorithm> rootFileHistogramMakerAlgorithm =
-    std::make_shared<Algorithm::RootFileHistogramMakerAlgorithm>("RootFileHistogramMakerAlgorithm",
-								 RootFileHistogramMakerConfiguration);
-
-  scheduler.addAlgorithm(rootFileHistogramMakerAlgorithm);
   
   scheduler.run();
 }

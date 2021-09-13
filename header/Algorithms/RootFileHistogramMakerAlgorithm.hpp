@@ -21,7 +21,7 @@ namespace Algorithm {
 	std::pair<
 	  std::shared_ptr<EventDataModel::HistogramObjectCollection_1D>,
 	  std::shared_ptr<EventDataModel::HistogramObjectCollection_2D>
-	  >(const TFile&)
+	  >(TFile*)
 	> extractionFunction;
     };
 
