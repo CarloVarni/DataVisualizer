@@ -30,7 +30,8 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Algorithms/SeedingPerformanceRootReaderAlgorithm.hpp
 		  header/Algorithms/MultiDataPlotterAlgorithm.hpp
 		  header/Algorithms/FilteringAlgorithm.hpp
-		  header/Algorithms/DataPlotterAlgorithm.hpp )
+		  header/Algorithms/DataPlotterAlgorithm.hpp
+		  header/Algorithms/PlotComparisonAlgorithm.hpp )
 		  
 SET( SRC_FILES src/Core/BaseAlgorithm.cpp
      	       src/Core/Scheduler.cpp

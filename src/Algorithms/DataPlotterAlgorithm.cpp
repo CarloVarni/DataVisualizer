@@ -41,8 +41,13 @@ namespace Algorithm {
       context.get<std::vector<bool>>(m_cfg.inputMaskName);
 
     const auto nSize = m_cfg.variableNames.size();
-    EventDataModel::HistogramObjectCollection_1D histograms;
-    histograms.reserve(nSize);
+
+    std::shared_ptr<EventDataModel::HistogramObjectCollection_1D> histograms =
+      std::make_shared<EventDataModel::HistogramObjectCollection_1D>();
+    std::shared_ptr<std::unordered_map<std::string, std::size_t>> map_1D =
+      std::make_shared<std::unordered_map<std::string, std::size_t>>();
+ 
+    histograms->reserve(nSize);
 
     for (auto ihisto(0); ihisto<nSize; ihisto++) {
       const std::string& var_name = m_cfg.variableNames.at(ihisto);
@@ -50,7 +55,8 @@ namespace Algorithm {
 
       std::visit([&] (auto& h_to_add) {
 		   EventDataModel::HistogramObject_1D toAdd( "h_" + var_name, var_name , h_to_add);
-		   histograms.push_back(toAdd);
+		   map_1D->emplace("h_" + var_name, histograms->size());
+		   histograms->push_back(toAdd);
 		 }, histo);
     }
 
@@ -60,18 +66,21 @@ namespace Algorithm {
 	continue;
       const auto& data = dataCollection->at(ientry);
       
-      for (auto& histo : histograms)
+      for (auto& histo : *histograms.get())
 	histo.Fill(data);
     }
 
     // Draw and save histograms
-    for (auto& histo : histograms) {
+    for (auto& histo : *histograms.get()) {
       TCanvas canvas("canvas", "canvas");
       histo.Draw(canvas, "HIST");
       canvas.Draw();
       canvas.SaveAs( (m_cfg.outputFolder + "/" + histo.target_variable() + ".pdf").c_str() );
     }
-    
+
+
+    context.add( "h_1d_" + m_cfg.inputCollection, std::move(histograms));
+    context.add( "index_1d_" + m_cfg.inputCollection, std::move(map_1D));
   }
 
 }

@@ -55,7 +55,7 @@ namespace Core {
   EventContext::get(const std::string& name) const
   {
     if (m_store.find(name) == m_store.end())
-      throw std::invalid_argument("Object with name `" + name + "` is not in memory. Cannot be retrieved.");
+      throw std::invalid_argument("Object with name `" + name + "` is not in memory. Cannot be retrieved: " + name);
 
     const IHolder* holder = m_store.at(name).get();
     if (typeid(T) != holder->type()) 

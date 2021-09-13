@@ -38,7 +38,9 @@ namespace EventDataModel {
     
     void Fill(const DataObject& data);
     void Fill(const MultiDataObject& data);
-    
+
+    void SetLineColor(int color);
+    void SetLineStyle(int style);
     void Draw(TCanvas& canvas,
 	      const std::string& option);
 
@@ -99,11 +101,29 @@ namespace EventDataModel {
 		 Fill(arg, data.weight());
 	       }, data.value(m_target_variable));
   }
+
+  template<typename ... histogram_supported_t>
+  void
+  Histogram_1D<histogram_supported_t...>::SetLineColor(int color)
+  {
+    std::visit( [&] (auto& histo) {
+		  histo.SetLineColor(color);
+		}, m_histogram);
+  }
+
+  template<typename ... histogram_supported_t>
+  void
+  Histogram_1D<histogram_supported_t...>::SetLineStyle(int style)
+  {
+    std::visit( [&] (auto& histo) {
+		  histo.SetLineStyle(style);
+		}, m_histogram);
+  }
   
   template<typename ... histogram_supported_t>
   void
   Histogram_1D<histogram_supported_t...>::Draw(TCanvas& canvas,
-				  const std::string& option)
+					       const std::string& option)
   {
     std::visit( [&] (auto& histo) {
 		  canvas.cd();
