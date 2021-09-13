@@ -10,7 +10,7 @@
 #include <TxtFileReaderAlgorithm.hpp>
 
 int main() {
-  
+
   Core::Scheduler scheduler;
 
   // Read histograms

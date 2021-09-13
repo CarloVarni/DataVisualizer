@@ -1,12 +1,15 @@
 
 #include <Scheduler.hpp>
+#include <TError.h>
 
 namespace Core {
 
   Scheduler::Scheduler()
     : m_msg("Scheduler"),
       m_name("Scheduler")
-  {}
+  {
+    gErrorIgnoreLevel = kFatal;
+  }
 
   Scheduler::Scheduler(const Core::Scheduler::Config& config)
     : m_cfg(config),

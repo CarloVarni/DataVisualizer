@@ -44,22 +44,26 @@ namespace Algorithm {
     if (histograms_1D) {
       for (const auto& const_histo : *histograms_1D) {
 	auto& histo = *const_cast<EventDataModel::HistogramObject_1D*>(&const_histo);
-	
+	const std::string saving_name = m_cfg.outputFolder + "/" + histo.title() + ".pdf";
+
 	TCanvas canvas("canvas", "canvas");
 	histo.Draw(canvas, "HIST");
 	canvas.Draw();
-	canvas.SaveAs( (m_cfg.outputFolder + "/" + histo.title() + ".pdf").c_str() );
+	canvas.SaveAs( saving_name.c_str() );
+	MSG_INFO("Created histogram: " + saving_name);
       }
     }
 
     if (histograms_2D) {
       for (const auto& const_histo : *histograms_2D) {
 	auto& histo = *const_cast<EventDataModel::HistogramObject_2D*>(&const_histo);
-	
+	const std::string saving_name = m_cfg.outputFolder + "/" + histo.title() + ".pdf";
+
 	TCanvas canvas("canvas", "canvas");
 	histo.Draw(canvas, "COLZ");
 	canvas.Draw();
-	canvas.SaveAs( (m_cfg.outputFolder + "/" + histo.title() + ".pdf").c_str() );
+	canvas.SaveAs( saving_name.c_str() );
+	MSG_INFO("Created histogram: " + saving_name);
       }
     }
     
