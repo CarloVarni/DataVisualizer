@@ -23,7 +23,7 @@ namespace Algorithm {
       std::function<bool(const typename data_t::value_type&)> filterFunction;
     };
 
-    static_assert(std::is_same<data_t, EventDataModel::DataObjectColletion>::value or
+    static_assert(std::is_same<data_t, EventDataModel::DataObjectCollection>::value or
 		  std::is_same<data_t, EventDataModel::MultiDataObjectCollection>::value,
 		  "Filtering algorithm requires EventDataModel::DataObjectCollection or EventDataModel::MultiDataObjectCollection as inputs.");
 
@@ -94,7 +94,7 @@ namespace Algorithm {
 		std::move(outputMask));
   }
 
-  using DataFilteringAlgorithm = FilteringAlgorithm<EventDataModel::DataObjectColletion>;
+  using DataFilteringAlgorithm = FilteringAlgorithm<EventDataModel::DataObjectCollection>;
   using MultiDataFilteringAlgorithm = FilteringAlgorithm<EventDataModel::MultiDataObjectCollection>;
   
 }

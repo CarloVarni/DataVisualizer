@@ -69,7 +69,7 @@ namespace EventDataModel {
 
 
   using DataObject = Data<double, int, float, long, unsigned int, short, bool, unsigned short>;
-  using DataObjectColletion = std::vector<DataObject>;
+  using DataObjectCollection = std::vector<DataObject>;
 }
 
 #endif

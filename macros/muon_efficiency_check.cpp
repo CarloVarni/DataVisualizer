@@ -7,6 +7,7 @@
 #include <PlotterAlgorithm.hpp>
 
 #include <RootFileHistogramMakerAlgorithm.hpp>
+#include <TxtFileReaderAlgorithm.hpp>
 
 int main() {
   

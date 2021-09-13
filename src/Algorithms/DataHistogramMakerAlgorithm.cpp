@@ -32,7 +32,7 @@ namespace Algorithm {
     
     MSG_INFO("Executing " + name() + " ... ");
     
-    const auto dataCollection = context.get<EventDataModel::DataObjectColletion>(m_cfg.inputCollection);
+    const auto dataCollection = context.get<EventDataModel::DataObjectCollection>(m_cfg.inputCollection);
     MSG_INFO("Retrieved " + std::to_string(dataCollection->size()) + " objects");
 
     const std::vector<bool>* mask = context.get<std::vector<bool>>(m_cfg.inputMaskName);

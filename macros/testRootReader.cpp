@@ -5,6 +5,7 @@
 #include <FilteringAlgorithm.hpp>
 #include <SeedingPerformanceRootReaderAlgorithm.hpp>
 #include <PlotterAlgorithm.hpp>
+#include <TxtFileReaderAlgorithm.hpp>
 
 int main() {
   
@@ -81,6 +82,23 @@ int main() {
   
   scheduler.addAlgorithm(plotterAlgorithm);
 
+
+
+
+  Algorithm::TxtFileReaderAlgorithm<EventDataModel::DataObjectCollection>::Config TxtFileReaderConfiguration;
+  TxtFileReaderConfiguration.inputFile = "";
+  TxtFileReaderConfiguration.outputCollection = "raw_data";
+  TxtFileReaderConfiguration.extraction_function =
+    [=] (const std::ifstream& file,
+	 std::shared_ptr<EventDataModel::DataObjectCollection>& data_collection) -> void {
+    };
+
+  std::shared_ptr<Algorithm::TxtFileReaderToDataObjectCollectionAlgorithm> txtFileReaderToDataObjectCollectionAlgorithm =
+    std::make_shared<Algorithm::TxtFileReaderToDataObjectCollectionAlgorithm>("TxtFileReaderToDataObjectCollectionAlgorithm",
+									      TxtFileReaderConfiguration);
   
+  scheduler.addAlgorithm(txtFileReaderToDataObjectCollectionAlgorithm);
+
+    
   scheduler.run();
 }

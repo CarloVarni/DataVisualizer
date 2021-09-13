@@ -33,7 +33,8 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Algorithms/FilteringAlgorithm.hpp
 		  header/Algorithms/PlotComparisonAlgorithm.hpp
 		  header/Algorithms/PlotterAlgorithm.hpp
-		  header/Algorithms/RootFileHistogramMakerAlgorithm.hpp )
+		  header/Algorithms/RootFileHistogramMakerAlgorithm.hpp
+		  header/Algorithms/TxtFileReaderAlgorithm.hpp )
 		  
 SET( SRC_FILES src/Core/BaseAlgorithm.cpp
      	       src/Core/Scheduler.cpp
