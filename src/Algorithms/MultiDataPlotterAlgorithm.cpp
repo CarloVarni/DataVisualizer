@@ -44,12 +44,22 @@ namespace Algorithm {
     const auto nSize_1D = m_cfg.variableNames_1D.size();
     const auto nSize_2D = m_cfg.variableNames_2D.size();
     
-    EventDataModel::HistogramObjectCollection_1D histograms_1D;
-    EventDataModel::HistogramObjectCollection_2D histograms_2D;
+    std::shared_ptr<EventDataModel::HistogramObjectCollection_1D> histograms_1D =
+      std::make_shared<EventDataModel::HistogramObjectCollection_1D>();
+    std::shared_ptr<EventDataModel::HistogramObjectCollection_2D> histograms_2D =
+      std::make_shared<EventDataModel::HistogramObjectCollection_2D>();
 
-    histograms_1D.reserve(nSize_1D);
-    histograms_2D.reserve(nSize_2D);
+    histograms_1D->reserve(nSize_1D);
+    histograms_2D->reserve(nSize_2D);
 
+
+    std::shared_ptr<std::unordered_map<std::string, std::size_t>> map_1D =
+      std::make_shared<std::unordered_map<std::string, std::size_t>>();
+    std::shared_ptr<std::unordered_map<std::string, std::size_t>> map_2D =
+      std::make_shared<std::unordered_map<std::string, std::size_t>>();
+
+
+    
     // 1D plots
     for (auto ihisto(0); ihisto<nSize_1D; ihisto++) {
       const std::string& var_name = m_cfg.variableNames_1D.at(ihisto);
@@ -57,7 +67,8 @@ namespace Algorithm {
 
       std::visit([&] (auto& h_to_add) {
 		   EventDataModel::HistogramObject_1D toAdd( "h_" + var_name, var_name , h_to_add);
-		   histograms_1D.push_back(toAdd);
+		   map_1D->emplace(toAdd.title(), histograms_1D->size());
+		   histograms_1D->push_back(toAdd);
 		 }, histo);
     }
 
@@ -71,7 +82,8 @@ namespace Algorithm {
 		   EventDataModel::HistogramObject_2D toAdd( "h_" + var_x_name + "_" + var_y_name,
 							     var_x_name , var_y_name,
 							     h_to_add);
-                   histograms_2D.push_back(toAdd);
+		   map_2D->emplace(toAdd.title(), histograms_2D->size());
+                   histograms_2D->push_back(toAdd);
 	}, histo);
     }
 
@@ -82,15 +94,15 @@ namespace Algorithm {
       auto& data = dataCollection->at(ientry);
 
       // 1D plots
-      for (auto& histo : histograms_1D)
+      for (auto& histo : *histograms_1D.get())
 	histo.Fill(data);
       // 2D plots
-      for (auto& histo : histograms_2D)
+      for (auto& histo : *histograms_2D.get())
 	histo.Fill(data);
     }
 
     // Draw and save histograms
-    for (auto& histo : histograms_1D) {
+    for (auto& histo : *histograms_1D.get()) {
       TCanvas canvas("canvas", "canvas");
       histo.Draw(canvas, "HIST");
       canvas.Draw();
@@ -98,13 +110,19 @@ namespace Algorithm {
     }
 
     // Draw and save histograms
-    for (auto& histo : histograms_2D) {
+    for (auto& histo : *histograms_2D.get()) {
       TCanvas canvas("canvas", "canvas");
       histo.Draw(canvas, "COLZ");
       canvas.Draw();
       canvas.SaveAs( (m_cfg.outputFolder + "/" + histo.target_variable_x() + "_" + histo.target_variable_y() + ".pdf").c_str() );
     }
 
+    
+    context.add( "h_1d_" + m_cfg.inputCollection, std::move(histograms_1D) );
+    context.add( "h_2d_" + m_cfg.inputCollection, std::move(histograms_2D) );
+
+    context.add( "index_1d_" + m_cfg.inputCollection, std::move(map_1D));
+    context.add( "index_2d_" + m_cfg.inputCollection, std::move(map_2D));
   }
 
 }
