@@ -32,7 +32,8 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Algorithms/MultiDataHistogramMakerAlgorithm.hpp	
 		  header/Algorithms/FilteringAlgorithm.hpp
 		  header/Algorithms/PlotComparisonAlgorithm.hpp
-		  header/Algorithms/PlotterAlgorithm.hpp )
+		  header/Algorithms/PlotterAlgorithm.hpp
+		  header/Algorithms/RootFileHistogramMakerAlgorithm.hpp )
 		  
 SET( SRC_FILES src/Core/BaseAlgorithm.cpp
      	       src/Core/Scheduler.cpp
@@ -42,7 +43,8 @@ SET( SRC_FILES src/Core/BaseAlgorithm.cpp
 	       src/Algorithms/DataHistogramMakerAlgorithm.cpp
 	       src/Algorithms/MultiDataHistogramMakerAlgorithm.cpp
 	       src/Algorithms/PlotComparisonAlgorithm.cpp
-	       src/Algorithms/PlotterAlgorithm.cpp )
+	       src/Algorithms/PlotterAlgorithm.cpp
+	       src/Algorithms/RootFileHistogramMakerAlgorithm.cpp )
 
 add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )
 
