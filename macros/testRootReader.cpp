@@ -98,7 +98,7 @@ int main() {
 
 
   // Plot Comparison
-  Algorithm::PlotComparison1DAlgorithm::Config PlotComparison1DConfiguration;
+  Algorithm::PlotComparisonAlgorithm::Config PlotComparison1DConfiguration;
   PlotComparison1DConfiguration.outputFolder = "./plot_comparison";
   PlotComparison1DConfiguration.originalInputCollection =
     {
@@ -106,11 +106,11 @@ int main() {
      SeedingPerformanceRootReaderConfiguration2.dataCollectionName
     };
   PlotComparison1DConfiguration.variableNames = MultiDataPlotterConfiguration.variableNames_1D ;
-    
-  std::shared_ptr<Algorithm::PlotComparison1DAlgorithm> plotComparison1DAlgorithm =
-    std::make_shared<Algorithm::PlotComparison1DAlgorithm>("PlotComparison1DAlgorithm",
-							   PlotComparison1DConfiguration);
- 
+  
+  std::shared_ptr<Algorithm::PlotComparisonAlgorithm> plotComparison1DAlgorithm =
+    std::make_shared<Algorithm::PlotComparisonAlgorithm>("PlotComparison1DAlgorithm",
+							 PlotComparison1DConfiguration);
+  
   scheduler.addAlgorithm(plotComparison1DAlgorithm);
 
   

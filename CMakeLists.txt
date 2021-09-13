@@ -39,7 +39,8 @@ SET( SRC_FILES src/Core/BaseAlgorithm.cpp
 	       src/Algorithms/RootFileReaderAlgorithm.cpp
 	       src/Algorithms/SeedingPerformanceRootReaderAlgorithm.cpp
 	       src/Algorithms/MultiDataPlotterAlgorithm.cpp
-	       src/Algorithms/DataPlotterAlgorithm.cpp )
+	       src/Algorithms/DataPlotterAlgorithm.cpp
+	       src/Algorithms/PlotComparisonAlgorithm.cpp )
 
 add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )
 

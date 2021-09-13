@@ -35,18 +35,24 @@ namespace Core {
   private:
     const std::string m_algoName;
   };
-
-#define MSG_INFO( xmsg )			\
-  msg().info_message( this->name(), xmsg )
   
-#define MSG_DEBUG( xmsg )			\
-  msg().debug_message( this->name(), xmsg )
+#define MSG( lvl, xmsg)							\
+  std::cout << std::setw(65) << std::left << this->name() << "     ";	\
+  std::cout << std::setw(8);						\
+  if (lvl == Core::Messager::LEVEL::INFO) std::cout << "INFO" << "   ";	\
+  else if (lvl == Core::Messager::LEVEL::DEBUG) std::cout << "DEBUG" << "   "; \
+  else if (lvl == Core::Messager::LEVEL::ERROR) std::cout << "ERROR" << "   "; \
+  else if (lvl == Core::Messager::LEVEL::FATAL) std::cout << "FATAL" << "   "; \
+  std::cout << xmsg << std::endl;					\
+  if (lvl == Core::Messager::LEVEL::FATAL)				\
+    throw std::runtime_error( xmsg )
   
-#define MSG_ERROR( xmsg )				\
-  this->msg().error_message( this->name(), xmsg )
-  
-#define MSG_FATAL( xmsg )				\
-  this->msg().fatal_message( this->name(), xmsg )
-}
+      
+#define MSG_INFO( xmsg ) MSG(Core::Messager::LEVEL::INFO, xmsg)	
+#define MSG_DEBUG( xmsg ) MSG(Core::Messager::LEVEL::DEBUG, xmsg)	
+#define MSG_ERROR( xmsg ) MSG(Core::Messager::LEVEL::ERROR, xmsg)
+#define MSG_FATAL( xmsg ) MSG(Core::Messager::LEVEL::FATAL, xmsg)
+      
+      }
 
 #endif 
