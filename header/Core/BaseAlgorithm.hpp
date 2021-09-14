@@ -20,11 +20,7 @@ namespace Core {
     const std::string& name() const;
 
   protected:
-    const Messager& msg() const;
-    
-  protected:
     const std::string m_name;
-    const Messager m_msg;
   };
   
 }

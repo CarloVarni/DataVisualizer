@@ -5,15 +5,13 @@
 namespace Core {
 
   Scheduler::Scheduler()
-    : m_msg("Scheduler"),
-      m_name("Scheduler")
+    :  m_name("Scheduler")
   {
     gErrorIgnoreLevel = kFatal;
   }
 
   Scheduler::Scheduler(const Core::Scheduler::Config& config)
     : m_cfg(config),
-      m_msg("Scheduler"),
       m_name("Scheduler")
   {}
   
@@ -51,10 +49,6 @@ namespace Core {
     m_algoSequence.push_back(name);
     m_store.emplace(name, std::move(algorithm));
   }
-
-  const Messager&
-  Scheduler::msg()  const
-  { return m_msg; }
 
   const std::string&
   Scheduler::name() const

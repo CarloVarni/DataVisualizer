@@ -4,8 +4,7 @@
 namespace Core {
 
   BaseAlgorithm::BaseAlgorithm(const std::string& name)
-    : m_name(name),
-      m_msg(name)
+    : m_name(name)
   {}
 
   void
@@ -17,10 +16,6 @@ namespace Core {
   const std::string&
   BaseAlgorithm::name() const
   { return m_name; }
-
-  const Messager&
-  BaseAlgorithm::msg() const
-  { return m_msg; }
 
 }
 

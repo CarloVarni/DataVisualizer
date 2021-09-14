@@ -30,12 +30,10 @@ namespace Core {
     void run();
 
   protected:
-    const Messager& msg() const;
     const std::string& name() const;
     
   private:
     const Config m_cfg;
-    const Messager m_msg;
     const std::string m_name;
     std::vector<std::unique_ptr<Core::EventContext>> m_eventContext;
     std::vector<std::string> m_algoSequence;
