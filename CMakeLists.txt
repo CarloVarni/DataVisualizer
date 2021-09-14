@@ -15,7 +15,10 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include )
 # My Code
 include_directories( header/EventDataModel
 		     header/Core
-		     header/Algorithms )
+		     header/Algorithms/Readers
+		     header/Algorithms/Filters
+		     header/Algorithms/HistogramMakers
+		     header/Algorithms/Plotters )
 
 SET( HEADER_FILES header/EventDataModel/Data.hpp 
      		  header/EventDataModel/MultiData.hpp
@@ -26,25 +29,27 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Core/BaseAlgorithm.hpp
 		  header/Core/Scheduler.hpp
 		  header/Core/Messager.hpp
-		  header/Algorithms/RootFileReaderAlgorithm.hpp
-		  header/Algorithms/SeedingPerformanceRootReaderAlgorithm.hpp
-		  header/Algorithms/DataHistogramMakerAlgorithm.hpp
-		  header/Algorithms/MultiDataHistogramMakerAlgorithm.hpp	
-		  header/Algorithms/FilteringAlgorithm.hpp
-		  header/Algorithms/PlotComparisonAlgorithm.hpp
-		  header/Algorithms/PlotterAlgorithm.hpp
-		  header/Algorithms/RootFileHistogramMakerAlgorithm.hpp
-		  header/Algorithms/TxtFileReaderAlgorithm.hpp )
+		  header/Algorithms/Readers/SeedingPerformanceRootReaderAlgorithm.hpp
+		  header/Algorithms/Readers/RootFileReaderAlgorithm.hpp
+		  header/Algorithms/Readers/TxtFileReaderAlgorithm.hpp
+		  header/Algorithms/Filters/FilteringAlgorithm.hpp
+		  header/Algorithms/HistogramMakers/DataHistogramMakerAlgorithm.hpp
+		  header/Algorithms/HistogramMakers/MultiDataHistogramMakerAlgorithm.hpp	
+		  header/Algorithms/HistogramMakers/RootFileHistogramMakerAlgorithm.hpp
+		  header/Algorithms/Plotters/PlotComparisonAlgorithm.hpp
+		  header/Algorithms/Plotters/PlotterAlgorithm.hpp )
+
 		  
 SET( SRC_FILES src/Core/BaseAlgorithm.cpp
      	       src/Core/Scheduler.cpp
-	       src/Algorithms/RootFileReaderAlgorithm.cpp
-	       src/Algorithms/SeedingPerformanceRootReaderAlgorithm.cpp
-	       src/Algorithms/DataHistogramMakerAlgorithm.cpp
-	       src/Algorithms/MultiDataHistogramMakerAlgorithm.cpp
-	       src/Algorithms/PlotComparisonAlgorithm.cpp
-	       src/Algorithms/PlotterAlgorithm.cpp
-	       src/Algorithms/RootFileHistogramMakerAlgorithm.cpp )
+	       src/Algorithms/Readers/RootFileReaderAlgorithm.cpp
+	       src/Algorithms/Readers/SeedingPerformanceRootReaderAlgorithm.cpp
+	       src/Algorithms/HistogramMakers/DataHistogramMakerAlgorithm.cpp
+	       src/Algorithms/HistogramMakers/MultiDataHistogramMakerAlgorithm.cpp
+	       src/Algorithms/HistogramMakers/RootFileHistogramMakerAlgorithm.cpp
+	       src/Algorithms/Plotters/PlotComparisonAlgorithm.cpp
+	       src/Algorithms/Plotters/PlotterAlgorithm.cpp )
+
 
 add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )
 
