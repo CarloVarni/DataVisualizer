@@ -31,6 +31,8 @@ namespace Core {
 
   protected:
     const std::string& name() const;
+    void initialize();
+    void finalize();
     
   private:
     const Config m_cfg;

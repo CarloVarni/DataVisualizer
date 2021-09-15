@@ -42,6 +42,7 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  
 SET( SRC_FILES src/Core/BaseAlgorithm.cpp
      	       src/Core/Scheduler.cpp
+	       src/Core/EventContext.cpp
 	       src/Algorithms/Readers/RootFileReaderAlgorithm.cpp
 	       src/Algorithms/Readers/SeedingPerformanceRootReaderAlgorithm.cpp
 	       src/Algorithms/HistogramMakers/DataHistogramMakerAlgorithm.cpp

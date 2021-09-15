@@ -81,6 +81,10 @@ namespace Algorithm {
 
     std::ifstream input_file;
     input_file.open(m_cfg.inputFile);
+
+    if ( not input_file.is_open()) {
+      MSG_FATAL("Input file has not been found!");
+    }
     
     m_cfg.extraction_function(input_file, data_collection);
     MSG_INFO("Retrieved " + std::to_string(data_collection->size()) + " data objects");

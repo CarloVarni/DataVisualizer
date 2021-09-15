@@ -42,7 +42,10 @@ namespace Algorithm {
     
     const auto dataCollection = context.get<EventDataModel::MultiDataObjectCollection>(m_cfg.inputCollection);
     MSG_INFO("Retrieved " + std::to_string(dataCollection->size()) + " objects");
-
+    if (dataCollection->size() == 0) {
+      MSG_FATAL("No input data have been found. Cannot create histogram from that!!!");
+    }
+    
     const std::vector<bool>* mask = context.get<std::vector<bool>>(m_cfg.inputMaskName);
 
     const auto nSize_1D = m_cfg.variableNames_1D.size();

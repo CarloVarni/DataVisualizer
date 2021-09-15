@@ -13,7 +13,7 @@ namespace Core {
 
   class EventContext {
   public:
-    EventContext() = default;
+    EventContext();
     EventContext(const EventContext&) = delete;
     EventContext& operator=(const EventContext&) = delete;
     ~EventContext() = default;
@@ -24,8 +24,12 @@ namespace Core {
     
     template <typename T>
     const T* get(const std::string& name) const;
+
+  protected:
+    const std::string& name() const;
     
   private:
+    const std::string m_name;
     std::unordered_map<std::string,
 		       std::shared_ptr<IHolder>> m_store;
   };
