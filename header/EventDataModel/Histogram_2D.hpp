@@ -44,6 +44,9 @@ namespace EventDataModel {
     void Draw(TCanvas& canvas,
 	      const std::string& option);
 
+    void Scale(double scale_value);
+    double Integral() const;
+    
     const std::string& title() const;
     const std::string& target_variable_x() const;
     const std::string& target_variable_y() const;
@@ -131,6 +134,25 @@ namespace EventDataModel {
 	       }, m_histogram);
   }
 
+  template<typename ... histogram_supported_t>
+  void
+  Histogram_2D<histogram_supported_t...>::Scale(double scale_value)
+  {
+    std::visit( [&] (auto& histo) {
+                  histo.Scale(scale_value);
+                }, m_histogram);
+  }
+
+  template<typename ... histogram_supported_t>
+  double
+  Histogram_2D<histogram_supported_t...>::Integral() const
+  {
+    return std::visit( [&] (auto& histo) -> double
+                       {
+                         return	histo.Integral();
+                       }, m_histogram);
+  }
+  
   template<typename ... histogram_supported_t>
   const std::string&
   Histogram_2D<histogram_supported_t...>::title() const

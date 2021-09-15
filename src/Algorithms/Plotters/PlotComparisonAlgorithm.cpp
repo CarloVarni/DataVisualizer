@@ -69,8 +69,10 @@ namespace Algorithm {
     canvas.cd();
     for (auto ihisto(0); ihisto<collection.size(); ihisto++) {
       auto& histo = collection.at(ihisto);
+      histo.Scale( 1./histo.Integral() );
       histo.SetLineColor(ihisto + 1);
       histo.SetLineStyle(ihisto == 0 ? 1 : 2);
+
       histo.Draw(canvas, ihisto == 0 ? "HIST" : "HISTSAME" );
     }
   }
