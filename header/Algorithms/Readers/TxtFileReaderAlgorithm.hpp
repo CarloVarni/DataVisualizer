@@ -26,7 +26,8 @@ namespace Algorithm {
     struct Config {
       std::string inputFile = "";
       std::string outputCollection = "";
-      std::function<void(const std::ifstream& file,
+      std::string outputMask = "";
+      std::function<void(std::ifstream& file,
 			 std::shared_ptr<data_t>& data_collection)> extraction_function;
     };
 
@@ -63,7 +64,10 @@ namespace Algorithm {
       throw std::invalid_argument("Missing input file for algorithm " + name());
 
     if (m_cfg.outputCollection.empty())
-      throw std::invalid_argument("Missing output collection name " + name());
+      throw std::invalid_argument("Missing output collection name for algorithm " + name());
+
+    if (m_cfg.outputMask.empty())
+      throw std::invalid_argument("Missing output mask name for algorithm " + name());
   }
 
   template<typename data_t>
@@ -81,8 +85,13 @@ namespace Algorithm {
     m_cfg.extraction_function(input_file, data_collection);
     MSG_INFO("Retrieved " + std::to_string(data_collection->size()) + " data objects");
     input_file.close();
+
+    // create mask
+    std::shared_ptr<std::vector<bool>> data_mask =
+      std::make_shared<std::vector<bool>>(data_collection->size(), true);
     
     context.add(m_cfg.outputCollection, std::move(data_collection));
+    context.add(m_cfg.outputMask, std::move(data_mask));
   }
   
   using TxtFileReaderToDataObjectCollectionAlgorithm = TxtFileReaderAlgorithm<EventDataModel::DataObjectCollection>;

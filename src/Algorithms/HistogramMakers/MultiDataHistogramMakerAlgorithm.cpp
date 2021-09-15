@@ -68,7 +68,10 @@ namespace Algorithm {
       auto& histo = m_cfg.histogramDefs_1D.at(ihisto);
       
       std::visit([&] (auto& h_to_add) {
-		   EventDataModel::HistogramObject_1D toAdd( "h_" + var_name, var_name , h_to_add);
+		   const std::string histoName(h_to_add.GetName());
+		   EventDataModel::HistogramObject_1D toAdd( "h_" + histoName,
+							     var_name ,
+							     h_to_add);
 		   map_1D->emplace(toAdd.title(), histograms_1D->size());
 		   histograms_1D->push_back(toAdd);
 		 }, histo);
@@ -81,7 +84,8 @@ namespace Algorithm {
       auto& histo = m_cfg.histogramDefs_2D.at(ihisto);
 
       std::visit([&] (auto& h_to_add) {
-		   EventDataModel::HistogramObject_2D toAdd( "h_" + var_x_name + "_" + var_y_name,
+		   const std::string histoName(h_to_add.GetName());
+		   EventDataModel::HistogramObject_2D toAdd( "h_" + histoName,
 							     var_x_name , var_y_name,
 							     h_to_add);
 		   map_2D->emplace(toAdd.title(), histograms_2D->size());

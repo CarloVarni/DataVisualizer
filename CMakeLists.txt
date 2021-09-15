@@ -62,3 +62,6 @@ target_link_libraries( testRootReader DataVisualizerLib )
 
 add_executable( muon_efficiency_check macros/muon_efficiency_check.cpp )
 target_link_libraries( muon_efficiency_check DataVisualizerLib )
+
+add_executable( timing_studies_EDM macros/timing_studies_EDM.cpp )
+target_link_libraries( timing_studies_EDM DataVisualizerLib )
