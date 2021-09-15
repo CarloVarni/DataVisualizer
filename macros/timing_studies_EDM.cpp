@@ -4,49 +4,59 @@
 #include <TxtFileReaderAlgorithm.hpp>
 #include <MultiDataHistogramMakerAlgorithm.hpp>
 #include <PlotterAlgorithm.hpp>
+#include <PlotComparisonAlgorithm.hpp>
+
 #include <sstream>
+
+void getTimingAlgoSequence(Core::Scheduler& scheduler,
+			   const std::string& file_name,
+			   const std::string& edm_type,
+			   const std::string& timing_type);
 
 int main() {
 
   Core::Scheduler scheduler;
 
-  // Reader
-  Algorithm::TXTFileReaderToMultiDataObjectCollectionAlgorithm::Config TxtFileReaderConfiguration_full;
-  TxtFileReaderConfiguration_full.inputFile = "./data/extracted_timing_full_adhoc_EDM.txt";
-  TxtFileReaderConfiguration_full.outputCollection = "raw_timing_data_full";
-  TxtFileReaderConfiguration_full.outputMask = "raw_timing_mask_full";
-  TxtFileReaderConfiguration_full.extraction_function =
-    [&] (std::ifstream& file,
-	 std::shared_ptr<EventDataModel::MultiDataObjectCollection>& data_collection) -> void
-    {
-      std::vector<std::string> labels( {"n_points", "time"} );
+  getTimingAlgoSequence(scheduler,
+			"./data/extracted_timing_full_adhoc_EDM.txt",
+			"adhoc",
+			"full");
+  getTimingAlgoSequence(scheduler,
+			"./data/extracted_timing_full_xaod_EDM.txt",
+			"xaod",
+			"full");
 
-      std::string line = "";
-      while ( std::getline(file, line) ) {
-	std::istringstream iss( line );
-	std::string s_n_points = "";
-	std::string s_time = "";
-	iss >> s_n_points >> s_time;
+  // Compare Plots
+  Algorithm::PlotComparisonAlgorithm::Config PlotComparisonConfiguration;
+  PlotComparisonConfiguration.outputFolder = "./timing_comparison";
+  PlotComparisonConfiguration.originalInputCollection = { "histograms_1d_adhoc_full",
+							  "histograms_1d_xaod_full" };
+  PlotComparisonConfiguration.variableNames = { "time" };
 
-	std::vector<EventDataModel::MultiDataObjectCollection::value_type::value_type> data_values( { std::stoi(s_n_points), std::stof(s_time) * 1e-3} );
-	EventDataModel::MultiDataObjectCollection::value_type data( labels, data_values );
-	data_collection->push_back( data );
-      }
-    };
+  std::shared_ptr<Algorithm::PlotComparisonAlgorithm> plotComparisonAlgorithm =
+    std::make_shared<Algorithm::PlotComparisonAlgorithm>("PlotComparisonAlgorithm",
+							 PlotComparisonConfiguration);
 
-  std::shared_ptr<Algorithm::TXTFileReaderToMultiDataObjectCollectionAlgorithm> timingFileReader_full =
-    std::make_shared<Algorithm::TXTFileReaderToMultiDataObjectCollectionAlgorithm>("TimingFileReader_full",
-										   TxtFileReaderConfiguration_full);
+  scheduler.addAlgorithm(plotComparisonAlgorithm);
 
-  scheduler.addAlgorithm(timingFileReader_full);
+  // Run  
+  scheduler.run();
+}
 
 
 
-  Algorithm::TXTFileReaderToMultiDataObjectCollectionAlgorithm::Config TxtFileReaderConfiguration_single;
-  TxtFileReaderConfiguration_single.inputFile = "./data/extracted_timing_single_adhoc_EDM.txt";
-  TxtFileReaderConfiguration_single.outputCollection = "raw_timing_data_single";
-  TxtFileReaderConfiguration_single.outputMask = "raw_timing_mask_single";
-  TxtFileReaderConfiguration_single.extraction_function =
+
+void getTimingAlgoSequence(Core::Scheduler& sequence,
+                           const std::string& file_name,
+                           const std::string& edm_type,
+                           const std::string& timing_type)
+{
+  // Reader  
+  Algorithm::TXTFileReaderToMultiDataObjectCollectionAlgorithm::Config TxtFileReaderConfiguration;
+  TxtFileReaderConfiguration.inputFile = file_name;
+  TxtFileReaderConfiguration.outputCollection = "raw_timing_data_" + edm_type + "_" + timing_type;
+  TxtFileReaderConfiguration.outputMask = "raw_timing_mask_" + edm_type + "_" + timing_type;
+  TxtFileReaderConfiguration.extraction_function =
     [&] (std::ifstream& file,
          std::shared_ptr<EventDataModel::MultiDataObjectCollection>& data_collection) -> void
     {
@@ -59,96 +69,55 @@ int main() {
         std::string s_time = "";
         iss >> s_n_points >> s_time;
 
-        std::vector<EventDataModel::MultiDataObjectCollection::value_type::value_type> data_values( { std::stoi(s_n_points), std::stof(s_time) } );
+        std::vector<EventDataModel::MultiDataObjectCollection::value_type::value_type> data_values( { std::stoi(s_n_points), std::stof(s_time) * 1e-3} );
         EventDataModel::MultiDataObjectCollection::value_type data( labels, data_values );
         data_collection->push_back( data );
       }
     };
 
-  std::shared_ptr<Algorithm::TXTFileReaderToMultiDataObjectCollectionAlgorithm> timingFileReader_single =
-    std::make_shared<Algorithm::TXTFileReaderToMultiDataObjectCollectionAlgorithm>("TimingFileReader_single",
-                                                                                   TxtFileReaderConfiguration_single);
+  std::shared_ptr<Algorithm::TXTFileReaderToMultiDataObjectCollectionAlgorithm> timingFileReader =
+    std::make_shared<Algorithm::TXTFileReaderToMultiDataObjectCollectionAlgorithm>("TimingFileReader_" + edm_type + "_" + timing_type,
+                                                                                   TxtFileReaderConfiguration);
 
-  scheduler.addAlgorithm(timingFileReader_single);
+  sequence.addAlgorithm(timingFileReader);
 
 
 
-  
+
   // Histogram Maker
-  Algorithm::MultiDataHistogramMakerAlgorithm::Config MultiDataHistogramMakerConfiguration_full;
-  MultiDataHistogramMakerConfiguration_full.inputCollection = TxtFileReaderConfiguration_full.outputCollection;
-  MultiDataHistogramMakerConfiguration_full.inputMaskName = TxtFileReaderConfiguration_full.outputMask;
-  MultiDataHistogramMakerConfiguration_full.outputCollection_1d = "histograms_1d_full";
-  MultiDataHistogramMakerConfiguration_full.outputCollection_2d = "histograms_2d_full";
-  MultiDataHistogramMakerConfiguration_full.variableNames_1D = { "n_points", "time" };
-  MultiDataHistogramMakerConfiguration_full.histogramDefs_1D =
+  Algorithm::MultiDataHistogramMakerAlgorithm::Config MultiDataHistogramMakerConfiguration;
+  MultiDataHistogramMakerConfiguration.inputCollection = TxtFileReaderConfiguration.outputCollection;
+  MultiDataHistogramMakerConfiguration.inputMaskName = TxtFileReaderConfiguration.outputMask;
+  MultiDataHistogramMakerConfiguration.outputCollection_1d = "histograms_1d_" + edm_type + "_" + timing_type;
+  MultiDataHistogramMakerConfiguration.outputCollection_2d = "histograms_2d_" + edm_type + "_" + timing_type;
+  MultiDataHistogramMakerConfiguration.variableNames_1D = { "n_points", "time" };
+  MultiDataHistogramMakerConfiguration.histogramDefs_1D =
     {
-     TH1I("n_points_full", "N. Points;N. Points;Entries", 50, 0, 25000),
-     TH1F("time_full", "Timing;Time [us];Entries", 100, 0, 10000)
+     TH1I(("n_points_" + edm_type + "_" + timing_type).c_str(), "N. Points;N. Points;Entries", 50, 0, 25000),
+     TH1F(("time_" + edm_type + "_" + timing_type).c_str(), "Timing;Time [us];Entries", 100, 0, 200000)
     };
-  MultiDataHistogramMakerConfiguration_full.variableNames_2D = { std::make_pair("n_points", "time") };;
-  MultiDataHistogramMakerConfiguration_full.histogramDefs_2D =
+  MultiDataHistogramMakerConfiguration.variableNames_2D = { std::make_pair("n_points", "time") };;
+  MultiDataHistogramMakerConfiguration.histogramDefs_2D =
     {
-     TH2F("n_points_vs_time_full","Timing;N. Points;Time [us]", 50, 0, 25000, 100, 0, 10000)
+     TH2F(("n_points_vs_time_" + edm_type + "_" + timing_type).c_str(),"Timing;N. Points;Time [us]", 50, 0, 25000, 100, 0, 200000)
     };
-  
-  std::shared_ptr<Algorithm::MultiDataHistogramMakerAlgorithm> multiDataHistogramMakerAlgorithm_full =
-    std::make_shared<Algorithm::MultiDataHistogramMakerAlgorithm>("multiDataHistogramMakerAlgorithm_full",
-								  MultiDataHistogramMakerConfiguration_full);
-  
-  scheduler.addAlgorithm(multiDataHistogramMakerAlgorithm_full);
-  
-  
-  
-  Algorithm::MultiDataHistogramMakerAlgorithm::Config MultiDataHistogramMakerConfiguration_single;
-  MultiDataHistogramMakerConfiguration_single.inputCollection = TxtFileReaderConfiguration_single.outputCollection;
-  MultiDataHistogramMakerConfiguration_single.inputMaskName = TxtFileReaderConfiguration_single.outputMask;
-  MultiDataHistogramMakerConfiguration_single.outputCollection_1d = "histograms_1d_single";
-  MultiDataHistogramMakerConfiguration_single.outputCollection_2d = "histograms_2d_single";
-  MultiDataHistogramMakerConfiguration_single.variableNames_1D = {"n_points", "time"};
-  MultiDataHistogramMakerConfiguration_single.variableNames_1D = {"time"};
-  MultiDataHistogramMakerConfiguration_single.histogramDefs_1D =
-    {
-     TH1F("time_single", "Timing;Time [ns];Entries", 100, 0, 200)
-    };
-  MultiDataHistogramMakerConfiguration_single.variableNames_2D = {};
-  MultiDataHistogramMakerConfiguration_single.histogramDefs_2D = {};
-  
 
-  std::shared_ptr<Algorithm::MultiDataHistogramMakerAlgorithm> multiDataHistogramMakerAlgorithm_single =
-    std::make_shared<Algorithm::MultiDataHistogramMakerAlgorithm>("multiDataHistogramMakerAlgorithm_single",
-                                                                  MultiDataHistogramMakerConfiguration_single);
+  std::shared_ptr<Algorithm::MultiDataHistogramMakerAlgorithm> multiDataHistogramMakerAlgorithm =
+    std::make_shared<Algorithm::MultiDataHistogramMakerAlgorithm>("multiDataHistogramMakerAlgorithm_" + edm_type + "_" + timing_type,
+                                                                  MultiDataHistogramMakerConfiguration);
 
-  scheduler.addAlgorithm(multiDataHistogramMakerAlgorithm_single);
+  sequence.addAlgorithm(multiDataHistogramMakerAlgorithm);
 
-  
   
   // Plotter
-  Algorithm::PlotterAlgorithm::Config PlotterConfiguration_full;
-  PlotterConfiguration_full.inputCollection_1d = MultiDataHistogramMakerConfiguration_full.outputCollection_1d;
-  PlotterConfiguration_full.inputCollection_2d = MultiDataHistogramMakerConfiguration_full.outputCollection_2d;
-  PlotterConfiguration_full.outputFolder = "./timing_plots_adhoc_EDM";
+  Algorithm::PlotterAlgorithm::Config PlotterConfiguration;
+  PlotterConfiguration.inputCollection_1d = MultiDataHistogramMakerConfiguration.outputCollection_1d;
+  PlotterConfiguration.inputCollection_2d = MultiDataHistogramMakerConfiguration.outputCollection_2d;
+  PlotterConfiguration.outputFolder = "./timing_plots_" + edm_type;
 
-  std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm_full =
-    std::make_shared<Algorithm::PlotterAlgorithm>("PlotterAlgorithm_full",
-						  PlotterConfiguration_full);
+  std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm =
+    std::make_shared<Algorithm::PlotterAlgorithm>("PlotterAlgorithm_" + edm_type + "_" + timing_type,
+                                                  PlotterConfiguration);
 
-  scheduler.addAlgorithm(plotterAlgorithm_full);
-
-
-  Algorithm::PlotterAlgorithm::Config PlotterConfiguration_single;
-  PlotterConfiguration_single.inputCollection_1d = MultiDataHistogramMakerConfiguration_single.outputCollection_1d;
-  PlotterConfiguration_single.inputCollection_2d = MultiDataHistogramMakerConfiguration_single.outputCollection_2d;
-  PlotterConfiguration_single.outputFolder = "./timing_plots_adhoc_EDM";
-
-  std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm_single =
-    std::make_shared<Algorithm::PlotterAlgorithm>("PlotterAlgorithm_single",
-						  PlotterConfiguration_single);
-
-  scheduler.addAlgorithm(plotterAlgorithm_single);
-
-  
-  
-  scheduler.run();
-
+  sequence.addAlgorithm(plotterAlgorithm);
 }

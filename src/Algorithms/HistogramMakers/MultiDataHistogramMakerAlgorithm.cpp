@@ -72,7 +72,7 @@ namespace Algorithm {
 		   EventDataModel::HistogramObject_1D toAdd( "h_" + histoName,
 							     var_name ,
 							     h_to_add);
-		   map_1D->emplace(toAdd.title(), histograms_1D->size());
+		   map_1D->emplace("h_" + var_name, histograms_1D->size());
 		   histograms_1D->push_back(toAdd);
 		 }, histo);
     }
@@ -88,7 +88,7 @@ namespace Algorithm {
 		   EventDataModel::HistogramObject_2D toAdd( "h_" + histoName,
 							     var_x_name , var_y_name,
 							     h_to_add);
-		   map_2D->emplace(toAdd.title(), histograms_2D->size());
+		   map_2D->emplace("h_" + var_x_name + "_" + var_y_name, histograms_2D->size());
                    histograms_2D->push_back(toAdd);
 		 }, histo);
     }

@@ -54,14 +54,17 @@ namespace Algorithm {
       DrawCollection(canvas,
 		     histo_to_be_drawn);
       canvas.Draw();
-      canvas.SaveAs( (m_cfg.outputFolder + "/comparison_" + var_name + ".pdf").c_str() );
+      
+      std::string save_name = m_cfg.outputFolder + "/comparison_" + var_name + ".pdf";
+      canvas.SaveAs( save_name.c_str() );
+      MSG_INFO( "Created histogram: " + save_name );
     }
     
   }
 
   void
   PlotComparisonAlgorithm::DrawCollection(TCanvas& canvas,
-								EventDataModel::HistogramObjectCollection_1D& collection)
+					  EventDataModel::HistogramObjectCollection_1D& collection)
   {
     canvas.cd();
     for (auto ihisto(0); ihisto<collection.size(); ihisto++) {
