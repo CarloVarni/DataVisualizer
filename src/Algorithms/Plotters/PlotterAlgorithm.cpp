@@ -76,7 +76,37 @@ namespace Algorithm {
 	MSG_INFO("Created histogram: " + saving_name);
       }
     }
-    
+
+
+    // Efficiency 1D
+    if (efficiency_1D) {
+      for (const auto& const_eff : *efficiency_1D) {
+        auto& eff = *const_cast<EventDataModel::Efficiency*>(&const_eff);
+        const std::string saving_name = m_cfg.outputFolder + "/" + eff.title() + ".pdf";
+
+        TCanvas canvas("canvas", "canvas");
+        eff.Draw(canvas, "HIST");
+        canvas.Draw();
+        canvas.SaveAs( saving_name.c_str() );
+        MSG_INFO("Created Efficiency: " + saving_name);
+      }
+    }
+
+    // Efficiency 2D
+    if (efficiency_2D) {
+      for (const auto& const_eff : *efficiency_2D) {
+        auto& eff = *const_cast<EventDataModel::Efficiency*>(&const_eff);
+        const std::string saving_name = m_cfg.outputFolder + "/" + eff.title() + ".pdf";
+
+        TCanvas canvas("canvas", "canvas");
+        eff.Draw(canvas, "COLZ");
+        canvas.Draw();
+        canvas.SaveAs( saving_name.c_str() );
+        MSG_INFO("Created Efficiency: " + saving_name);
+      }
+    }
+
+
   }
   
 }
