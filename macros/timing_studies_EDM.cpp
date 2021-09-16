@@ -4,7 +4,7 @@
 #include <MultiDataHistogramMakerAlgorithm.hpp>
 #include <PlotterAlgorithm.hpp>
 #include <PlotComparisonAlgorithm.hpp>
-
+#include <Graph.hpp>
 #include <sstream>
 
 void getTimingAlgoSequence_full(Core::Scheduler& scheduler,
