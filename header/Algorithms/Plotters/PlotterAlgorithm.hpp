@@ -14,9 +14,11 @@ namespace Algorithm {
     : public Core::BaseAlgorithm {
   public:
     struct Config {
-      std::string inputCollection_1d;
-      std::string inputCollection_2d;
-      std::string outputFolder;
+      std::string inputCollection_hist_1d = "";
+      std::string inputCollection_hist_2d = "";
+      std::string inputCollection_eff_1d = "";
+      std::string inputCollection_eff_2d = "";
+      std::string outputFolder = "";
     };
 
     PlotterAlgorithm() = delete;

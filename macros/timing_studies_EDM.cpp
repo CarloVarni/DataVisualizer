@@ -1,4 +1,4 @@
-
+ 
 #include <Scheduler.hpp>
 #include <TxtFileReaderAlgorithm.hpp>
 #include <MultiDataHistogramMakerAlgorithm.hpp>
@@ -120,8 +120,8 @@ void getTimingAlgoSequence_single(Core::Scheduler& sequence,
 
   // Plotter
   Algorithm::PlotterAlgorithm::Config PlotterConfiguration;
-  PlotterConfiguration.inputCollection_1d = MultiDataHistogramMakerConfiguration.outputCollection_1d;
-  PlotterConfiguration.inputCollection_2d = MultiDataHistogramMakerConfiguration.outputCollection_2d;
+  PlotterConfiguration.inputCollection_hist_1d = MultiDataHistogramMakerConfiguration.outputCollection_1d;
+  PlotterConfiguration.inputCollection_hist_2d = MultiDataHistogramMakerConfiguration.outputCollection_2d;
   PlotterConfiguration.outputFolder = "./timing_plots_" + edm_type;
   
   std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm =
@@ -198,8 +198,8 @@ void getTimingAlgoSequence_full(Core::Scheduler& sequence,
   
   // Plotter
   Algorithm::PlotterAlgorithm::Config PlotterConfiguration;
-  PlotterConfiguration.inputCollection_1d = MultiDataHistogramMakerConfiguration.outputCollection_1d;
-  PlotterConfiguration.inputCollection_2d = MultiDataHistogramMakerConfiguration.outputCollection_2d;
+  PlotterConfiguration.inputCollection_hist_1d = MultiDataHistogramMakerConfiguration.outputCollection_1d;
+  PlotterConfiguration.inputCollection_hist_2d = MultiDataHistogramMakerConfiguration.outputCollection_2d;
   PlotterConfiguration.outputFolder = "./timing_plots_" + edm_type;
 
   std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm =

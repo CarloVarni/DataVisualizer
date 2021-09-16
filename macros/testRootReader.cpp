@@ -72,8 +72,8 @@ int main() {
   
   // Plotter
   Algorithm::PlotterAlgorithm::Config PlotterConfiguration;
-  PlotterConfiguration.inputCollection_1d = MultiDataHistogramMakerConfiguration.outputCollection_1d;
-  PlotterConfiguration.inputCollection_2d = MultiDataHistogramMakerConfiguration.outputCollection_2d;
+  PlotterConfiguration.inputCollection_hist_1d = MultiDataHistogramMakerConfiguration.outputCollection_1d;
+  PlotterConfiguration.inputCollection_hist_2d = MultiDataHistogramMakerConfiguration.outputCollection_2d;
   PlotterConfiguration.outputFolder = "./plots";
   
   std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm =

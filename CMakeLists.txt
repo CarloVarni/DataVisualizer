@@ -24,6 +24,7 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
      		  header/EventDataModel/MultiData.hpp
 		  header/EventDataModel/Histogram_1D.hpp 
 		  header/EventDataModel/Histogram_2D.hpp 
+		  header/EventDataModel/Efficiency.hpp
 		  header/Core/IHolder.hpp
 		  header/Core/EventContext.hpp
 		  header/Core/BaseAlgorithm.hpp
@@ -40,7 +41,8 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Algorithms/Plotters/PlotterAlgorithm.hpp )
 
 		  
-SET( SRC_FILES src/Core/BaseAlgorithm.cpp
+SET( SRC_FILES src/EventDataModel/Efficiency.cpp
+     	       src/Core/BaseAlgorithm.cpp
      	       src/Core/Scheduler.cpp
 	       src/Core/EventContext.cpp
 	       src/Algorithms/Readers/RootFileReaderAlgorithm.cpp
@@ -66,3 +68,6 @@ target_link_libraries( muon_efficiency_check DataVisualizerLib )
 
 add_executable( timing_studies_EDM macros/timing_studies_EDM.cpp )
 target_link_libraries( timing_studies_EDM DataVisualizerLib )
+
+add_executable( seed_finding_timing macros/seed_finding_timing.cxx )
+target_link_libraries( seed_finding_timing DataVisualizerLib )

@@ -92,8 +92,8 @@ int main() {
   
   // Plotter
   Algorithm::PlotterAlgorithm::Config PlotterConfiguration;
-  PlotterConfiguration.inputCollection_1d = RootFileHistogramMakerConfiguration.output_collection_1d;
-  PlotterConfiguration.inputCollection_2d = RootFileHistogramMakerConfiguration.output_collection_2d;
+  PlotterConfiguration.inputCollection_hist_1d = RootFileHistogramMakerConfiguration.output_collection_1d;
+  PlotterConfiguration.inputCollection_hist_2d = RootFileHistogramMakerConfiguration.output_collection_2d;
   PlotterConfiguration.outputFolder = "./muon_performance_plots";
   
   std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm =
