@@ -18,6 +18,7 @@ namespace Algorithm {
       std::string inputCollection_hist_2d = "";
       std::string inputCollection_eff_1d = "";
       std::string inputCollection_eff_2d = "";
+      std::string inputCollection_gr = "";
       std::string outputFolder = "";
     };
 

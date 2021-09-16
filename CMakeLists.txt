@@ -18,6 +18,7 @@ include_directories( header/EventDataModel
 		     header/Algorithms/Readers
 		     header/Algorithms/Filters
 		     header/Algorithms/HistogramMakers
+		     header/Algorithms/GraphMakers
 		     header/Algorithms/Plotters )
 
 SET( HEADER_FILES header/EventDataModel/Data.hpp 
@@ -38,8 +39,10 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Algorithms/HistogramMakers/DataHistogramMakerAlgorithm.hpp
 		  header/Algorithms/HistogramMakers/MultiDataHistogramMakerAlgorithm.hpp	
 		  header/Algorithms/HistogramMakers/RootFileHistogramMakerAlgorithm.hpp
+		  header/Algorithms/GraphMakers/MultiDataGraphMakerAlgorithm.hpp
 		  header/Algorithms/Plotters/PlotComparisonAlgorithm.hpp
-		  header/Algorithms/Plotters/PlotterAlgorithm.hpp )
+		  header/Algorithms/Plotters/PlotterAlgorithm.hpp
+		  )
 
 		  
 SET( SRC_FILES src/EventDataModel/Efficiency.cpp
@@ -51,8 +54,10 @@ SET( SRC_FILES src/EventDataModel/Efficiency.cpp
 	       src/Algorithms/HistogramMakers/DataHistogramMakerAlgorithm.cpp
 	       src/Algorithms/HistogramMakers/MultiDataHistogramMakerAlgorithm.cpp
 	       src/Algorithms/HistogramMakers/RootFileHistogramMakerAlgorithm.cpp
+	       src/Algorithms/GraphMakers/MultiDataGraphMakerAlgorithm.cpp
 	       src/Algorithms/Plotters/PlotComparisonAlgorithm.cpp
-	       src/Algorithms/Plotters/PlotterAlgorithm.cpp )
+	       src/Algorithms/Plotters/PlotterAlgorithm.cpp
+	       )
 
 
 add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )

@@ -3,6 +3,7 @@
 #include <Histogram_1D.hpp>
 #include <Histogram_2D.hpp>
 #include <Efficiency.hpp>
+#include <Graph.hpp>
 
 namespace Algorithm {
 
@@ -20,7 +21,8 @@ namespace Algorithm {
     if (m_cfg.inputCollection_hist_1d.empty() and
 	m_cfg.inputCollection_hist_2d.empty() and
 	m_cfg.inputCollection_eff_1d.empty() and
-	m_cfg.inputCollection_eff_2d.empty() )
+	m_cfg.inputCollection_eff_2d.empty() and
+	m_cfg.inputCollection_gr.empty() )
       throw std::invalid_argument(name() + " requires an input collection to be defined!");
 
     if (m_cfg.outputFolder.empty())
@@ -48,7 +50,10 @@ namespace Algorithm {
     if (not m_cfg.inputCollection_eff_2d.empty())
       efficiency_2D = context.get<EventDataModel::EfficiencyCollection>( "eff_2d_" + m_cfg.inputCollection_eff_2d );
 
-
+    const EventDataModel::GraphObjectCollection* graphs = nullptr;
+    if (not m_cfg.inputCollection_gr.empty())
+      graphs = context.get<EventDataModel::GraphObjectCollection>( "gr_" + m_cfg.inputCollection_gr );
+    
     // Histograms 1D
     if (histograms_1D) {
       for (const auto& const_histo : *histograms_1D) {
@@ -106,7 +111,23 @@ namespace Algorithm {
       }
     }
 
-
+    // Graphs
+    if (graphs) {
+      for (const auto& const_gr : *graphs) {
+        auto& gr = *const_cast<EventDataModel::GraphObject*>(&const_gr);
+        const std::string saving_name = m_cfg.outputFolder + "/" + gr.title() + ".pdf";
+	gr.SetMarkerSize(0.7);
+	gr.SetMarkerStyle(21);
+	gr.SetMarkerColor(2);
+	
+        TCanvas canvas("canvas", "canvas");
+        gr.Draw(canvas, "AP");
+        canvas.Draw();
+        canvas.SaveAs( saving_name.c_str() );
+        MSG_INFO("Created Graph: " + saving_name);
+      }
+    }
+    
   }
   
 }

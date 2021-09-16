@@ -2,6 +2,7 @@
 #include <Scheduler.hpp>
 #include <TxtFileReaderAlgorithm.hpp>
 #include <MultiDataHistogramMakerAlgorithm.hpp>
+#include <MultiDataGraphMakerAlgorithm.hpp>
 #include <PlotterAlgorithm.hpp>
 #include <PlotComparisonAlgorithm.hpp>
 
@@ -119,12 +120,37 @@ seed_finding_timing_algo_sequence(Core::Scheduler& sequence,
   
   sequence.addAlgorithm(multiDataHistogramMakerAlgorithm);
   
-  
 
+  // Graph Maker  
+  Algorithm::MultiDataGraphMakerAlgorithm::Config MultiDataGraphMakerConfiguration;
+  MultiDataGraphMakerConfiguration.inputCollection = TxtFileReaderConfiguration.outputCollection;;
+  MultiDataGraphMakerConfiguration.inputMaskName = TxtFileReaderConfiguration.outputMask;;
+  MultiDataGraphMakerConfiguration.outputCollection = "graphs_" + edm_type;
+  MultiDataGraphMakerConfiguration.variableNames =
+    {
+     std::make_pair("n_seeds", "time"),
+     std::make_pair("n_points", "time"),
+     std::make_pair("n_points", "n_seeds")
+    };
+  MultiDataGraphMakerConfiguration.graphDefs =
+    {
+     TGraph(),
+     TGraph(),
+     TGraph()
+    };
+
+	
+  std::shared_ptr<Algorithm::MultiDataGraphMakerAlgorithm> multiDataGraphMakerAlgorithm =
+    std::make_shared<Algorithm::MultiDataGraphMakerAlgorithm>("MultiDataGraphMakerAlgorithm_" + edm_type,
+							      MultiDataGraphMakerConfiguration);
+
+  sequence.addAlgorithm(multiDataGraphMakerAlgorithm);
+  
   // Plotter
   Algorithm::PlotterAlgorithm::Config PlotterConfiguration;
   PlotterConfiguration.inputCollection_hist_1d = MultiDataHistogramMakerConfiguration.outputCollection_1d;
   PlotterConfiguration.inputCollection_hist_2d = MultiDataHistogramMakerConfiguration.outputCollection_2d;
+  PlotterConfiguration.inputCollection_gr = MultiDataGraphMakerConfiguration.outputCollection;
   PlotterConfiguration.outputFolder = "./timing_plots_" + edm_type;
 
   std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm =
@@ -133,3 +159,6 @@ seed_finding_timing_algo_sequence(Core::Scheduler& sequence,
 
   sequence.addAlgorithm(plotterAlgorithm);
 }
+
+
+

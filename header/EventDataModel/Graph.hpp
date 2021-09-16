@@ -48,7 +48,14 @@ namespace EventDataModel {
 	      const std::string& option);
     
     int GetN() const;
+    void SetLineColor(int color);
+    void SetLineStyle(int style);
+    void SetMarkerColor(int color);
+    void SetMarkerStyle(int style);
+    void SetMarkerSize(double size);
     
+    const std::string& title() const;
+
   private:
     const std::string m_title;
     const std::string m_target_variable_x;
@@ -136,6 +143,56 @@ namespace EventDataModel {
 			return gr.GetN();
 		      }, m_graph);
   }
+
+  template<typename ... supported_graph_t>
+  void
+  Graph<supported_graph_t...>::SetLineColor(int color)
+  {
+    std::visit([&] (auto& gr) {
+		 gr.SetLineColor(color);
+	       }, m_graph);
+  }
+  
+  template<typename ... supported_graph_t>
+  void
+  Graph<supported_graph_t...>::SetLineStyle(int style)
+  {
+    std::visit([&] (auto& gr) {
+		 gr.SetLineStyle(style);
+               }, m_graph);
+  }
+  
+  template<typename ... supported_graph_t>
+  void
+  Graph<supported_graph_t...>::SetMarkerColor(int color)
+  {
+    std::visit([&] (auto& gr) {
+		 gr.SetMarkerColor(color);
+               }, m_graph);
+  }
+
+  template<typename ... supported_graph_t>
+  void
+  Graph<supported_graph_t...>::SetMarkerStyle(int style)
+  {
+    std::visit([&] (auto& gr) {
+		 gr.SetMarkerStyle(style);
+               }, m_graph);
+  }
+
+  template<typename ... supported_graph_t>
+  void
+  Graph<supported_graph_t...>::SetMarkerSize(double size)
+  {
+    std::visit([&] (auto& gr) {
+		 gr.SetMarkerSize(size);
+               }, m_graph);
+  }
+  
+  template<typename ... supported_graph_t>
+  const std::string&
+  Graph<supported_graph_t...>::title() const
+  { return m_title; }
   
   /* ============================================================== */
 
@@ -144,3 +201,4 @@ namespace EventDataModel {
 }
 
 #endif
+
