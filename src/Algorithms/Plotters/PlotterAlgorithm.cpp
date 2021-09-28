@@ -90,7 +90,7 @@ namespace Algorithm {
         const std::string saving_name = m_cfg.outputFolder + "/" + eff.title() + ".pdf";
 
         TCanvas canvas("canvas", "canvas");
-        eff.Draw(canvas, "HIST");
+        eff.Draw(canvas, "APL");
         canvas.Draw();
         canvas.SaveAs( saving_name.c_str() );
         MSG_INFO("Created Efficiency: " + saving_name);
