@@ -15,7 +15,9 @@ void getTimingAlgoSequence_single(Core::Scheduler& scheduler,
 				  const std::string& edm_type);
 
 int main() {
-  std::string performace_target = "seed"; // sp or seed !
+  // sp or seed !
+  std::string performace_target = "sp"; 
+
 
   
 
@@ -39,17 +41,31 @@ int main() {
   
   // Compare Plots
   Algorithm::PlotComparisonAlgorithm::Config PlotComparisonConfiguration;
-  PlotComparisonConfiguration.outputFolder = "./timing_comparison";
+  PlotComparisonConfiguration.outputFolder = "./timing_comparison_full";
   PlotComparisonConfiguration.originalInputCollection = { "histograms_1d_adhoc_full",
 							  "histograms_1d_xaod_full" };
   PlotComparisonConfiguration.variableNames = { "time" };
 
   std::shared_ptr<Algorithm::PlotComparisonAlgorithm> plotComparisonAlgorithm =
-    std::make_shared<Algorithm::PlotComparisonAlgorithm>("PlotComparisonAlgorithm",
+    std::make_shared<Algorithm::PlotComparisonAlgorithm>("PlotComparisonAlgorithm_full",
 							 PlotComparisonConfiguration);
 
   scheduler.addAlgorithm(plotComparisonAlgorithm);
 
+  // Compare Plots
+  Algorithm::PlotComparisonAlgorithm::Config PlotComparisonConfiguration_single;
+  PlotComparisonConfiguration_single.outputFolder = "./timing_comparison_single";
+  PlotComparisonConfiguration_single.originalInputCollection = { "histograms_1d_adhoc_single",
+								 "histograms_1d_xaod_single" };
+  PlotComparisonConfiguration_single.variableNames = { "time" };
+  
+  std::shared_ptr<Algorithm::PlotComparisonAlgorithm> plotComparisonAlgorithm_single =
+    std::make_shared<Algorithm::PlotComparisonAlgorithm>("PlotComparisonAlgorithm_single",
+                                                         PlotComparisonConfiguration_single);
+
+  scheduler.addAlgorithm(plotComparisonAlgorithm_single);
+
+  
   // Run  
   scheduler.run();
 }
@@ -81,7 +97,7 @@ void getTimingAlgoSequence_single(Core::Scheduler& sequence,
         iss >> s_n_points >> s_time;
 	
         std::vector<EventDataModel::MultiDataObjectCollection::value_type::value_type> data_values;
-	data_values.push_back(std::stof(s_time));
+	data_values.push_back(std::stof(s_time) * 1e-3);
         EventDataModel::MultiDataObjectCollection::value_type data( labels, data_values );
         data_collection->push_back( data );
       }
@@ -105,7 +121,7 @@ void getTimingAlgoSequence_single(Core::Scheduler& sequence,
   MultiDataHistogramMakerConfiguration.variableNames_1D = { "time", };
   MultiDataHistogramMakerConfiguration.histogramDefs_1D =
     {
-     TH1F(("time_" + edm_type + "_" + timing_type).c_str(), "Timing;Time [us];Entries", 100, 0, 80000)
+     TH1F(("time_" + edm_type + "_" + timing_type).c_str(), "Timing;Time [us];Entries", 100, 0, 10)
     };
   MultiDataHistogramMakerConfiguration.variableNames_2D = {};
   MultiDataHistogramMakerConfiguration.histogramDefs_2D = {};

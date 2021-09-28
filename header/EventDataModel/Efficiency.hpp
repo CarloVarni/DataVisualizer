@@ -46,7 +46,8 @@ namespace EventDataModel {
   };
 
 
-  using EfficiencyCollection = std::vector<Efficiency>;
+  using EfficiencyObject = Efficiency;
+  using EfficiencyObjectCollection = std::vector<Efficiency>;
 }
 
 #endif

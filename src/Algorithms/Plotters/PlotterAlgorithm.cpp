@@ -42,13 +42,13 @@ namespace Algorithm {
     if (not m_cfg.inputCollection_hist_2d.empty())
       histograms_2D = context.get<EventDataModel::HistogramObjectCollection_2D>( "h_2d_" + m_cfg.inputCollection_hist_2d);
 
-    const EventDataModel::EfficiencyCollection* efficiency_1D = nullptr;
+    const EventDataModel::EfficiencyObjectCollection* efficiency_1D = nullptr;
     if (not m_cfg.inputCollection_eff_1d.empty())
-      efficiency_1D = context.get<EventDataModel::EfficiencyCollection>( "eff_1d_" + m_cfg.inputCollection_eff_1d );
+      efficiency_1D = context.get<EventDataModel::EfficiencyObjectCollection>( "eff_1d_" + m_cfg.inputCollection_eff_1d );
 
-    const EventDataModel::EfficiencyCollection* efficiency_2D = nullptr;
+    const EventDataModel::EfficiencyObjectCollection* efficiency_2D = nullptr;
     if (not m_cfg.inputCollection_eff_2d.empty())
-      efficiency_2D = context.get<EventDataModel::EfficiencyCollection>( "eff_2d_" + m_cfg.inputCollection_eff_2d );
+      efficiency_2D = context.get<EventDataModel::EfficiencyObjectCollection>( "eff_2d_" + m_cfg.inputCollection_eff_2d );
 
     const EventDataModel::GraphObjectCollection* graphs = nullptr;
     if (not m_cfg.inputCollection_gr.empty())
@@ -86,7 +86,7 @@ namespace Algorithm {
     // Efficiency 1D
     if (efficiency_1D) {
       for (const auto& const_eff : *efficiency_1D) {
-        auto& eff = *const_cast<EventDataModel::Efficiency*>(&const_eff);
+        auto& eff = *const_cast<EventDataModel::EfficiencyObject*>(&const_eff);
         const std::string saving_name = m_cfg.outputFolder + "/" + eff.title() + ".pdf";
 
         TCanvas canvas("canvas", "canvas");
@@ -100,7 +100,7 @@ namespace Algorithm {
     // Efficiency 2D
     if (efficiency_2D) {
       for (const auto& const_eff : *efficiency_2D) {
-        auto& eff = *const_cast<EventDataModel::Efficiency*>(&const_eff);
+        auto& eff = *const_cast<EventDataModel::EfficiencyObject*>(&const_eff);
         const std::string saving_name = m_cfg.outputFolder + "/" + eff.title() + ".pdf";
 
         TCanvas canvas("canvas", "canvas");

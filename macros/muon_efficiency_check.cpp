@@ -5,7 +5,7 @@
 #include <FilteringAlgorithm.hpp>
 #include <SeedingPerformanceRootReaderAlgorithm.hpp>
 #include <PlotterAlgorithm.hpp>
-
+#include <Profile.hpp>
 #include <RootFileHistogramMakerAlgorithm.hpp>
 #include <TxtFileReaderAlgorithm.hpp>
 
@@ -15,7 +15,7 @@ int main() {
 
   // Read histograms
   Algorithm::RootFileHistogramMakerAlgorithm::Config RootFileHistogramMakerConfiguration;
-  RootFileHistogramMakerConfiguration.inputFile = "./data/muon_efficiency_plots.root";
+  RootFileHistogramMakerConfiguration.inputFile = "./data/muon_performance/muon_efficiency_plots.root";
   RootFileHistogramMakerConfiguration.output_collection_1d = "muon_performance_1d";
   RootFileHistogramMakerConfiguration.output_collection_2d = "muon_performance_2d";
   RootFileHistogramMakerConfiguration.extractionFunction =

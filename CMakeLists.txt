@@ -19,6 +19,8 @@ include_directories( header/EventDataModel
 		     header/Algorithms/Filters
 		     header/Algorithms/HistogramMakers
 		     header/Algorithms/GraphMakers
+		     header/Algorithms/ProfileMakers
+		     header/Algorithms/EfficiencyMakers
 		     header/Algorithms/Plotters )
 
 SET( HEADER_FILES header/EventDataModel/Data.hpp 
@@ -27,6 +29,7 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/EventDataModel/Histogram_2D.hpp 
 		  header/EventDataModel/Efficiency.hpp
 		  header/EventDataModel/Graph.hpp
+		  header/EventDataModel/Profile.hpp
 		  header/Core/IHolder.hpp
 		  header/Core/EventContext.hpp
 		  header/Core/BaseAlgorithm.hpp
@@ -40,6 +43,8 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Algorithms/HistogramMakers/MultiDataHistogramMakerAlgorithm.hpp	
 		  header/Algorithms/HistogramMakers/RootFileHistogramMakerAlgorithm.hpp
 		  header/Algorithms/GraphMakers/MultiDataGraphMakerAlgorithm.hpp
+		  header/Algorithms/ProfileMakers/RootFileProfileMakerAlgorithm.hpp
+		  header/Algorithms/EfficiencyMakers/RootFileEfficiencyMakerAlgorithm.hpp
 		  header/Algorithms/Plotters/PlotComparisonAlgorithm.hpp
 		  header/Algorithms/Plotters/GraphComparisonPlotterAlgorithm.hpp
 		  header/Algorithms/Plotters/PlotterAlgorithm.hpp
@@ -47,6 +52,7 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 
 		  
 SET( SRC_FILES src/EventDataModel/Efficiency.cpp
+     	       src/EventDataModel/Profile.cpp
      	       src/Core/BaseAlgorithm.cpp
      	       src/Core/Scheduler.cpp
 	       src/Core/EventContext.cpp
@@ -56,6 +62,8 @@ SET( SRC_FILES src/EventDataModel/Efficiency.cpp
 	       src/Algorithms/HistogramMakers/MultiDataHistogramMakerAlgorithm.cpp
 	       src/Algorithms/HistogramMakers/RootFileHistogramMakerAlgorithm.cpp
 	       src/Algorithms/GraphMakers/MultiDataGraphMakerAlgorithm.cpp
+	       src/Algorithms/ProfileMakers/RootFileProfileMakerAlgorithm.cpp
+	       src/Algorithms/EfficiencyMakers/RootFileEfficiencyMakerAlgorithm.cpp
 	       src/Algorithms/Plotters/PlotComparisonAlgorithm.cpp
 	       src/Algorithms/Plotters/PlotterAlgorithm.cpp
 	       src/Algorithms/Plotters/GraphComparisonPlotterAlgorithm.cpp
@@ -79,3 +87,6 @@ target_link_libraries( timing_studies_EDM DataVisualizerLib )
 
 add_executable( seed_finding_timing macros/seed_finding_timing.cxx )
 target_link_libraries( seed_finding_timing DataVisualizerLib )
+
+add_executable( efficiency_vs_nparticles macros/efficiency_vs_nparticles.cxx )
+target_link_libraries( efficiency_vs_nparticles DataVisualizerLib )
