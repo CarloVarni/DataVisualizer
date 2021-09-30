@@ -79,4 +79,24 @@ namespace EventDataModel {
   Efficiency::target_variable_y() const
   { return m_target_variable_y; }
 
+  void
+  Efficiency::SetLineColor(int color)
+  { m_efficiency.SetLineColor(color); }
+  
+  void
+  Efficiency::SetLineStyle(int style)
+  { m_efficiency.SetLineStyle(style); }
+  
+  void
+  Efficiency::SetMarkerColor(int color)
+  { m_efficiency.SetMarkerColor(color); }
+  
+  void
+  Efficiency::SetMarkerStyle(int style)
+  { m_efficiency.SetMarkerStyle(style); }
+  
+  void
+  Efficiency::SetMarkerSize(double size)
+  { m_efficiency.SetMarkerSize(size); }
+  
 }

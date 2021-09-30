@@ -36,23 +36,30 @@ namespace Algorithm {
       std::shared_ptr<EventDataModel::EfficiencyObjectCollection>
       > efficiency_collections = m_cfg.extractionFunction( file.get() );
 
-    std::shared_ptr<std::vector<std::string>> efficiency_names_1d =
-      std::make_shared<std::vector<std::string>>();
+    std::shared_ptr<
+      std::unordered_map<std::string, std::size_t>
+      > efficiency_names_1d =
+      std::make_shared<
+	std::unordered_map<std::string, std::size_t>
+      >();
+    
+    std::shared_ptr<
+      std::unordered_map<std::string, std::size_t>
+      > efficiency_names_2d =
+      std::make_shared<
+	std::unordered_map<std::string, std::size_t>
+      >();
+    
 
-    std::shared_ptr<std::vector<std::string>> efficiency_names_2d =
-      std::make_shared<std::vector<std::string>>();
-
-    efficiency_names_1d->reserve(efficiency_collections.first->size());
-    efficiency_names_2d->reserve(efficiency_collections.second->size());
     
     for (auto index(0); index<efficiency_collections.first->size(); index++) {
       const auto& object = efficiency_collections.first->at(index);
-      efficiency_names_1d->push_back(object.title());
+      (*efficiency_names_1d.get())["eff_" + object.title()] = index;
     }
 
     for (auto index(0); index<efficiency_collections.second->size(); index++) {
       const auto& object = efficiency_collections.second->at(index);
-      efficiency_names_2d->push_back(object.title());
+      (*efficiency_names_2d.get())["eff_" + object.title()] = index;
     }
     
     if (not m_cfg.output_collection_1d.empty()) {
