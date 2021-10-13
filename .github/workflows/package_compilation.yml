@@ -43,8 +43,8 @@ jobs:
       - name: Install dependencies on ubuntu with clang
         if: startsWith(matrix.config.name, 'Ubuntu_CLANG')
         run: |
-          #apt install clang-11 -y
-          clang-11 --version
+          apt install ${{ matrix.config.cxx }} -y
+          ${{ matrix.config.cxx }} --version
 
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -53,12 +53,7 @@ jobs:
 
       # Run the compilation
       - name: Run the compilation 
-        run: >
+        run: |
           mkdir build
-          cmake -S . -B build
-          -DCMAKE_CXX_FLAGS=-Werror
-          -DCMAKE_CXX_STANDARD=17
-          -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} 
-          -DCMAKE_C_COMPILER=-DCMAKE_CXX_COMPILER=${{ matrix.config.cc }}
-          -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} 
+          cmake -S . -B build -DCMAKE_CXX_FLAGS=-Werror -DCMAKE_CXX_STANDARD=17 -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DCMAKE_C_COMPILER=-DCMAKE_CXX_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} 
           cmake --build build
