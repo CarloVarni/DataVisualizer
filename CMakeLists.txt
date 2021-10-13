@@ -97,3 +97,6 @@ target_link_libraries( efficiency_vs_nparticles DataVisualizerLib )
 
 add_executable( ckf_performance macros/ckf_performance.cxx )
 target_link_libraries( ckf_performance DataVisualizerLib )
+
+add_executable( tracking_performance macros/tracking_performance.cxx )
+target_link_libraries( tracking_performance DataVisualizerLib )
