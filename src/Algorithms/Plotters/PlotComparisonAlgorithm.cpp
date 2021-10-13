@@ -34,7 +34,7 @@ namespace Algorithm {
 
     for (const std::string& input : m_cfg.originalInputCollection ) {
       histo_collections.push_back( context.get<EventDataModel::HistogramObjectCollection_1D>("h_1d_" + input) );
-      histo_maps.push_back( context.get<std::unordered_map<std::string, std::size_t>>("index_1d_" + input) );
+      histo_maps.push_back( context.get<std::unordered_map<std::string, std::size_t>>("index_h_1d_" + input) );
     }
 
     
@@ -43,10 +43,10 @@ namespace Algorithm {
       
       for (auto ientry(0); ientry < histo_maps.size(); ientry++) {
 	const auto& map = histo_maps.at(ientry);
-	if (map->find("h_" + var_name) == map->end())
+	if (map->find("h_1d_" + var_name) == map->end()) 
 	  throw std::runtime_error("Variable not available in collection: " + var_name);
 
-	std::size_t index = map->at("h_" + var_name);
+	std::size_t index = map->at("h_1d_" + var_name);
 	histo_to_be_drawn.push_back( histo_collections.at(ientry)->at(index) );
       }
 

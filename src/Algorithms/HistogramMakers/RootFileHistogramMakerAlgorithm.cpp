@@ -30,34 +30,42 @@ namespace Algorithm {
     std::pair<std::shared_ptr<EventDataModel::HistogramObjectCollection_1D>,
 	      std::shared_ptr<EventDataModel::HistogramObjectCollection_2D>> histo_collection =
       m_cfg.extractionFunction( file.get() );
-    
-    std::shared_ptr<std::vector<std::string>> histo_names_1d =
-      std::make_shared<std::vector<std::string>>();
-    
-    std::shared_ptr<std::vector<std::string>> histo_names_2d =
-      std::make_shared<std::vector<std::string>>();
-    
+
+    std::shared_ptr<
+      std::unordered_map<std::string, std::size_t>
+      > histo_names_1d =
+      std::make_shared<
+        std::unordered_map<std::string, std::size_t>
+      >();
+
+    std::shared_ptr<
+      std::unordered_map<std::string, std::size_t>
+      > histo_names_2d =
+      std::make_shared<
+	std::unordered_map<std::string, std::size_t>
+      >();
+        
     histo_names_1d->reserve(histo_collection.first->size());
     histo_names_2d->reserve(histo_collection.second->size());
 
     for (auto ihisto(0); ihisto<histo_collection.first->size(); ihisto++) {
       const auto& histo = histo_collection.first->at(ihisto);
-      histo_names_1d->push_back(histo.title());
+       (*histo_names_1d.get())["h_1d_" + histo.title()] = ihisto;
     }
 
     for (auto ihisto(0); ihisto<histo_collection.second->size(); ihisto++) {
       const auto& histo = histo_collection.second->at(ihisto);
-      histo_names_2d->push_back(histo.title());
+      (*histo_names_2d.get())["h_2d_" + histo.title()] = ihisto;
     }
 
     if (not m_cfg.output_collection_1d.empty()) {
       context.add( "h_1d_" + m_cfg.output_collection_1d, std::move(histo_collection.first) );
-      context.add( "index_1d_" + m_cfg.output_collection_1d, std::move(histo_names_1d) );
+      context.add( "index_h_1d_" + m_cfg.output_collection_1d, std::move(histo_names_1d) );
     }
 
     if (not m_cfg.output_collection_2d.empty()) {
       context.add( "h_2d_" + m_cfg.output_collection_2d, std::move(histo_collection.second) );
-      context.add( "index_2d_" + m_cfg.output_collection_2d, std::move(histo_names_2d) );
+      context.add( "index_h_2d_" + m_cfg.output_collection_2d, std::move(histo_names_2d) );
     }
 
     file->Close();

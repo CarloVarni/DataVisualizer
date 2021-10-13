@@ -7,6 +7,7 @@
 #include <RootFileHistogramMakerAlgorithm.hpp>
 #include <EfficiencyComparisonPlotterAlgorithm.hpp>
 #include <ProfileComparisonPlotterAlgorithm.hpp>
+#include <PlotComparisonAlgorithm.hpp>
 
 void get_algo_sequence(Core::Scheduler& sequence,
 		       const std::string& file_name,
@@ -22,6 +23,35 @@ int main() {
     std::string fileName = "./data/"  + particle + "_efficiency_plots.root";
     get_algo_sequence(scheduler, fileName, particle);
   }
+
+  // Compare Histograms
+  Algorithm::PlotComparisonAlgorithm::Config PlotComparisonConfiguration;
+  PlotComparisonConfiguration.outputFolder = "./plots/tracking_performance_plots";
+  PlotComparisonConfiguration.variableNames =
+    {
+      "reco_particle_pt",
+      "reco_particle_eta",
+      "truth_particle_n_reco_times",
+      "reco_particle_d0",
+      "reco_particle_z0",
+      "reco_particle_err_d0",
+      "reco_particle_err_z0",
+      "reco_particle_significance_d0",
+      "reco_particle_significance_z0"
+    };
+
+  std::vector<std::string> input_collection_hist;
+  input_collection_hist.reserve(particles.size());
+  for (const std::string& particle : particles) {
+    input_collection_hist.push_back( "h_collection_1d_" + particle );
+  }
+  PlotComparisonConfiguration.originalInputCollection = input_collection_hist;
+  
+  std::shared_ptr<Algorithm::PlotComparisonAlgorithm> plotComparisonAlgorithm =
+    std::make_shared<Algorithm::PlotComparisonAlgorithm>("PlotComparisonAlgorithm",
+							 PlotComparisonConfiguration);
+
+  scheduler.addAlgorithm(plotComparisonAlgorithm);
   
       
   // Compare Prof
@@ -46,7 +76,7 @@ int main() {
     std::make_shared<Algorithm::ProfileComparisonPlotterAlgorithm>("ProfileComparisonPlotterAlgorithm",
 								   ProfileComparisonPlotterConfiguration);
 
-    scheduler.addAlgorithm(profileComparisonPlotterAlgorithm);
+  scheduler.addAlgorithm(profileComparisonPlotterAlgorithm);
   // ================
   scheduler.run();
 }
@@ -58,11 +88,11 @@ get_algo_sequence(Core::Scheduler& sequence,
 		  const std::string& particle_type)
 {
   // Histograms
-  Algorithm::RootFileHistogramMakerAlgorithm::Config RootFileEfficiencyMakerConfiguration;
-  RootFileEfficiencyMakerConfiguration.inputFile = file_name;
-  RootFileEfficiencyMakerConfiguration.output_collection_1d = "h_collection_1d_" + particle_type;
-  RootFileEfficiencyMakerConfiguration.output_collection_2d = "h_collection_2d_" + particle_type;
-  RootFileEfficiencyMakerConfiguration.extractionFunction =
+  Algorithm::RootFileHistogramMakerAlgorithm::Config RootFileHistogramMakerConfiguration;
+  RootFileHistogramMakerConfiguration.inputFile = file_name;
+  RootFileHistogramMakerConfiguration.output_collection_1d = "h_collection_1d_" + particle_type;
+  RootFileHistogramMakerConfiguration.output_collection_2d = "h_collection_2d_" + particle_type;
+  RootFileHistogramMakerConfiguration.extractionFunction =
     [=] (TFile* file) -> std::pair<
       std::shared_ptr<EventDataModel::HistogramObjectCollection_1D>,
       std::shared_ptr<EventDataModel::HistogramObjectCollection_2D>
@@ -86,8 +116,14 @@ get_algo_sequence(Core::Scheduler& sequence,
       TH1F *reco_particle_significance_d0 = (TH1F*) file->Get("reco_particle_significance_d0");
       TH1F *reco_particle_significance_z0 = (TH1F*) file->Get("reco_particle_significance_z0");
 
+      output_1d->emplace_back("reco_particle_pt",
+			      *reco_particle_pt);
+      output_1d->emplace_back("reco_particle_eta",
+			      *reco_particle_eta);
+      
       output_1d->emplace_back("truth_particle_n_reco_times",
 			      *truth_particle_n_reco_times);
+
       output_1d->emplace_back("reco_particle_d0",
 			      *reco_particle_d0);
       output_1d->emplace_back("reco_particle_z0",
@@ -106,7 +142,7 @@ get_algo_sequence(Core::Scheduler& sequence,
 
   std::shared_ptr<Algorithm::RootFileHistogramMakerAlgorithm> rootFileHistogramMakerAlgorithm
     = std::make_shared<Algorithm::RootFileHistogramMakerAlgorithm>("RootFileHistogramMakerAlgorithm_" + particle_type,
-								   RootFileEfficiencyMakerConfiguration);
+								   RootFileHistogramMakerConfiguration);
 
   sequence.addAlgorithm(rootFileHistogramMakerAlgorithm);
   
@@ -149,8 +185,8 @@ get_algo_sequence(Core::Scheduler& sequence,
   
   // Plotter
   Algorithm::PlotterAlgorithm::Config PlotterConfiguration;
-  PlotterConfiguration.inputCollection_hist_1d = RootFileEfficiencyMakerConfiguration.output_collection_1d;
-  PlotterConfiguration.inputCollection_hist_2d = RootFileEfficiencyMakerConfiguration.output_collection_2d;
+  PlotterConfiguration.inputCollection_hist_1d = RootFileHistogramMakerConfiguration.output_collection_1d;
+  PlotterConfiguration.inputCollection_hist_2d = RootFileHistogramMakerConfiguration.output_collection_2d;
   PlotterConfiguration.inputCollection_prof = RootFileProfileMakerConfiguration.output_collection;
   PlotterConfiguration.outputFolder = "./plots/tracking_performance_plots";
   
