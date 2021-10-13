@@ -36,21 +36,13 @@ jobs:
           apt update
           apt install libcppunit-dev cmake -y
           cmake --version
-      - name: Install dependencies on ubuntu with gcc
-        if: startsWith(matrix.config.name, 'Ubuntu_GCC')
-        run: |
-          gcc --version
-      - name: Install dependencies on ubuntu with clang
-        if: startsWith(matrix.config.name, 'Ubuntu_CLANG')
+      - name: Install dependencies on ubuntu
         run: |
           apt install ${{ matrix.config.cc }} -y
           ${{ matrix.config.cc }} --version
-
-
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
         uses: actions/checkout@v2
-
       # Run the compilation
       - name: Run the compilation 
         run: |
