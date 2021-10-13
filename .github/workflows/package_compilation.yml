@@ -44,7 +44,7 @@ jobs:
         if: startsWith(matrix.config.name, 'Ubuntu_CLANG')
         run: |
           apt install clang-11 -y
-          clang --version
+          clang-11 --version
 
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -57,3 +57,4 @@ jobs:
           ls .
           mkdir build
           cmake -S . -B build
+          make --build build
