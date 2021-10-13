@@ -7,7 +7,7 @@
 #include <RootFileHistogramMakerAlgorithm.hpp>
 #include <EfficiencyComparisonPlotterAlgorithm.hpp>
 #include <ProfileComparisonPlotterAlgorithm.hpp>
-#include <PlotComparisonAlgorithm.hpp>
+#include <HistogramComparisonPlotterAlgorithm.hpp>
 
 void get_algo_sequence(Core::Scheduler& sequence,
 		       const std::string& file_name,
@@ -25,7 +25,7 @@ int main() {
   }
 
   // Compare Histograms
-  Algorithm::PlotComparisonAlgorithm::Config PlotComparisonConfiguration;
+  Algorithm::HistogramComparisonPlotterAlgorithm::Config PlotComparisonConfiguration;
   PlotComparisonConfiguration.outputFolder = "./plots/tracking_performance_plots";
   PlotComparisonConfiguration.variableNames =
     {
@@ -47,9 +47,9 @@ int main() {
   }
   PlotComparisonConfiguration.originalInputCollection = input_collection_hist;
   
-  std::shared_ptr<Algorithm::PlotComparisonAlgorithm> plotComparisonAlgorithm =
-    std::make_shared<Algorithm::PlotComparisonAlgorithm>("PlotComparisonAlgorithm",
-							 PlotComparisonConfiguration);
+  std::shared_ptr<Algorithm::HistogramComparisonPlotterAlgorithm> plotComparisonAlgorithm =
+    std::make_shared<Algorithm::HistogramComparisonPlotterAlgorithm>("HistogramComparisonPlotterAlgorithm",
+								     PlotComparisonConfiguration);
 
   scheduler.addAlgorithm(plotComparisonAlgorithm);
   

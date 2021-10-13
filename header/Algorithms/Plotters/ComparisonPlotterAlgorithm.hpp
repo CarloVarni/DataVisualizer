@@ -4,10 +4,6 @@
 
 #include <BaseAlgorithm.hpp>
 #include <EventContext.hpp>
-#include <Histogram_1D.hpp>
-#include <Graph.hpp>
-#include <Profile.hpp>
-#include <Efficiency.hpp>
 
 #include <TCanvas.h>
 
@@ -41,19 +37,10 @@ namespace Algorithm {
     virtual void execute(Core::EventContext&) override;
     
   protected:
-    void DrawCollection(TCanvas& canvas,
-			EventDataModel::HistogramObjectCollection_1D& collection);
-
-    void DrawCollection(TCanvas& canvas,
-			EventDataModel::GraphObjectCollection& collection);
+    virtual void DrawCollection(TCanvas& canvas,
+				object_collection_t& collection) = 0;
     
-    void DrawCollection(TCanvas& canvas,
-			EventDataModel::EfficiencyObjectCollection& collection);
-
-    void DrawCollection(TCanvas& canvas,
-			EventDataModel::ProfileObjectCollection& collection);
-    
-  private:
+  protected:
     const Config m_cfg;
   };
 
@@ -121,80 +108,6 @@ namespace Algorithm {
     }
   }
 
-  template<typename object_collection_t>
-  void
-  ComparisonPlotterAlgorithm<object_collection_t>::DrawCollection(TCanvas& canvas,
-								  EventDataModel::HistogramObjectCollection_1D& collection)
-  {
-    canvas.cd();
-    for (auto ihisto(0); ihisto<collection.size(); ihisto++) {
-      auto& histo = collection.at(ihisto);
-      histo.Scale( 1./histo.Integral() );
-      histo.SetLineColor(ihisto + 1);
-      histo.SetLineStyle(ihisto == 0 ? 1 : 2);
-
-      histo.Draw(canvas, ihisto == 0 ? "HIST" : "HISTSAME" );
-    }
-  }
-
-  template<typename object_collection_t>
-  void
-  ComparisonPlotterAlgorithm<object_collection_t>::DrawCollection(TCanvas& canvas,
-								  EventDataModel::GraphObjectCollection& collection)
-  {
-    canvas.cd();
-    for (auto igr(0); igr<collection.size(); igr++) {
-      auto& gr = collection.at(igr);
-      
-      gr.SetLineColor(igr + 1);
-      gr.SetLineStyle(igr == 0 ? 1 : 2);
-      gr.SetMarkerStyle(20);
-      gr.SetMarkerColor(igr + 1);
-      
-      gr.Draw(canvas, igr == 0 ? "AP" : "PSAME" );
-    }
-  }
-  
-  
-  template<typename object_collection_t>
-  void
-  ComparisonPlotterAlgorithm<object_collection_t>::DrawCollection(TCanvas& canvas,
-								  EventDataModel::EfficiencyObjectCollection& collection)
-  {
-    canvas.cd();
-    for (auto igr(0); igr<collection.size(); igr++) {
-      auto& gr = collection.at(igr);
-      
-      gr.SetLineColor(igr + 1);
-      gr.SetLineStyle(igr == 0 ? 1 : 2);
-      gr.SetMarkerStyle(20);
-      gr.SetMarkerColor(igr + 1);
-      
-      gr.Draw(canvas, igr == 0 ? "APL" : "PLSAME" );
-    }
-  }
-  
-  template<typename object_collection_t>
-  void
-  ComparisonPlotterAlgorithm<object_collection_t>::DrawCollection(TCanvas& canvas,
-								  EventDataModel::ProfileObjectCollection& collection)
-  {
-    canvas.cd();
-    for (auto igr(0); igr<collection.size(); igr++) {
-      auto& gr = collection.at(igr);
-
-      gr.SetLineColor(igr + 1);
-      gr.SetMarkerColor(igr + 1);
-      
-      gr.Draw(canvas, igr == 0 ? "" : "SAME" );
-    }
-  }
-
-
-  using HistogramComparisonPlotterAlgorithm = ComparisonPlotterAlgorithm<EventDataModel::HistogramObjectCollection_1D>;
-  using GraphComparisonPlotterAlgorithm = ComparisonPlotterAlgorithm<EventDataModel::GraphObjectCollection>;
-  using EfficiencyComparisonPlotterAlgorithm = ComparisonPlotterAlgorithm<EventDataModel::EfficiencyObjectCollection>;
-  using ProfileComparisonPlotterAlgorithm = ComparisonPlotterAlgorithm<EventDataModel::ProfileObjectCollection>;
 }
 
 #endif

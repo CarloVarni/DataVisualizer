@@ -3,7 +3,7 @@
 #include <TxtFileReaderAlgorithm.hpp>
 #include <MultiDataHistogramMakerAlgorithm.hpp>
 #include <PlotterAlgorithm.hpp>
-#include <PlotComparisonAlgorithm.hpp>
+#include <HistogramComparisonPlotterAlgorithm.hpp>
 #include <Graph.hpp>
 #include <sstream>
 
@@ -40,27 +40,27 @@ int main() {
 
   
   // Compare Plots
-  Algorithm::PlotComparisonAlgorithm::Config PlotComparisonConfiguration;
+  Algorithm::HistogramComparisonPlotterAlgorithm::Config PlotComparisonConfiguration;
   PlotComparisonConfiguration.outputFolder = "./timing_comparison_full";
   PlotComparisonConfiguration.originalInputCollection = { "histograms_1d_adhoc_full",
 							  "histograms_1d_xaod_full" };
   PlotComparisonConfiguration.variableNames = { "time" };
 
-  std::shared_ptr<Algorithm::PlotComparisonAlgorithm> plotComparisonAlgorithm =
-    std::make_shared<Algorithm::PlotComparisonAlgorithm>("PlotComparisonAlgorithm_full",
+  std::shared_ptr<Algorithm::HistogramComparisonPlotterAlgorithm> plotComparisonAlgorithm =
+    std::make_shared<Algorithm::HistogramComparisonPlotterAlgorithm>("HistogramComparisonPlotterAlgorithm_full",
 							 PlotComparisonConfiguration);
 
   scheduler.addAlgorithm(plotComparisonAlgorithm);
 
   // Compare Plots
-  Algorithm::PlotComparisonAlgorithm::Config PlotComparisonConfiguration_single;
+  Algorithm::HistogramComparisonPlotterAlgorithm::Config PlotComparisonConfiguration_single;
   PlotComparisonConfiguration_single.outputFolder = "./timing_comparison_single";
   PlotComparisonConfiguration_single.originalInputCollection = { "histograms_1d_adhoc_single",
 								 "histograms_1d_xaod_single" };
   PlotComparisonConfiguration_single.variableNames = { "time" };
   
-  std::shared_ptr<Algorithm::PlotComparisonAlgorithm> plotComparisonAlgorithm_single =
-    std::make_shared<Algorithm::PlotComparisonAlgorithm>("PlotComparisonAlgorithm_single",
+  std::shared_ptr<Algorithm::HistogramComparisonPlotterAlgorithm> plotComparisonAlgorithm_single =
+    std::make_shared<Algorithm::HistogramComparisonPlotterAlgorithm>("HistogramComparisonPlotterAlgorithm_single",
                                                          PlotComparisonConfiguration_single);
 
   scheduler.addAlgorithm(plotComparisonAlgorithm_single);

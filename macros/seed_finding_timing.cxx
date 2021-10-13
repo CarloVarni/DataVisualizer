@@ -4,7 +4,7 @@
 #include <MultiDataHistogramMakerAlgorithm.hpp>
 #include <MultiDataGraphMakerAlgorithm.hpp>
 #include <PlotterAlgorithm.hpp>
-#include <PlotComparisonAlgorithm.hpp>
+#include <HistogramComparisonPlotterAlgorithm.hpp>
 #include <GraphComparisonPlotterAlgorithm.hpp>
 
 void seed_finding_timing_algo_sequence(Core::Scheduler& sequence,
@@ -23,15 +23,15 @@ int main() {
 
 
   // Compare Plots
-  Algorithm::PlotComparisonAlgorithm::Config PlotComparisonConfiguration;
+  Algorithm::HistogramComparisonPlotterAlgorithm::Config PlotComparisonConfiguration;
   PlotComparisonConfiguration.outputFolder = "./timing_comparison";
   PlotComparisonConfiguration.originalInputCollection = { "histograms_1d_adhoc",
                                                           "histograms_1d_xaod" };
   PlotComparisonConfiguration.variableNames = { "time" };
 
-  std::shared_ptr<Algorithm::PlotComparisonAlgorithm> plotComparisonAlgorithm =
-    std::make_shared<Algorithm::PlotComparisonAlgorithm>("PlotComparisonAlgorithm",
-                                                         PlotComparisonConfiguration);
+  std::shared_ptr<Algorithm::HistogramComparisonPlotterAlgorithm> plotComparisonAlgorithm =
+    std::make_shared<Algorithm::HistogramComparisonPlotterAlgorithm>("HistogramComparisonPlotterAlgorithm",
+								     PlotComparisonConfiguration);
 
   scheduler.addAlgorithm(plotComparisonAlgorithm);
 

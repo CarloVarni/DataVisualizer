@@ -4,7 +4,8 @@
 #include <RootFileEfficiencyMakerAlgorithm.hpp>
 #include <RootFileProfileMakerAlgorithm.hpp>
 #include <PlotterAlgorithm.hpp>
-#include <ComparisonPlotterAlgorithm.hpp>
+#include <EfficiencyComparisonPlotterAlgorithm.hpp>
+#include <ProfileComparisonPlotterAlgorithm.hpp>
 
 void get_algo_sequence(Core::Scheduler& sequence,
 		       const std::string& file_name,

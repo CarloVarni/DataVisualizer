@@ -46,7 +46,7 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Algorithms/ProfileMakers/RootFileProfileMakerAlgorithm.hpp
 		  header/Algorithms/EfficiencyMakers/RootFileEfficiencyMakerAlgorithm.hpp
 		  header/Algorithms/Plotters/ComparisonPlotterAlgorithm.hpp
-		  header/Algorithms/Plotters/PlotComparisonAlgorithm.hpp
+		  header/Algorithms/Plotters/HistogramComparisonPlotterAlgorithm.hpp
 		  header/Algorithms/Plotters/GraphComparisonPlotterAlgorithm.hpp
 		  header/Algorithms/Plotters/EfficiencyComparisonPlotterAlgorithm.hpp
 		  header/Algorithms/Plotters/ProfileComparisonPlotterAlgorithm.hpp
@@ -67,8 +67,8 @@ SET( SRC_FILES src/EventDataModel/Efficiency.cpp
 	       src/Algorithms/GraphMakers/MultiDataGraphMakerAlgorithm.cpp
 	       src/Algorithms/ProfileMakers/RootFileProfileMakerAlgorithm.cpp
 	       src/Algorithms/EfficiencyMakers/RootFileEfficiencyMakerAlgorithm.cpp
-	       src/Algorithms/Plotters/PlotComparisonAlgorithm.cpp
 	       src/Algorithms/Plotters/PlotterAlgorithm.cpp
+	       src/Algorithms/Plotters/HistogramComparisonPlotterAlgorithm.cpp	
 	       src/Algorithms/Plotters/GraphComparisonPlotterAlgorithm.cpp
 	       src/Algorithms/Plotters/EfficiencyComparisonPlotterAlgorithm.cpp
 	       src/Algorithms/Plotters/ProfileComparisonPlotterAlgorithm.cpp
