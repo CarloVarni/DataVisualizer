@@ -51,7 +51,7 @@ jobs:
         uses: actions/checkout@v2
 
       # Run the compilation
-      -name: |
-           ls .
-           mkdir build
-           cmake -S DataVisualizer -B build
+      - name: |
+          ls .
+          mkdir build
+          cmake -S DataVisualizer -B build
