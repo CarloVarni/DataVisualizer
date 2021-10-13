@@ -31,6 +31,9 @@ namespace EventDataModel {
     const std::string& title() const;
     const std::string& target_variable_x() const;
     const std::string& target_variable_y() const;
+
+    void SetLineColor(int color);
+    void SetMarkerColor(int color);
     
   private:
     const std::string m_title;

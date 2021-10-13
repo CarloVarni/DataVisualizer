@@ -3,6 +3,7 @@
 #include <Histogram_1D.hpp>
 #include <Histogram_2D.hpp>
 #include <Efficiency.hpp>
+#include <Profile.hpp>
 #include <Graph.hpp>
 
 namespace Algorithm {
@@ -22,7 +23,8 @@ namespace Algorithm {
 	m_cfg.inputCollection_hist_2d.empty() and
 	m_cfg.inputCollection_eff_1d.empty() and
 	m_cfg.inputCollection_eff_2d.empty() and
-	m_cfg.inputCollection_gr.empty() )
+	m_cfg.inputCollection_gr.empty() and
+	m_cfg.inputCollection_prof.empty() )
       throw std::invalid_argument(name() + " requires an input collection to be defined!");
 
     if (m_cfg.outputFolder.empty())
@@ -53,6 +55,10 @@ namespace Algorithm {
     const EventDataModel::GraphObjectCollection* graphs = nullptr;
     if (not m_cfg.inputCollection_gr.empty())
       graphs = context.get<EventDataModel::GraphObjectCollection>( "gr_" + m_cfg.inputCollection_gr );
+
+    const EventDataModel::ProfileObjectCollection* profiles = nullptr;
+    if (not m_cfg.inputCollection_prof.empty())
+      profiles = context.get<EventDataModel::ProfileObjectCollection>( "prof_" + m_cfg.inputCollection_prof );
     
     // Histograms 1D
     if (histograms_1D) {
@@ -125,6 +131,22 @@ namespace Algorithm {
         canvas.Draw();
         canvas.SaveAs( saving_name.c_str() );
         MSG_INFO("Created Graph: " + saving_name);
+      }
+    }
+
+    // Profiles
+    if (profiles) {
+      for (const auto& const_prof : *profiles) {
+	auto& prof = *const_cast<EventDataModel::ProfileObject*>(&const_prof);
+	const std::string saving_name = m_cfg.outputFolder + "/" + prof.title() + ".pdf";
+	prof.SetMarkerColor(2);
+	prof.SetLineColor(2);
+
+	TCanvas canvas("canvas", "canvas");
+	prof.Draw(canvas, "");
+	canvas.Draw();
+	canvas.SaveAs( saving_name.c_str()  );
+	MSG_INFO("Created Profile: " + saving_name);
       }
     }
     

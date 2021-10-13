@@ -58,5 +58,13 @@ namespace EventDataModel {
   Profile::target_variable_y() const
   { return m_target_variable_y; }
 
+  void
+  Profile::SetLineColor(int color)
+  { m_profile.SetLineColor(color); }
+
+  void
+  Profile::SetMarkerColor(int color)
+  { m_profile.SetMarkerColor(color); }
+  
 }
 

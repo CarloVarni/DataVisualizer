@@ -13,12 +13,10 @@ void get_algo_sequence(Core::Scheduler& sequence,
 int main() {
   Core::Scheduler scheduler;
   std::vector<std::string> particles{ "muon", "pion", "electron" };
-  std::vector<int> nparticles{1, 10, 100, 1000};
+  std::vector<int> nparticles{1};
 
   for (const auto& particle : particles) {
     for (int np : nparticles) {
-      if (np == 1000 && particle == "pion") continue;
-      if (np == 1000 && particle == "electron") continue;
       std::string fileName = "./data/performance_vs_nparticles/" + particle + "_efficiency_plots_n" + std::to_string(np) + ".root";
       std::string snp = std::to_string(np);
       get_algo_sequence(scheduler,

@@ -30,7 +30,7 @@ namespace Algorithm {
     MSG_INFO("Executing " + name() + " ...");
     
     std::shared_ptr<TFile> file = std::make_shared<TFile>(m_cfg.inputFile.c_str(), "READ");
-    
+
     std::pair<
       std::shared_ptr<EventDataModel::EfficiencyObjectCollection>,
       std::shared_ptr<EventDataModel::EfficiencyObjectCollection>

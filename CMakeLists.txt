@@ -48,6 +48,7 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Algorithms/Plotters/PlotComparisonAlgorithm.hpp
 		  header/Algorithms/Plotters/GraphComparisonPlotterAlgorithm.hpp
 		  header/Algorithms/Plotters/EfficiencyComparisonPlotterAlgorithm.hpp
+		  header/Algorithms/Plotters/ProfileComparisonPlotterAlgorithm.hpp
 		  header/Algorithms/Plotters/PlotterAlgorithm.hpp
 		  )
 
@@ -69,6 +70,7 @@ SET( SRC_FILES src/EventDataModel/Efficiency.cpp
 	       src/Algorithms/Plotters/PlotterAlgorithm.cpp
 	       src/Algorithms/Plotters/GraphComparisonPlotterAlgorithm.cpp
 	       src/Algorithms/Plotters/EfficiencyComparisonPlotterAlgorithm.cpp
+	       src/Algorithms/Plotters/ProfileComparisonPlotterAlgorithm.cpp
 	       )
 
 
@@ -92,3 +94,6 @@ target_link_libraries( seed_finding_timing DataVisualizerLib )
 
 add_executable( efficiency_vs_nparticles macros/efficiency_vs_nparticles.cxx )
 target_link_libraries( efficiency_vs_nparticles DataVisualizerLib )
+
+add_executable( ckf_performance macros/ckf_performance.cxx )
+target_link_libraries( ckf_performance DataVisualizerLib )

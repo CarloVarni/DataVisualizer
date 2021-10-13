@@ -31,19 +31,23 @@ namespace Algorithm {
     std::shared_ptr<EventDataModel::ProfileObjectCollection> profile_collection = 
       m_cfg.extractionFunction( file.get() );
 
-    std::shared_ptr<std::vector<std::string>> profile_names =
-      std::make_shared<std::vector<std::string>>();
+    std::shared_ptr<
+      std::unordered_map<std::string, std::size_t>
+      > profile_names =
+      std::make_shared<
+	std::unordered_map<std::string, std::size_t>
+      >();
     
     profile_names->reserve(profile_collection->size());
 
     for (auto index(0); index<profile_collection->size(); index++) {
       const auto& object = profile_collection->at(index);
-      profile_names->push_back(object.title());
+      (*profile_names.get())["prof_" + object.title()] = index;
     }
 
     if (not m_cfg.output_collection.empty()) {
-      context.add( "p_" + m_cfg.output_collection, std::move(profile_collection) );
-      context.add( "index_p_" + m_cfg.output_collection, std::move(profile_names) );
+      context.add( "prof_" + m_cfg.output_collection, std::move(profile_collection) );
+      context.add( "index_prof_" + m_cfg.output_collection, std::move(profile_names) );
     }
     
     file->Close(); 
