@@ -56,4 +56,4 @@ jobs:
         run: |
           ls .
           mkdir build
-          cmake -S DataVisualizer -B build
+          cmake -S . -B build
