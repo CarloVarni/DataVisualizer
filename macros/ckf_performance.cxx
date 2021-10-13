@@ -4,8 +4,9 @@
 #include <RootFileEfficiencyMakerAlgorithm.hpp>
 #include <RootFileProfileMakerAlgorithm.hpp>
 #include <PlotterAlgorithm.hpp>
-#include <EfficiencyComparisonPlotterAlgorithm.hpp>
-#include <ProfileComparisonPlotterAlgorithm.hpp>
+//#include <EfficiencyComparisonPlotterAlgorithm.hpp>
+//#include <ProfileComparisonPlotterAlgorithm.hpp>
+#include <ComparisonPlotterAlgorithm.hpp>
 
 void get_algo_sequence(Core::Scheduler& sequence,
 		       const std::string& file_name,
@@ -24,6 +25,7 @@ int main() {
 
   // Compare Eff
   Algorithm::EfficiencyComparisonPlotterAlgorithm::Config EfficiencyComparisonPlotterConfiguration;
+  EfficiencyComparisonPlotterConfiguration.prefix = "eff";
   EfficiencyComparisonPlotterConfiguration.outputFolder = "./plots";
   EfficiencyComparisonPlotterConfiguration.variableNames =
     {
@@ -47,6 +49,7 @@ int main() {
 			   
   // Compare Prof
   Algorithm::ProfileComparisonPlotterAlgorithm::Config ProfileComparisonPlotterConfiguration;
+  ProfileComparisonPlotterConfiguration.prefix = "prof_1d"; 
   ProfileComparisonPlotterConfiguration.outputFolder = "./plots";
   ProfileComparisonPlotterConfiguration.variableNames =
     {
