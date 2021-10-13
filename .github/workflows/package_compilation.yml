@@ -43,8 +43,8 @@ jobs:
       - name: Install dependencies on ubuntu with clang
         if: startsWith(matrix.config.name, 'Ubuntu_CLANG')
         run: |
-          apt install ${{ matrix.config.cxx }} -y
-          ${{ matrix.config.cxx }} --version
+          apt install ${{ matrix.config.cc }} -y
+          ${{ matrix.config.cc }} --version
 
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
