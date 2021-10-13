@@ -20,7 +20,7 @@ jobs:
             os: ubuntu-latest,
             build_type: "Release",
             cc: "gcc-10",
-            cxx: "g++-10",
+            cxx: "gcc++-10",
           }
         - {
             name: "Ubuntu_CLANG",
