@@ -19,8 +19,8 @@ jobs:
             name: "Ubuntu_GCC",
             os: ubuntu-latest,
             build_type: "Release",
-            cc: "gcc-10",
-            cxx: "gcc++-10",
+            cc: "gcc-9",
+            cxx: "g++-9",
           }
         - {
             name: "Ubuntu_CLANG",
