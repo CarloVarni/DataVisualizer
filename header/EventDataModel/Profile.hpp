@@ -8,8 +8,6 @@
 #include <TProfile.h>
 #include <TCanvas.h>
 
-#include <string>
-
 namespace EventDataModel {
 
   class Profile {

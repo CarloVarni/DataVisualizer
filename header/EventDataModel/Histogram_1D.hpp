@@ -3,7 +3,6 @@
 #define HISTOGRAM_1D_H
 
 #include <type_traits>
-#include <string>
 #include <Data.hpp>
 #include <MultiData.hpp>
 

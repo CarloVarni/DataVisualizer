@@ -3,7 +3,6 @@
 #define MULTIDATA_H
 
 #include <utility>
-#include <string>
 #include <vector>
 #include <unordered_map>
 #include <variant>

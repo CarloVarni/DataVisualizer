@@ -2,7 +2,6 @@
 #ifndef DATA_H
 #define DATA_H
 
-#include <string>
 #include <stdexcept>
 #include <type_traits>
 #include <vector>

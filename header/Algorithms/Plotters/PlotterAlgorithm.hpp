@@ -5,7 +5,6 @@
 #include <BaseAlgorithm.hpp>
 #include <EventContext.hpp>
 
-#include <string>
 #include <vector>
 
 namespace Algorithm {

@@ -5,7 +5,6 @@
 #include <BaseAlgorithm.hpp>
 #include <Graph.hpp>
 
-#include <string>
 #include <vector>
 
 namespace Algorithm {

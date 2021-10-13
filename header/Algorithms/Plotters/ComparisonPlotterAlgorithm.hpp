@@ -7,7 +7,6 @@
 
 #include <TCanvas.h>
 
-#include <string>
 #include <vector>
 
 namespace Algorithm {

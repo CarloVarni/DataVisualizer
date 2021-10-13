@@ -6,7 +6,6 @@
 #include <Data.hpp>
 #include <MultiData.hpp>
 
-#include <string>
 #include <functional>
 
 namespace Algorithm {

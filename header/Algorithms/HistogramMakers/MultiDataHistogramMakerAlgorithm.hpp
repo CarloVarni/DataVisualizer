@@ -7,7 +7,6 @@
 #include <Histogram_1D.hpp>
 #include <Histogram_2D.hpp>
 
-#include <string>
 #include <vector>
 
 namespace Algorithm {

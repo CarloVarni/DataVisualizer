@@ -3,7 +3,6 @@
 #define HISTOGRAM_2D_H
 
 #include <type_traits>
-#include <string>
 #include <MultiData.hpp>
 
 #include <TH2.h>
