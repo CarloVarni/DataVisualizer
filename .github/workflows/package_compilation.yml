@@ -19,8 +19,8 @@ jobs:
             name: "Ubuntu_GCC",
             os: ubuntu-latest,
             build_type: "Release",
-            cc: "gcc-9",
-            cxx: "g++-9",
+            cc: "gcc-10",
+            cxx: "g++-10",
           }
         - {
             name: "Ubuntu_CLANG",
@@ -43,7 +43,7 @@ jobs:
       - name: Install dependencies on ubuntu with clang
         if: startsWith(matrix.config.name, 'Ubuntu_CLANG')
         run: |
-          apt install clang-11 -y
+          #apt install clang-11 -y
           clang-11 --version
 
 
