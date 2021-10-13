@@ -43,7 +43,7 @@ jobs:
       - name: Install dependencies on ubuntu with clang
         if: startsWith(matrix.config.name, 'Ubuntu_CLANG')
         run: |
-          #apt install clang-11 -y
+          apt install clang-11 -y
           clang --version
 
 
