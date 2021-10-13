@@ -56,5 +56,5 @@ jobs:
         run: |
           ls .
           mkdir build
-          cmake -S . -B build
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} -DCMAKE_C_COMPILER=-DCMAKE_CXX_COMPILER=${{ matrix.config.cc }}
           cmake --build build
