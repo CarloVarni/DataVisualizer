@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - {
+	- {
             name: "Ubuntu_GCC",
             os: ubuntu-latest,
             build_type: "Release",
@@ -55,4 +55,3 @@ jobs:
            ls .
            mkdir build
            cmake -S DataVisualizer -B build
-	   
