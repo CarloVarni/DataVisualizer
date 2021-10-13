@@ -4,8 +4,6 @@
 #include <RootFileEfficiencyMakerAlgorithm.hpp>
 #include <RootFileProfileMakerAlgorithm.hpp>
 #include <PlotterAlgorithm.hpp>
-//#include <EfficiencyComparisonPlotterAlgorithm.hpp>
-//#include <ProfileComparisonPlotterAlgorithm.hpp>
 #include <ComparisonPlotterAlgorithm.hpp>
 
 void get_algo_sequence(Core::Scheduler& sequence,
@@ -25,8 +23,8 @@ int main() {
 
   // Compare Eff
   Algorithm::EfficiencyComparisonPlotterAlgorithm::Config EfficiencyComparisonPlotterConfiguration;
-  EfficiencyComparisonPlotterConfiguration.prefix = "eff";
-  EfficiencyComparisonPlotterConfiguration.outputFolder = "./plots";
+  EfficiencyComparisonPlotterConfiguration.prefix = "eff_1d";
+  EfficiencyComparisonPlotterConfiguration.outputFolder = "./plots/ckf_performance_plots";
   EfficiencyComparisonPlotterConfiguration.variableNames =
     {
       "trackeff_vs_pT",
@@ -49,8 +47,8 @@ int main() {
 			   
   // Compare Prof
   Algorithm::ProfileComparisonPlotterAlgorithm::Config ProfileComparisonPlotterConfiguration;
-  ProfileComparisonPlotterConfiguration.prefix = "prof_1d"; 
-  ProfileComparisonPlotterConfiguration.outputFolder = "./plots";
+  ProfileComparisonPlotterConfiguration.prefix = "prof"; 
+  ProfileComparisonPlotterConfiguration.outputFolder = "./plots/ckf_performance_plots";
   ProfileComparisonPlotterConfiguration.variableNames =
     {
       "nStates_vs_eta",

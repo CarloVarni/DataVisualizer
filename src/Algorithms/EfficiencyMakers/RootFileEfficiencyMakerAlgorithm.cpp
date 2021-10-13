@@ -54,12 +54,12 @@ namespace Algorithm {
     
     for (auto index(0); index<efficiency_collections.first->size(); index++) {
       const auto& object = efficiency_collections.first->at(index);
-      (*efficiency_names_1d.get())["eff_" + object.title()] = index;
+      (*efficiency_names_1d.get())["eff_1d_" + object.title()] = index;
     }
 
     for (auto index(0); index<efficiency_collections.second->size(); index++) {
       const auto& object = efficiency_collections.second->at(index);
-      (*efficiency_names_2d.get())["eff_" + object.title()] = index;
+      (*efficiency_names_2d.get())["eff_2d_" + object.title()] = index;
     }
     
     if (not m_cfg.output_collection_1d.empty()) {

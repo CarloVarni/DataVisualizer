@@ -41,19 +41,15 @@ namespace Algorithm {
     virtual void execute(Core::EventContext&) override;
     
   protected:
-    template<typename Enable = std::enable_if_t<std::is_same<object_collection_t, EventDataModel::HistogramObjectCollection_1D>::value>>
     void DrawCollection(TCanvas& canvas,
 			EventDataModel::HistogramObjectCollection_1D& collection);
 
-    template<typename Enable = std::enable_if_t<std::is_same<object_collection_t, EventDataModel::GraphObjectCollection>::value>>
     void DrawCollection(TCanvas& canvas,
 			EventDataModel::GraphObjectCollection& collection);
     
-    template<typename Enable = std::enable_if_t<std::is_same<object_collection_t, EventDataModel::EfficiencyObjectCollection>::value>>
     void DrawCollection(TCanvas& canvas,
 			EventDataModel::EfficiencyObjectCollection& collection);
 
-    template<typename Enable = std::enable_if_t<std::is_same<object_collection_t, EventDataModel::ProfileObjectCollection>::value>>
     void DrawCollection(TCanvas& canvas,
 			EventDataModel::ProfileObjectCollection& collection);
     
@@ -106,8 +102,10 @@ namespace Algorithm {
       for (auto ientry(0); ientry < object_maps.size(); ientry++) {
 	const auto& map = object_maps.at(ientry);
 	if (map->find( m_cfg.prefix + "_" + var_name) == map->end())
+	  {
+	    for (auto el : *map) std::cout<<el.first<<std::endl; 
 	  throw std::runtime_error("Variable not available in collection: " + var_name);
-
+	  }
 	std::size_t index = map->at( m_cfg.prefix + "_" + var_name);
 	object_to_be_drawn.push_back( object_collections.at(ientry)->at(index) );
       }
@@ -124,7 +122,6 @@ namespace Algorithm {
   }
 
   template<typename object_collection_t>
-  template<typename Enable>
   void
   ComparisonPlotterAlgorithm<object_collection_t>::DrawCollection(TCanvas& canvas,
 								  EventDataModel::HistogramObjectCollection_1D& collection)
@@ -141,7 +138,6 @@ namespace Algorithm {
   }
 
   template<typename object_collection_t>
-  template<typename Enable>
   void
   ComparisonPlotterAlgorithm<object_collection_t>::DrawCollection(TCanvas& canvas,
 								  EventDataModel::GraphObjectCollection& collection)
@@ -161,7 +157,6 @@ namespace Algorithm {
   
   
   template<typename object_collection_t>
-  template<typename Enable>
   void
   ComparisonPlotterAlgorithm<object_collection_t>::DrawCollection(TCanvas& canvas,
 								  EventDataModel::EfficiencyObjectCollection& collection)
@@ -180,7 +175,6 @@ namespace Algorithm {
   }
   
   template<typename object_collection_t>
-  template<typename Enable>
   void
   ComparisonPlotterAlgorithm<object_collection_t>::DrawCollection(TCanvas& canvas,
 								  EventDataModel::ProfileObjectCollection& collection)
