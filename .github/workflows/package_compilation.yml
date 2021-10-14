@@ -17,14 +17,14 @@ jobs:
         config:
         - {
             name: "Macos_GCC",
-            os: ubuntu-latest,
+            os: macos-latest,
             build_type: "Release",
             cc: "gcc-9",
             cxx: "g++-9",
           }
         - {
             name: "Macos_CLANG",
-            os: ubuntu-latest,
+            os: macos-latest,
             build_type: "Release",
             cc: "clang-11",
             cxx: "clang++-11",
@@ -34,7 +34,7 @@ jobs:
       - name: Install common dependencies
         run: |
           apt update
-          apt install libcppunit-dev cmake -y
+          #apt install libcppunit-dev cmake -y
           cmake --version
       - name: Install dependencies on ubuntu with gcc
         if: startsWith(matrix.config.name, 'Macos_GCC')
