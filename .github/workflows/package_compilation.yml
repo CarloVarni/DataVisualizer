@@ -44,7 +44,7 @@ jobs:
       - name: Install dependencies on ubuntu with clang
         if: startsWith(matrix.config.name, 'Ubuntu_CLANG')
         run: |
-          dnf install ${{ matrix.config.cc }}
+          dnf install ${{ matrix.config.cc }} -y
           ${{ matrix.config.cc }} --version
       - name: Check ROOT version
         run: |
