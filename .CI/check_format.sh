@@ -17,9 +17,9 @@ find . \( -iname '*.cpp' -or -iname '*.hpp' -or -iname '*.ipp' -or -iname '*.cu'
   | xargs $_binary -i -style=file
   
 if ! [ -z $CI ] || ! [ -z $GITHUB_ACTIONS ]; then
-  mkdir changed
+  mkdir DataVisualizerFormatted
   for f in $(git diff --name-only); do
-    cp --parents $f changed
+    cp --parents $f DataVisualizerFormatted
   done
 fi
     
