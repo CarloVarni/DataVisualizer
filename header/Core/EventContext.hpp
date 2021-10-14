@@ -4,7 +4,6 @@
 
 #include <IHolder.hpp>
 #include <stdexcept>
-#include <string>
 #include <memory>
 #include <utility>
 #include <unordered_map>

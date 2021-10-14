@@ -6,7 +6,6 @@
 #include <EventContext.hpp>
 #include <Histogram_1D.hpp>
 
-#include <string>
 #include <vector>
 
 namespace Algorithm {

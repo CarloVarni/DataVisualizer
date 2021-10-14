@@ -3,7 +3,6 @@
 #define MESSAGER_H 1
 
 #include <iostream>
-#include <string>
 #include <iomanip>
 
 namespace Core {
