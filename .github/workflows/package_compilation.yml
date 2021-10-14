@@ -9,7 +9,8 @@ jobs:
   build:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
-    container: rootproject/root:latest
+    container: 
+      image: rootproject/root:6.24.02-conda
     strategy:
       fail-fast: false
       matrix:
