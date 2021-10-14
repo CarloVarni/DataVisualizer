@@ -7,22 +7,22 @@
 
 namespace Core {
 
-  class BaseAlgorithm {
-  public:
-    BaseAlgorithm() = delete;
-    BaseAlgorithm(const std::string& name);
-    virtual ~BaseAlgorithm() = default;
+class BaseAlgorithm {
+public:
+  BaseAlgorithm() = delete;
+  BaseAlgorithm(const std::string &name);
+  virtual ~BaseAlgorithm() = default;
 
-    virtual void initialize() = 0;
-    virtual void execute(EventContext& context) = 0;
-    virtual void finalize();
+  virtual void initialize() = 0;
+  virtual void execute(EventContext &context) = 0;
+  virtual void finalize();
 
-    const std::string& name() const;
+  const std::string &name() const;
 
-  protected:
-    const std::string m_name;
-  };
-  
-}
+protected:
+  const std::string m_name;
+};
+
+} // namespace Core
 
 #endif
