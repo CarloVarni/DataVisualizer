@@ -59,7 +59,6 @@ jobs:
           cmake -S . -B build 
           -DCMAKE_C_COMPILER=${{ matrix.config.cc }} 
           -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} 
-          -DCMAKE_CXX_FLAGS="-Qunused-arguments"
       - name: Install
         run: |
           cmake --build build
