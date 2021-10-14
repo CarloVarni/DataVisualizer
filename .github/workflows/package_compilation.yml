@@ -1,9 +1,7 @@
 name: Package Compilation
 
 on:
-  push:
   pull_request:
-  workflow_dispatch:
   
 jobs:
   build:
@@ -60,7 +58,7 @@ jobs:
           cmake -S . -B build 
           -DCMAKE_C_COMPILER=${{ matrix.config.cc }} 
           -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
-      - name: Build with gcc
+      - name: Build with clang
         if: startsWith(matrix.config.name, 'CI-build-CLANG')
         run: >
           cmake -S . -B build 
