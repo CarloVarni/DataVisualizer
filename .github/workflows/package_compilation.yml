@@ -1,6 +1,7 @@
 name: Package Compilation
 
 on:
+  push:
   pull_request:
   
 jobs:
