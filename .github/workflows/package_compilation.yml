@@ -10,7 +10,7 @@ jobs:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     container:
-      image: rootproject/root:6.24.02-ubuntu20.04
+      image: rootproject/root:6.24.06-conda
     strategy:
       fail-fast: false
       matrix:
@@ -19,8 +19,8 @@ jobs:
             name: "Ubuntu_GCC",
             os: ubuntu-20.04,
             build_type: "Release",
-            cc: "gcc-10",
-            cxx: "g++-10",
+            cc: "gcc-9",
+            cxx: "g++-9",
           }
         - {
             name: "Ubuntu_CLANG",
