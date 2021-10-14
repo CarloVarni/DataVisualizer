@@ -18,14 +18,12 @@ jobs:
         - {
             name: "Ubuntu_GCC",
             os: ubuntu-latest,
-            build_type: "Release",
             cc: "gcc-9",
             cxx: "g++-9",
           }
         - {
             name: "Ubuntu_CLANG",
             os: ubuntu-latest,
-            build_type: "Release",
             cc: "clang-11",
             cxx: "clang++-11",
           }
@@ -33,8 +31,8 @@ jobs:
     steps:
       - name: Install common dependencies
         run: |
-          apt update
-          apt install libcppunit-dev cmake -y
+          apt-get update
+          apt-get install libcppunit-dev cmake -y
           cmake --version
       - name: Install dependencies on ubuntu with gcc
         if: startsWith(matrix.config.name, 'Ubuntu_GCC')
@@ -62,7 +60,7 @@ jobs:
           mkdir build
       - name: Build
         run: |
-          cmake -S . -B build -DCMAKE_CXX_FLAGS="-Werror -Wall" -DCMAKE_CXX_STANDARD=17 -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} 
+          cmake -S . -B build -DCMAKE_CXX_FLAGS="-Werror -Wall" -DCMAKE_CXX_STANDARD="17" -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} 
       - name: Install
         run: |
           cmake --build build
