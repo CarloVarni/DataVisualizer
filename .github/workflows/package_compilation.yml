@@ -18,8 +18,8 @@ jobs:
         - {
             name: "Ubuntu_GCC",
             os: ubuntu-latest,
-            cc: "gcc-10",
-            cxx: "g++-10",
+            cc: "gcc-9",
+            cxx: "g++-9",
           }
         - {
             name: "Ubuntu_CLANG",
