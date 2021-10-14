@@ -31,8 +31,8 @@ jobs:
     steps:
       - name: Install common dependencies
         run: |
-          dnf upgrade
-          dnf install libcppunit-dev cmake
+          #dnf upgrade
+          #dnf install libcppunit-dev cmake
           cmake --version
       - name: Install dependencies on ubuntu with gcc
         if: startsWith(matrix.config.name, 'Ubuntu_GCC')
