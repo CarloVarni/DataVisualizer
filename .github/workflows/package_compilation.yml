@@ -10,7 +10,7 @@ jobs:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     container: 
-      image: rootproject/root:6.24.00-ubuntu20.04
+      image: rootproject/root:6.24.02-arch
     strategy:
       fail-fast: false
       matrix:
@@ -24,8 +24,8 @@ jobs:
         - {
             name: "Ubuntu_CLANG",
             os: ubuntu-20.04,
-            cc: "clang-13",
-            cxx: "clang++-13",
+            cc: "clang-11",
+            cxx: "clang++-11",
           }
 
     steps:
