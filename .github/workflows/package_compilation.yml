@@ -10,7 +10,7 @@ jobs:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     container:
-      image: rootproject/root:6.24.06-conda
+      image: rootproject/root:6.22.08-fedora34
     strategy:
       fail-fast: false
       matrix:
@@ -34,7 +34,7 @@ jobs:
       - name: Install common dependencies
         run: |
           apt update
-          apt install cmake -y
+          apt install libcppunit-dev cmake -y
           cmake --version
       - name: Install dependencies on ubuntu with gcc
         if: startsWith(matrix.config.name, 'Ubuntu_GCC')
