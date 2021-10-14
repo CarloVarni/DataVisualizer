@@ -6,6 +6,7 @@
 #include <type_traits>
 #include <vector>
 #include <variant>
+#include <string>
 
 namespace EventDataModel {
 
