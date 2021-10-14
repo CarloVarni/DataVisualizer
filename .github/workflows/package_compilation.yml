@@ -37,14 +37,14 @@ jobs:
       - name: Install dependencies on ubuntu with gcc
         if: startsWith(matrix.config.name, 'Ubuntu_GCC')
         run: |
-          #apt install ${{ matrix.config.cc }} -y
-          #apt install ${{ matrix.config.cxx }} -y
+          apt install ${{ matrix.config.cc }} -y
+          apt install ${{ matrix.config.cxx }} -y
           ${{ matrix.config.cc }} --version
           ${{ matrix.config.cxx }} --version
       - name: Install dependencies on ubuntu with clang
         if: startsWith(matrix.config.name, 'Ubuntu_CLANG')
         run: |
-          #apt install ${{ matrix.config.cc }} -y
+          apt install ${{ matrix.config.cc }} -y
           ${{ matrix.config.cc }} --version
       - name: Check ROOT version
         run: |
