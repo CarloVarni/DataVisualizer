@@ -20,7 +20,7 @@ jobs:
       - name: Check Format
         shell: bash
         run: |
-          source ./CI/check_format.sh .
+          source ./.CI/check_format.sh .
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v1
