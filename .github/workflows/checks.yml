@@ -15,6 +15,7 @@ jobs:
 
       - name: Install dependencies with clang
         run: |
+          clang --version
           apt install clang -y
 
       - name: Check Format
