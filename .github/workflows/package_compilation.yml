@@ -17,7 +17,7 @@ jobs:
         config:
         - {
             name: "Ubuntu_GCC",
-            os: ubuntu-20.04.3,
+            os: ubuntu-20.04,
             build_type: "Release",
             cc: "gcc-10",
             cxx: "g++-10",
