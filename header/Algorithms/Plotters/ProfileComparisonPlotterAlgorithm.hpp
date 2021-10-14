@@ -7,22 +7,27 @@
 
 namespace Algorithm {
 
-  class ProfileComparisonPlotterAlgorithm
-    : public ComparisonPlotterAlgorithm<EventDataModel::ProfileObjectCollection> {
-  public:
-    ProfileComparisonPlotterAlgorithm() = delete;
-    ProfileComparisonPlotterAlgorithm(const std::string& name,
-				      const ComparisonPlotterAlgorithm<EventDataModel::ProfileObjectCollection>::Config& cfg);
-    ProfileComparisonPlotterAlgorithm(const ProfileComparisonPlotterAlgorithm&) = delete;
-    ProfileComparisonPlotterAlgorithm& operator=(const ProfileComparisonPlotterAlgorithm&) = delete;
-    virtual ~ProfileComparisonPlotterAlgorithm() = default;
+class ProfileComparisonPlotterAlgorithm
+    : public ComparisonPlotterAlgorithm<
+          EventDataModel::ProfileObjectCollection> {
+public:
+  ProfileComparisonPlotterAlgorithm() = delete;
+  ProfileComparisonPlotterAlgorithm(
+      const std::string &name,
+      const ComparisonPlotterAlgorithm<
+          EventDataModel::ProfileObjectCollection>::Config &cfg);
+  ProfileComparisonPlotterAlgorithm(const ProfileComparisonPlotterAlgorithm &) =
+      delete;
+  ProfileComparisonPlotterAlgorithm &
+  operator=(const ProfileComparisonPlotterAlgorithm &) = delete;
+  virtual ~ProfileComparisonPlotterAlgorithm() = default;
 
-  protected:
-    virtual void DrawCollection(TCanvas& canvas,
-				EventDataModel::ProfileObjectCollection& collection);
-  };
+protected:
+  virtual void
+  DrawCollection(TCanvas &canvas,
+                 EventDataModel::ProfileObjectCollection &collection);
+};
 
-}
+} // namespace Algorithm
 
 #endif
-
