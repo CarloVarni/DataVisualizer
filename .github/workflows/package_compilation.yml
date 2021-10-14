@@ -10,7 +10,7 @@ jobs:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     container: 
-      image: rootproject/root:6.22.06-arch
+      image: rootproject/root:latest
     strategy:
       fail-fast: false
       matrix:
@@ -18,21 +18,21 @@ jobs:
         - {
             name: "Ubuntu_GCC",
             os: ubuntu-latest,
-            cc: "gcc-9",
-            cxx: "g++-9",
+            cc: "gcc-10",
+            cxx: "g++-10",
           }
         - {
             name: "Ubuntu_CLANG",
             os: ubuntu-latest,
-            cc: "clang-11",
-            cxx: "clang++-11",
+            cc: "clang-13",
+            cxx: "clang++-13",
           }
 
     steps:
       - name: Install common dependencies
         run: |
-          apt-get update
-          apt-get install libcppunit-dev cmake -y
+          #apt update
+          #apt install libcppunit-dev cmake -y
           cmake --version
       - name: Install dependencies on ubuntu with gcc
         if: startsWith(matrix.config.name, 'Ubuntu_GCC')
@@ -52,7 +52,7 @@ jobs:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       # Run the compilation
       - name: Prepare folders
