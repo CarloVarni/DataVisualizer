@@ -5,25 +5,23 @@
 #include <RootFileReaderAlgorithm.hpp>
 
 namespace Algorithm {
-  
-  class SeedingPerformanceRootReaderAlgorithm
-    : public RootFileReaderAlgorithm {
-    
-  public:
-    struct Config
-      : public Algorithm::RootFileReaderAlgorithm::Config {
-      
-    };
 
-    SeedingPerformanceRootReaderAlgorithm(const std::string& name,
-					  const Config& cfg);
-    SeedingPerformanceRootReaderAlgorithm(const SeedingPerformanceRootReaderAlgorithm&) = delete;
-    SeedingPerformanceRootReaderAlgorithm& operator=(const SeedingPerformanceRootReaderAlgorithm&) = delete;
-    virtual ~SeedingPerformanceRootReaderAlgorithm() = default;
-    
-    virtual void execute(Core::EventContext& context) override;
-  };
-  
-}
+class SeedingPerformanceRootReaderAlgorithm : public RootFileReaderAlgorithm {
+
+public:
+  struct Config : public Algorithm::RootFileReaderAlgorithm::Config {};
+
+  SeedingPerformanceRootReaderAlgorithm(const std::string &name,
+                                        const Config &cfg);
+  SeedingPerformanceRootReaderAlgorithm(
+      const SeedingPerformanceRootReaderAlgorithm &) = delete;
+  SeedingPerformanceRootReaderAlgorithm &
+  operator=(const SeedingPerformanceRootReaderAlgorithm &) = delete;
+  virtual ~SeedingPerformanceRootReaderAlgorithm() = default;
+
+  virtual void execute(Core::EventContext &context) override;
+};
+
+} // namespace Algorithm
 
 #endif
