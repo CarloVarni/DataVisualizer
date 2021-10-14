@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Check
-        run: CI/check_format .
+        run: .CI/check_format .
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
