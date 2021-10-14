@@ -17,14 +17,14 @@ jobs:
         config:
         - {
             name: "Ubuntu_GCC",
-            os: ubuntu-latest,
+            os: macos-latest,
             build_type: "Release",
             cc: "gcc-10",
             cxx: "g++-10",
           }
         - {
             name: "Ubuntu_CLANG",
-            os: ubuntu-latest,
+            os: macos-latest,
             build_type: "Release",
             cc: "clang-11",
             cxx: "clang++-11",
@@ -33,20 +33,20 @@ jobs:
     steps:
       - name: Install common dependencies
         run: |
-          apt update
-          apt install libcppunit-dev cmake -y
+          #apt update
+          #apt install libcppunit-dev cmake -y
           cmake --version
       - name: Install dependencies on ubuntu with gcc
         if: startsWith(matrix.config.name, 'Ubuntu_GCC')
         run: |
-          apt install ${{ matrix.config.cc }} -y
-          apt install ${{ matrix.config.cxx }} -y
+          #apt install ${{ matrix.config.cc }} -y
+          #apt install ${{ matrix.config.cxx }} -y
           ${{ matrix.config.cc }} --version
           ${{ matrix.config.cxx }} --version
       - name: Install dependencies on ubuntu with clang
         if: startsWith(matrix.config.name, 'Ubuntu_CLANG')
         run: |
-          apt install ${{ matrix.config.cc }} -y
+          #apt install ${{ matrix.config.cc }} -y
           ${{ matrix.config.cc }} --version
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
