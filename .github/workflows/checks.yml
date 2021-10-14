@@ -12,6 +12,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Install dependencies with clang
+        run: |
+          apt install clang -y
+
       - name: Check Format
         shell: bash
         run: source ./CI/check_format.sh .
