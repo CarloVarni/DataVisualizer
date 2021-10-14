@@ -34,6 +34,7 @@ jobs:
           #dnf upgrade
           #dnf install libcppunit-dev cmake
           cmake --version
+          gcc --version
 
       - name: Check ROOT version
         run: |
