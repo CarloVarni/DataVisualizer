@@ -10,17 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install dependencies with clang
+      - name: Install dependencies for clang
         run: |
           clang --version
-          #apt install clang -y
 
       - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: Check Format
         shell: bash
-        run: source ./CI/check_format.sh .
+        run: |
+          source ./CI/check_format.sh .
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v1
