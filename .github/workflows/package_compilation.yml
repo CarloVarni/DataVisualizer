@@ -31,14 +31,10 @@ jobs:
     steps:
       - name: Install common dependencies
         run: |
-          #dnf upgrade
-          #dnf install libcppunit-dev cmake
           cmake --version
       - name: Install dependencies on ubuntu with gcc
         if: startsWith(matrix.config.name, 'Ubuntu_GCC')
         run: |
-          #dnf install ${{ matrix.config.cc }} -y
-          #dnf install ${{ matrix.config.cxx }} -y
           ${{ matrix.config.cc }} --version
           ${{ matrix.config.cxx }} --version
       - name: Install dependencies on ubuntu with clang
@@ -59,8 +55,11 @@ jobs:
         run: |
           mkdir build
       - name: Build
-        run: |
-          cmake -S . -B build -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} -DCMAKE_CXX_FLAGS="-Wunused-command-line-argument -Wall -Werror"
+        run: >
+          cmake -S . -B build 
+          -DCMAKE_C_COMPILER=${{ matrix.config.cc }} 
+          -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} 
+          -DCMAKE_CXX_FLAGS="-Qunused-arguments"
       - name: Install
         run: |
           cmake --build build
