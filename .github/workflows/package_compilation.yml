@@ -31,8 +31,8 @@ jobs:
     steps:
       - name: Install common dependencies
         run: |
-          apt update
-          apt install libcppunit-dev cmake -y
+          pacman -Syy
+          pacman -S libcppunit-dev cmake
           cmake --version
       - name: Install dependencies on ubuntu with gcc
         if: startsWith(matrix.config.name, 'Ubuntu_GCC')
