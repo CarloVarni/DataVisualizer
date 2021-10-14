@@ -10,7 +10,7 @@ jobs:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     container:
-      image: rootproject/root:6.22.08-fedora34
+      image: rootproject/root:6.24.02-arch
     strategy:
       fail-fast: false
       matrix:
