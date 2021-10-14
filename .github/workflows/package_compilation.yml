@@ -47,6 +47,9 @@ jobs:
         run: |
           #apt install ${{ matrix.config.cc }} -y
           ${{ matrix.config.cc }} --version
+      - name: Check ROOT version
+        run: |
+          root --version
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
