@@ -60,7 +60,7 @@ jobs:
           mkdir build
       - name: Build
         run: |
-          cmake -S . -B build -DCMAKE_CXX_FLAGS="-Werror -Wall" -DCMAKE_CXX_STANDARD="17" -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} 
+          cmake -S . -B build -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} 
       - name: Install
         run: |
           cmake --build build
