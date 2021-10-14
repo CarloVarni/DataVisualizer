@@ -37,14 +37,14 @@ jobs:
           apt install libcppunit-dev cmake -y
           cmake --version
       - name: Install dependencies on ubuntu with gcc
-        if: startsWith(matrix.config.name, 'Ubuntu_GCC')
+        if: startsWith(matrix.config.name, 'Macos_GCC')
         run: |
           apt install ${{ matrix.config.cc }} -y
           apt install ${{ matrix.config.cxx }} -y
           ${{ matrix.config.cc }} --version
           ${{ matrix.config.cxx }} --version
       - name: Install dependencies on ubuntu with clang
-        if: startsWith(matrix.config.name, 'Ubuntu_CLANG')
+        if: startsWith(matrix.config.name, 'Macos_CLANG')
         run: |
           apt install ${{ matrix.config.cc }} -y
           ${{ matrix.config.cc }} --version
