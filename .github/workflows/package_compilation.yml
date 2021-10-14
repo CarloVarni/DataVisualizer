@@ -9,22 +9,21 @@ jobs:
   build:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
-    container:
-      image: rootproject/root:6.22.08-centos7
+    container: rootproject/root:latest
     strategy:
       fail-fast: false
       matrix:
         config:
         - {
             name: "Ubuntu_GCC",
-            os: macos-latest,
+            os: ubuntu-latest,
             build_type: "Release",
-            cc: "gcc-10",
-            cxx: "g++-10",
+            cc: "gcc-9",
+            cxx: "g++-9",
           }
         - {
             name: "Ubuntu_CLANG",
-            os: macos-latest,
+            os: ubuntu-latest,
             build_type: "Release",
             cc: "clang-11",
             cxx: "clang++-11",
@@ -54,8 +53,12 @@ jobs:
         uses: actions/checkout@v1
 
       # Run the compilation
-      - name: Run the compilation 
+      - name: Prepare folders
         run: |
           mkdir build
+      - name: Build
+        run: |
           cmake -S . -B build -DCMAKE_CXX_FLAGS="-Werror -Wall" -DCMAKE_CXX_STANDARD=17 -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }} 
+      - name: Install
+        run: |
           cmake --build build
