@@ -9,10 +9,14 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Check
-        run: .CI/check_format .
-      - uses: actions/upload-artifact@v1
+        run: CI/check_format .
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v1
         if: failure()
         with:
           name: changed
