@@ -1,8 +1,9 @@
 
 #include <DataHistogramMakerAlgorithm.hpp>
 #include <FilteringAlgorithm.hpp>
+#include <Histogram1DPlotterAlgorithm.hpp>
+#include <Histogram2DPlotterAlgorithm.hpp>
 #include <MultiDataHistogramMakerAlgorithm.hpp>
-#include <PlotterAlgorithm.hpp>
 #include <Profile.hpp>
 #include <RootFileHistogramMakerAlgorithm.hpp>
 #include <Scheduler.hpp>
@@ -92,18 +93,34 @@ int main() {
   scheduler.addAlgorithm(rootFileHistogramMakerAlgorithm);
 
   // Plotter
-  Algorithm::PlotterAlgorithm::Config PlotterConfiguration;
-  PlotterConfiguration.inputCollection_hist_1d =
+  Algorithm::Histogram1DPlotterAlgorithm::Config
+      Histogram1DPlotterConfiguration;
+  Histogram1DPlotterConfiguration.prefix = "h_1d";
+  Histogram1DPlotterConfiguration.inputCollection =
       RootFileHistogramMakerConfiguration.output_collection_1d;
-  PlotterConfiguration.inputCollection_hist_2d =
+  Histogram1DPlotterConfiguration.outputFolder = "./muon_performance_plots";
+
+  std::shared_ptr<Algorithm::Histogram1DPlotterAlgorithm>
+      histogram1DPlotterAlgorithm =
+          std::make_shared<Algorithm::Histogram1DPlotterAlgorithm>(
+              "Histogram1DPlotterAlgorithm", Histogram1DPlotterConfiguration);
+
+  scheduler.addAlgorithm(histogram1DPlotterAlgorithm);
+
+  Algorithm::Histogram2DPlotterAlgorithm::Config
+      Histogram2DPlotterConfiguration;
+  Histogram2DPlotterConfiguration.prefix = "h_2d";
+  Histogram2DPlotterConfiguration.inputCollection =
       RootFileHistogramMakerConfiguration.output_collection_2d;
-  PlotterConfiguration.outputFolder = "./muon_performance_plots";
+  Histogram2DPlotterConfiguration.outputFolder =
+      Histogram1DPlotterConfiguration.outputFolder;
 
-  std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm =
-      std::make_shared<Algorithm::PlotterAlgorithm>("PlotterAlgorithm",
-                                                    PlotterConfiguration);
+  std::shared_ptr<Algorithm::Histogram2DPlotterAlgorithm>
+      histogram2DPlotterAlgorithm =
+          std::make_shared<Algorithm::Histogram2DPlotterAlgorithm>(
+              "Histogram2DPlotterAlgorithm", Histogram2DPlotterConfiguration);
 
-  scheduler.addAlgorithm(plotterAlgorithm);
+  scheduler.addAlgorithm(histogram2DPlotterAlgorithm);
 
   scheduler.run();
 }

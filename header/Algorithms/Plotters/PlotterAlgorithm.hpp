@@ -9,16 +9,13 @@
 
 namespace Algorithm {
 
+template <typename object_collection_t>
 class PlotterAlgorithm : public Core::BaseAlgorithm {
 public:
   struct Config {
-    std::string inputCollection_hist_1d = "";
-    std::string inputCollection_hist_2d = "";
-    std::string inputCollection_eff_1d = "";
-    std::string inputCollection_eff_2d = "";
-    std::string inputCollection_gr = "";
-    std::string inputCollection_prof = "";
     std::string outputFolder = "";
+    std::string prefix = "";
+    std::string inputCollection = "";
   };
 
   PlotterAlgorithm() = delete;
@@ -30,9 +27,42 @@ public:
   virtual void initialize() override;
   virtual void execute(Core::EventContext &context) override;
 
-private:
+protected:
+  virtual void DrawCollection(const object_collection_t *collection) = 0;
+
+protected:
   const Config m_cfg;
 };
+
+template <typename object_collection_t>
+PlotterAlgorithm<object_collection_t>::PlotterAlgorithm(const std::string &name,
+                                                        const Config &cfg)
+    : Core::BaseAlgorithm(name), m_cfg(cfg) {}
+
+template <typename object_collection_t>
+void PlotterAlgorithm<object_collection_t>::initialize() {
+  MSG_INFO("Initializing " + name() + " ... ");
+
+  if (m_cfg.outputFolder.empty())
+    throw std::invalid_argument("Missing output folder for algorithm " +
+                                name());
+
+  if (m_cfg.inputCollection.empty())
+    throw std::invalid_argument("Missing input collection for algorithm " +
+                                name());
+}
+
+template <typename object_collection_t>
+void PlotterAlgorithm<object_collection_t>::execute(
+    Core::EventContext &context) {
+  MSG_INFO("Executing " + name() + " ... ");
+
+  const object_collection_t *object_collection =
+      context.get<object_collection_t>(m_cfg.prefix + "_" +
+                                       m_cfg.inputCollection);
+
+  DrawCollection(object_collection);
+}
 
 } // namespace Algorithm
 

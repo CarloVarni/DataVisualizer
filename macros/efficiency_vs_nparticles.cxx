@@ -2,7 +2,8 @@
 #include <Scheduler.hpp>
 
 #include <RootFileEfficiencyMakerAlgorithm.hpp>
-#include <PlotterAlgorithm.hpp>
+#include <Efficiency1DPlotterAlgorithm.hpp>
+#include <Efficiency2DPlotterAlgorithm.hpp>
 #include <EfficiencyComparisonPlotterAlgorithm.hpp>
 
 void get_algo_sequence(Core::Scheduler& sequence,
@@ -128,16 +129,28 @@ get_algo_sequence(Core::Scheduler& sequence,
   sequence.addAlgorithm(rootFileEfficiencyMakerAlgorithm);
 
   // Plotter
-  Algorithm::PlotterAlgorithm::Config PlotterConfiguration;
-  PlotterConfiguration.inputCollection_eff_1d = RootFileEfficiencyMakerConfiguration.output_collection_1d;
-  PlotterConfiguration.inputCollection_eff_2d = RootFileEfficiencyMakerConfiguration.output_collection_2d;
-  PlotterConfiguration.outputFolder = "./efficiency_plots_vs_nparticles/" + particle_type + "_n" + nparticles;
+  Algorithm::Efficiency1DPlotterAlgorithm::Config Efficiency1DPlotterConfiguration;
+  Efficiency1DPlotterConfiguration.prefix = "eff_1d";
+  Efficiency1DPlotterConfiguration.inputCollection = RootFileEfficiencyMakerConfiguration.output_collection_1d;
+  Efficiency1DPlotterConfiguration.outputFolder = "./efficiency_plots_vs_nparticles/" + particle_type + "_n" + nparticles;
 
-  std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm =
-    std::make_shared<Algorithm::PlotterAlgorithm>("PlotterAlgorithm_"  + particle_type + "_n" + nparticles,
-                                                  PlotterConfiguration);
+  std::shared_ptr<Algorithm::Efficiency1DPlotterAlgorithm> efficiency1DPlotterAlgorithm =
+    std::make_shared<Algorithm::Efficiency1DPlotterAlgorithm>("Efficiency1DPlotterAlgorithm_" + particle_type + "_n" + nparticles,
+							      Efficiency1DPlotterConfiguration);
 
-  sequence.addAlgorithm(plotterAlgorithm);
+  sequence.addAlgorithm(efficiency1DPlotterAlgorithm);
+  
+  
+  Algorithm::Efficiency2DPlotterAlgorithm::Config Efficiency2DPlotterConfiguration;
+  Efficiency2DPlotterConfiguration.prefix = "eff_2d";
+  Efficiency2DPlotterConfiguration.inputCollection = RootFileEfficiencyMakerConfiguration.output_collection_2d;
+  Efficiency2DPlotterConfiguration.outputFolder = "./efficiency_plots_vs_nparticles/" + particle_type + "_n" + nparticles;
+
+  std::shared_ptr<Algorithm::Efficiency2DPlotterAlgorithm> efficiency2DPlotterAlgorithm =
+    std::make_shared<Algorithm::Efficiency2DPlotterAlgorithm>("Efficiency2DPlotterAlgorithm_" + particle_type + "_n" + nparticles,
+							      Efficiency2DPlotterConfiguration);
+
+  sequence.addAlgorithm(efficiency2DPlotterAlgorithm);
 }
 
 

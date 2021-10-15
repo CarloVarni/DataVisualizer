@@ -13,7 +13,7 @@ _binary=${CLANG_FORMAT_BINARY:-clang-format}
 $_binary --version
 
 cd $1
-find . \( -iname '*.cpp' -or -iname '*.hpp' -or -iname '*.ipp' -or -iname '*.cu' -or -iname '*.cuh' \) \
+find . \( -iname '*.cpp' -or -iname '*.hpp' -or -iname '*.ipp' \) \
   | xargs $_binary -i -style=file
   
 if ! [ -z $CI ] || ! [ -z $GITHUB_ACTIONS ]; then

@@ -3,7 +3,9 @@
 
 #include <RootFileEfficiencyMakerAlgorithm.hpp>
 #include <RootFileProfileMakerAlgorithm.hpp>
-#include <PlotterAlgorithm.hpp>
+#include <ProfilePlotterAlgorithm.hpp>
+#include <Efficiency1DPlotterAlgorithm.hpp>
+#include <Efficiency2DPlotterAlgorithm.hpp>
 #include <EfficiencyComparisonPlotterAlgorithm.hpp>
 #include <ProfileComparisonPlotterAlgorithm.hpp>
 
@@ -154,21 +156,43 @@ get_algo_sequence(Core::Scheduler& sequence,
   sequence.addAlgorithm(rootFileProfileMakerAlgorithm);
 
   
-  // Plotter for eff
-  Algorithm::PlotterAlgorithm::Config PlotterConfiguration;
-  PlotterConfiguration.inputCollection_eff_1d = RootFileEfficiencyMakerConfiguration.output_collection_1d;
-  PlotterConfiguration.inputCollection_eff_2d = RootFileEfficiencyMakerConfiguration.output_collection_2d;
-  PlotterConfiguration.inputCollection_prof = RootFileProfileMakerConfiguration.output_collection;
-  PlotterConfiguration.outputFolder = "./plots/ckf_performance_plots";
-  
-  std::shared_ptr<Algorithm::PlotterAlgorithm> plotterAlgorithm =
-    std::make_shared<Algorithm::PlotterAlgorithm>("PlotterAlgorithm_"  + particle_type,
-                                                  PlotterConfiguration);
-  
-  sequence.addAlgorithm(plotterAlgorithm);
+  // Plotters
+  Algorithm::ProfilePlotterAlgorithm::Config ProfilePlotterConfiguration;
+  ProfilePlotterConfiguration.prefix = "prof";
+  ProfilePlotterConfiguration.inputCollection = RootFileProfileMakerConfiguration.output_collection;
+  ProfilePlotterConfiguration.outputFolder = "./plots/ckf_performance_plots";
 
-  
+  std::shared_ptr<Algorithm::ProfilePlotterAlgorithm> profilePlotterAlgorithm =
+    std::make_shared<Algorithm::ProfilePlotterAlgorithm>("ProfilePlotterAlgorithm_" + particle_type,
+							 ProfilePlotterConfiguration);
 
+  sequence.addAlgorithm(profilePlotterAlgorithm);
+
+
+  Algorithm::Efficiency1DPlotterAlgorithm::Config Efficiency1DPlotterConfiguration;
+  Efficiency1DPlotterConfiguration.prefix = "eff_1d";
+  Efficiency1DPlotterConfiguration.inputCollection = RootFileEfficiencyMakerConfiguration.output_collection_1d;
+  Efficiency1DPlotterConfiguration.outputFolder = ProfilePlotterConfiguration.outputFolder;
+  
+  std::shared_ptr<Algorithm::Efficiency1DPlotterAlgorithm> ffficiency1DPlotterAlgorithm =
+    std::make_shared<Algorithm::Efficiency1DPlotterAlgorithm>("Efficiency1DPlotterAlgorithm_" + particle_type,
+							      Efficiency1DPlotterConfiguration);
+
+  sequence.addAlgorithm(ffficiency1DPlotterAlgorithm);
+
+
+
+
+  Algorithm::Efficiency2DPlotterAlgorithm::Config Efficiency2DPlotterConfiguration;
+  Efficiency2DPlotterConfiguration.prefix = "eff_2d";
+  Efficiency2DPlotterConfiguration.inputCollection = RootFileEfficiencyMakerConfiguration.output_collection_2d;
+  Efficiency2DPlotterConfiguration.outputFolder = ProfilePlotterConfiguration.outputFolder;
+
+  std::shared_ptr<Algorithm::Efficiency2DPlotterAlgorithm> efficiency2DPlotterAlgorithm =
+    std::make_shared<Algorithm::Efficiency2DPlotterAlgorithm>("Efficiency2DPlotterAlgorithm_" + particle_type,
+							     Efficiency2DPlotterConfiguration);
+
+  sequence.addAlgorithm(efficiency2DPlotterAlgorithm);
 }
 
 
