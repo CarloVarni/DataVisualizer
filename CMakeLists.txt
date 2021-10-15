@@ -51,6 +51,12 @@ SET( HEADER_FILES header/EventDataModel/Data.hpp
 		  header/Algorithms/Plotters/EfficiencyComparisonPlotterAlgorithm.hpp
 		  header/Algorithms/Plotters/ProfileComparisonPlotterAlgorithm.hpp
 		  header/Algorithms/Plotters/PlotterAlgorithm.hpp
+		  header/Algorithms/Plotters/ProfilePlotterAlgorithm.hpp
+		  header/Algorithms/Plotters/GraphPlotterAlgorithm.hpp
+		  header/Algorithms/Plotters/Histogram1DPlotterAlgorithm.hpp
+		  header/Algorithms/Plotters/Histogram2DPlotterAlgorithm.hpp
+		  header/Algorithms/Plotters/Efficiency1DPlotterAlgorithm.hpp
+		  header/Algorithms/Plotters/Efficiency2DPlotterAlgorithm.hpp
 		  )
 
 		  
@@ -67,11 +73,16 @@ SET( SRC_FILES src/EventDataModel/Efficiency.cpp
 	       src/Algorithms/GraphMakers/MultiDataGraphMakerAlgorithm.cpp
 	       src/Algorithms/ProfileMakers/RootFileProfileMakerAlgorithm.cpp
 	       src/Algorithms/EfficiencyMakers/RootFileEfficiencyMakerAlgorithm.cpp
-	       src/Algorithms/Plotters/PlotterAlgorithm.cpp
+	       src/Algorithms/Plotters/ProfilePlotterAlgorithm.cpp
+	       src/Algorithms/Plotters/GraphPlotterAlgorithm.cpp
+	       src/Algorithms/Plotters/Histogram1DPlotterAlgorithm.cpp
+	       src/Algorithms/Plotters/Histogram2DPlotterAlgorithm.cpp
 	       src/Algorithms/Plotters/HistogramComparisonPlotterAlgorithm.cpp	
 	       src/Algorithms/Plotters/GraphComparisonPlotterAlgorithm.cpp
 	       src/Algorithms/Plotters/EfficiencyComparisonPlotterAlgorithm.cpp
 	       src/Algorithms/Plotters/ProfileComparisonPlotterAlgorithm.cpp
+	       src/Algorithms/Plotters/Efficiency1DPlotterAlgorithm.cpp
+	       src/Algorithms/Plotters/Efficiency2DPlotterAlgorithm.cpp
 	       )
 
 
@@ -80,21 +91,23 @@ add_library( DataVisualizerLib SHARED ${SRC_FILES} ${HEADER_FILES} )
 target_link_libraries( DataVisualizerLib ${ROOT_LIBRARIES} )
 set_target_properties(DataVisualizerLib PROPERTIES LINKER_LANGUAGE CXX)
 
+
+
 # Executables
-add_executable( testRootReader macros/testRootReader.cpp)
-target_link_libraries( testRootReader DataVisualizerLib )
+#add_executable( testRootReader macros/testRootReader.cpp)
+#target_link_libraries( testRootReader DataVisualizerLib )
 
-add_executable( muon_efficiency_check macros/muon_efficiency_check.cpp )
-target_link_libraries( muon_efficiency_check DataVisualizerLib )
+#add_executable( muon_efficiency_check macros/muon_efficiency_check.cpp )
+#target_link_libraries( muon_efficiency_check DataVisualizerLib )
 
-add_executable( timing_studies_EDM macros/timing_studies_EDM.cpp )
-target_link_libraries( timing_studies_EDM DataVisualizerLib )
+#add_executable( timing_studies_EDM macros/timing_studies_EDM.cpp )
+#target_link_libraries( timing_studies_EDM DataVisualizerLib )
 
-add_executable( seed_finding_timing macros/seed_finding_timing.cxx )
-target_link_libraries( seed_finding_timing DataVisualizerLib )
+#add_executable( seed_finding_timing macros/seed_finding_timing.cxx )
+#target_link_libraries( seed_finding_timing DataVisualizerLib )
 
-add_executable( efficiency_vs_nparticles macros/efficiency_vs_nparticles.cxx )
-target_link_libraries( efficiency_vs_nparticles DataVisualizerLib )
+#add_executable( efficiency_vs_nparticles macros/efficiency_vs_nparticles.cxx )
+#target_link_libraries( efficiency_vs_nparticles DataVisualizerLib )
 
 add_executable( ckf_performance macros/ckf_performance.cxx )
 target_link_libraries( ckf_performance DataVisualizerLib )
