@@ -28,6 +28,7 @@ int main() {
 
   // Compare Histograms
   Algorithm::HistogramComparisonPlotterAlgorithm::Config PlotComparisonConfiguration;
+  PlotComparisonConfiguration.prefix = "h_1d";
   PlotComparisonConfiguration.outputFolder = "./plots/tracking_performance_plots";
   PlotComparisonConfiguration.variableNames =
     {
@@ -58,6 +59,7 @@ int main() {
       
   // Compare Prof
   Algorithm::ProfileComparisonPlotterAlgorithm::Config ProfileComparisonPlotterConfiguration;
+  ProfileComparisonPlotterConfiguration.prefix = "prof"; 
   ProfileComparisonPlotterConfiguration.outputFolder = "./plots/tracking_performance_plots";
   ProfileComparisonPlotterConfiguration.variableNames =
     {

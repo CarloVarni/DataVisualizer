@@ -4,8 +4,8 @@
 #include <RootFileEfficiencyMakerAlgorithm.hpp>
 #include <RootFileProfileMakerAlgorithm.hpp>
 #include <ProfilePlotterAlgorithm.hpp>
-#include <Histogram1DPlotterAlgorithm.hpp>
-#include <Histogram2DPlotterAlgorithm.hpp>
+#include <Efficiency1DPlotterAlgorithm.hpp>
+#include <Efficiency2DPlotterAlgorithm.hpp>
 #include <EfficiencyComparisonPlotterAlgorithm.hpp>
 #include <ProfileComparisonPlotterAlgorithm.hpp>
 
@@ -169,30 +169,30 @@ get_algo_sequence(Core::Scheduler& sequence,
   sequence.addAlgorithm(profilePlotterAlgorithm);
 
 
-  Algorithm::Histogram1DPlotterAlgorithm::Config Histogram1DPlotterConfiguration;
-  Histogram1DPlotterConfiguration.prefix = "h_1d";
-  Histogram1DPlotterConfiguration.inputCollection = RootFileEfficiencyMakerConfiguration.output_collection_1d;
-  Histogram1DPlotterConfiguration.outputFolder = ProfilePlotterConfiguration.outputFolder;
+  Algorithm::Efficiency1DPlotterAlgorithm::Config Efficiency1DPlotterConfiguration;
+  Efficiency1DPlotterConfiguration.prefix = "eff_1d";
+  Efficiency1DPlotterConfiguration.inputCollection = RootFileEfficiencyMakerConfiguration.output_collection_1d;
+  Efficiency1DPlotterConfiguration.outputFolder = ProfilePlotterConfiguration.outputFolder;
+  
+  std::shared_ptr<Algorithm::Efficiency1DPlotterAlgorithm> ffficiency1DPlotterAlgorithm =
+    std::make_shared<Algorithm::Efficiency1DPlotterAlgorithm>("Efficiency1DPlotterAlgorithm_" + particle_type,
+							      Efficiency1DPlotterConfiguration);
 
-  std::shared_ptr<Algorithm::Histogram1DPlotterAlgorithm> histogram1DPlotterAlgorithm =
-    std::make_shared<Algorithm::Histogram1DPlotterAlgorithm>("Histogram1DPlotterAlgorithm_" + particle_type,
-							     Histogram1DPlotterConfiguration);
-
-  sequence.addAlgorithm(histogram1DPlotterAlgorithm);
-
-
+  sequence.addAlgorithm(ffficiency1DPlotterAlgorithm);
 
 
-  Algorithm::Histogram2DPlotterAlgorithm::Config Histogram2DPlotterConfiguration;
-  Histogram2DPlotterConfiguration.prefix = "h_1d";
-  Histogram2DPlotterConfiguration.inputCollection = RootFileEfficiencyMakerConfiguration.output_collection_2d;
-  Histogram2DPlotterConfiguration.outputFolder = ProfilePlotterConfiguration.outputFolder;
 
-  std::shared_ptr<Algorithm::Histogram2DPlotterAlgorithm> histogram2DPlotterAlgorithm =
-    std::make_shared<Algorithm::Histogram2DPlotterAlgorithm>("Histogram2DPlotterAlgorithm_" + particle_type,
-							     Histogram2DPlotterConfiguration);
 
-  sequence.addAlgorithm(histogram2DPlotterAlgorithm);
+  Algorithm::Efficiency2DPlotterAlgorithm::Config Efficiency2DPlotterConfiguration;
+  Efficiency2DPlotterConfiguration.prefix = "eff_2d";
+  Efficiency2DPlotterConfiguration.inputCollection = RootFileEfficiencyMakerConfiguration.output_collection_2d;
+  Efficiency2DPlotterConfiguration.outputFolder = ProfilePlotterConfiguration.outputFolder;
+
+  std::shared_ptr<Algorithm::Efficiency2DPlotterAlgorithm> efficiency2DPlotterAlgorithm =
+    std::make_shared<Algorithm::Efficiency2DPlotterAlgorithm>("Efficiency2DPlotterAlgorithm_" + particle_type,
+							     Efficiency2DPlotterConfiguration);
+
+  sequence.addAlgorithm(efficiency2DPlotterAlgorithm);
 }
 
 
