@@ -94,20 +94,20 @@ set_target_properties(DataVisualizerLib PROPERTIES LINKER_LANGUAGE CXX)
 
 
 # Executables
-#add_executable( testRootReader macros/testRootReader.cpp)
-#target_link_libraries( testRootReader DataVisualizerLib )
+add_executable( testRootReader macros/testRootReader.cpp)
+target_link_libraries( testRootReader DataVisualizerLib )
 
-#add_executable( muon_efficiency_check macros/muon_efficiency_check.cpp )
-#target_link_libraries( muon_efficiency_check DataVisualizerLib )
+add_executable( muon_efficiency_check macros/muon_efficiency_check.cpp )
+target_link_libraries( muon_efficiency_check DataVisualizerLib )
 
-#add_executable( timing_studies_EDM macros/timing_studies_EDM.cpp )
-#target_link_libraries( timing_studies_EDM DataVisualizerLib )
+add_executable( timing_studies_EDM macros/timing_studies_EDM.cpp )
+target_link_libraries( timing_studies_EDM DataVisualizerLib )
 
-#add_executable( seed_finding_timing macros/seed_finding_timing.cxx )
-#target_link_libraries( seed_finding_timing DataVisualizerLib )
+add_executable( seed_finding_timing macros/seed_finding_timing.cxx )
+target_link_libraries( seed_finding_timing DataVisualizerLib )
 
-#add_executable( efficiency_vs_nparticles macros/efficiency_vs_nparticles.cxx )
-#target_link_libraries( efficiency_vs_nparticles DataVisualizerLib )
+add_executable( efficiency_vs_nparticles macros/efficiency_vs_nparticles.cxx )
+target_link_libraries( efficiency_vs_nparticles DataVisualizerLib )
 
 add_executable( ckf_performance macros/ckf_performance.cxx )
 target_link_libraries( ckf_performance DataVisualizerLib )
