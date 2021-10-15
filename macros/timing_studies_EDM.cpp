@@ -1,9 +1,9 @@
 
 #include <Graph.hpp>
-#include <HistogramComparisonPlotterAlgorithm.hpp>
-#include <MultiDataHistogramMakerAlgorithm.hpp>
 #include <Histogram1DPlotterAlgorithm.hpp>
 #include <Histogram2DPlotterAlgorithm.hpp>
+#include <HistogramComparisonPlotterAlgorithm.hpp>
+#include <MultiDataHistogramMakerAlgorithm.hpp>
 #include <Scheduler.hpp>
 #include <TxtFileReaderAlgorithm.hpp>
 #include <sstream>
@@ -151,27 +151,33 @@ void getTimingAlgoSequence_single(Core::Scheduler &sequence,
   sequence.addAlgorithm(multiDataHistogramMakerAlgorithm);
 
   // Plotter
-  Algorithm::Histogram1DPlotterAlgorithm::Config Histogram1DPlotterConfiguration;
+  Algorithm::Histogram1DPlotterAlgorithm::Config
+      Histogram1DPlotterConfiguration;
   Histogram1DPlotterConfiguration.prefix = "h_1d";
-  Histogram1DPlotterConfiguration.inputCollection = MultiDataHistogramMakerConfiguration.outputCollection_1d;
+  Histogram1DPlotterConfiguration.inputCollection =
+      MultiDataHistogramMakerConfiguration.outputCollection_1d;
   Histogram1DPlotterConfiguration.outputFolder = "./timing_plots_" + edm_type;
 
-  std::shared_ptr<Algorithm::Histogram1DPlotterAlgorithm> histogram1DPlotterAlgorithm =
-    std::make_shared<Algorithm::Histogram1DPlotterAlgorithm>("Histogram1DPlotterAlgorithm_" + edm_type + "_" + timing_type,
-                                                             Histogram1DPlotterConfiguration);
+  std::shared_ptr<Algorithm::Histogram1DPlotterAlgorithm>
+      histogram1DPlotterAlgorithm =
+          std::make_shared<Algorithm::Histogram1DPlotterAlgorithm>(
+              "Histogram1DPlotterAlgorithm_" + edm_type + "_" + timing_type,
+              Histogram1DPlotterConfiguration);
 
   sequence.addAlgorithm(histogram1DPlotterAlgorithm);
 
-
-
-  Algorithm::Histogram2DPlotterAlgorithm::Config Histogram2DPlotterConfiguration;
+  Algorithm::Histogram2DPlotterAlgorithm::Config
+      Histogram2DPlotterConfiguration;
   Histogram2DPlotterConfiguration.prefix = "h_2d";
-  Histogram2DPlotterConfiguration.inputCollection = MultiDataHistogramMakerConfiguration.outputCollection_2d;
+  Histogram2DPlotterConfiguration.inputCollection =
+      MultiDataHistogramMakerConfiguration.outputCollection_2d;
   Histogram2DPlotterConfiguration.outputFolder = "./timing_plots_" + edm_type;
 
-  std::shared_ptr<Algorithm::Histogram2DPlotterAlgorithm> histogram2DPlotterAlgorithm =
-    std::make_shared<Algorithm::Histogram2DPlotterAlgorithm>("Histogram2DPlotterAlgorithm_" + edm_type + "_" + timing_type,
-                                                             Histogram2DPlotterConfiguration);
+  std::shared_ptr<Algorithm::Histogram2DPlotterAlgorithm>
+      histogram2DPlotterAlgorithm =
+          std::make_shared<Algorithm::Histogram2DPlotterAlgorithm>(
+              "Histogram2DPlotterAlgorithm_" + edm_type + "_" + timing_type,
+              Histogram2DPlotterConfiguration);
 
   sequence.addAlgorithm(histogram2DPlotterAlgorithm);
 }
@@ -253,28 +259,33 @@ void getTimingAlgoSequence_full(Core::Scheduler &sequence,
   sequence.addAlgorithm(multiDataHistogramMakerAlgorithm);
 
   // Plotter
-  Algorithm::Histogram1DPlotterAlgorithm::Config Histogram1DPlotterConfiguration;
+  Algorithm::Histogram1DPlotterAlgorithm::Config
+      Histogram1DPlotterConfiguration;
   Histogram1DPlotterConfiguration.prefix = "h_1d";
-  Histogram1DPlotterConfiguration.inputCollection = MultiDataHistogramMakerConfiguration.outputCollection_1d;
+  Histogram1DPlotterConfiguration.inputCollection =
+      MultiDataHistogramMakerConfiguration.outputCollection_1d;
   Histogram1DPlotterConfiguration.outputFolder = "./timing_plots_" + edm_type;
 
-  std::shared_ptr<Algorithm::Histogram1DPlotterAlgorithm> histogram1DPlotterAlgorithm =
-    std::make_shared<Algorithm::Histogram1DPlotterAlgorithm>("Histogram1DPlotterAlgorithm_" + edm_type + "_" + timing_type,
-							     Histogram1DPlotterConfiguration);
+  std::shared_ptr<Algorithm::Histogram1DPlotterAlgorithm>
+      histogram1DPlotterAlgorithm =
+          std::make_shared<Algorithm::Histogram1DPlotterAlgorithm>(
+              "Histogram1DPlotterAlgorithm_" + edm_type + "_" + timing_type,
+              Histogram1DPlotterConfiguration);
 
   sequence.addAlgorithm(histogram1DPlotterAlgorithm);
 
-
-  
-  Algorithm::Histogram2DPlotterAlgorithm::Config Histogram2DPlotterConfiguration;
+  Algorithm::Histogram2DPlotterAlgorithm::Config
+      Histogram2DPlotterConfiguration;
   Histogram2DPlotterConfiguration.prefix = "h_2d";
-  Histogram2DPlotterConfiguration.inputCollection = MultiDataHistogramMakerConfiguration.outputCollection_2d;
+  Histogram2DPlotterConfiguration.inputCollection =
+      MultiDataHistogramMakerConfiguration.outputCollection_2d;
   Histogram2DPlotterConfiguration.outputFolder = "./timing_plots_" + edm_type;
 
-  std::shared_ptr<Algorithm::Histogram2DPlotterAlgorithm> histogram2DPlotterAlgorithm =
-    std::make_shared<Algorithm::Histogram2DPlotterAlgorithm>("Histogram2DPlotterAlgorithm_" + edm_type + "_" + timing_type,
-                                                             Histogram2DPlotterConfiguration);
+  std::shared_ptr<Algorithm::Histogram2DPlotterAlgorithm>
+      histogram2DPlotterAlgorithm =
+          std::make_shared<Algorithm::Histogram2DPlotterAlgorithm>(
+              "Histogram2DPlotterAlgorithm_" + edm_type + "_" + timing_type,
+              Histogram2DPlotterConfiguration);
 
   sequence.addAlgorithm(histogram2DPlotterAlgorithm);
-
 }

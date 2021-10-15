@@ -1,9 +1,9 @@
 
 #include <DataHistogramMakerAlgorithm.hpp>
-#include <FilteringAlgorithm.hpp>
-#include <MultiDataHistogramMakerAlgorithm.hpp>
 #include <Efficiency1DPlotterAlgorithm.hpp>
 #include <Efficiency2DPlotterAlgorithm.hpp>
+#include <FilteringAlgorithm.hpp>
+#include <MultiDataHistogramMakerAlgorithm.hpp>
 #include <Scheduler.hpp>
 #include <SeedingPerformanceRootReaderAlgorithm.hpp>
 #include <TxtFileReaderAlgorithm.hpp>
@@ -74,32 +74,35 @@ int main() {
 
   scheduler.addAlgorithm(multiDataHistogramMakerAlgorithm);
 
-  
   // Plotter
-  Algorithm::Efficiency1DPlotterAlgorithm::Config Efficiency1DPlotterConfiguration;
+  Algorithm::Efficiency1DPlotterAlgorithm::Config
+      Efficiency1DPlotterConfiguration;
   Efficiency1DPlotterConfiguration.prefix = "eff_1d";
-  Efficiency1DPlotterConfiguration.inputCollection = MultiDataHistogramMakerConfiguration.outputCollection_1d;
+  Efficiency1DPlotterConfiguration.inputCollection =
+      MultiDataHistogramMakerConfiguration.outputCollection_1d;
   Efficiency1DPlotterConfiguration.outputFolder = "./plots";
 
-  std::shared_ptr<Algorithm::Efficiency1DPlotterAlgorithm> efficiency1DPlotterAlgorithm =
-    std::make_shared<Algorithm::Efficiency1DPlotterAlgorithm>("Efficiency1DPlotterAlgorithm",
-                                                              Efficiency1DPlotterConfiguration);
+  std::shared_ptr<Algorithm::Efficiency1DPlotterAlgorithm>
+      efficiency1DPlotterAlgorithm =
+          std::make_shared<Algorithm::Efficiency1DPlotterAlgorithm>(
+              "Efficiency1DPlotterAlgorithm", Efficiency1DPlotterConfiguration);
 
   scheduler.addAlgorithm(efficiency1DPlotterAlgorithm);
 
-
-  Algorithm::Efficiency2DPlotterAlgorithm::Config Efficiency2DPlotterConfiguration;
+  Algorithm::Efficiency2DPlotterAlgorithm::Config
+      Efficiency2DPlotterConfiguration;
   Efficiency2DPlotterConfiguration.prefix = "eff_2d";
-  Efficiency2DPlotterConfiguration.inputCollection = MultiDataHistogramMakerConfiguration.outputCollection_2d;
-  Efficiency2DPlotterConfiguration.outputFolder = Efficiency1DPlotterConfiguration.outputFolder;
+  Efficiency2DPlotterConfiguration.inputCollection =
+      MultiDataHistogramMakerConfiguration.outputCollection_2d;
+  Efficiency2DPlotterConfiguration.outputFolder =
+      Efficiency1DPlotterConfiguration.outputFolder;
 
-  std::shared_ptr<Algorithm::Efficiency2DPlotterAlgorithm> efficiency2DPlotterAlgorithm =
-    std::make_shared<Algorithm::Efficiency2DPlotterAlgorithm>("Efficiency2DPlotterAlgorithm",
-                                                              Efficiency2DPlotterConfiguration);
+  std::shared_ptr<Algorithm::Efficiency2DPlotterAlgorithm>
+      efficiency2DPlotterAlgorithm =
+          std::make_shared<Algorithm::Efficiency2DPlotterAlgorithm>(
+              "Efficiency2DPlotterAlgorithm", Efficiency2DPlotterConfiguration);
 
   scheduler.addAlgorithm(efficiency2DPlotterAlgorithm);
-
-  
 
   Algorithm::TxtFileReaderAlgorithm<
       EventDataModel::DataObjectCollection>::Config TxtFileReaderConfiguration;
